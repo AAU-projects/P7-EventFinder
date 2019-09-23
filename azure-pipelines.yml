@@ -30,10 +30,17 @@ steps:
 
 - task: CopyFiles@2
   inputs:
-    SourceFolder: 'EventFinder/dist/EventFinder'
+    SourceFolder: 'EventFinder/dist'
     Contents: '**'
     TargetFolder: '$(Build.ArtifactStagingDirectory)'
     CleanTargetFolder: true
+    OverWrite: true
+
+- task: CopyFiles@2
+  inputs:
+    SourceFolder: 'EventFinder/'
+    Contents: '+(firestore.* | *.rules* | firebase.json)'
+    TargetFolder: '$(Build.ArtifactStagingDirectory)'
     OverWrite: true
 
 - task: PublishBuildArtifacts@1
