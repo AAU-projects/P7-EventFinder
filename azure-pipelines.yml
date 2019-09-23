@@ -1,4 +1,5 @@
 # Node.js with Angular
+
 # Build a Node.js project that uses Angular.
 # Add steps that analyze code, save build artifacts, deploy, and more:
 # https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
@@ -22,3 +23,17 @@ steps:
     ng build --prod
   displayName: 'npm install and build'
   workingDirectory: EventFinder/
+
+- task: CopyFiles@2
+  inputs:
+    SourceFolder: 'EventFinder/dist/EventFinder'
+    Contents: '**'
+    TargetFolder: '$(Build.ArtifactStagingDirectory)'
+    CleanTargetFolder: true
+    OverWrite: true
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    ArtifactName: 'build'
+    publishLocation: 'Container'
