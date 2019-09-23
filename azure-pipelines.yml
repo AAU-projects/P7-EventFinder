@@ -30,10 +30,8 @@ steps:
 
 - task: CopyFiles@2
   inputs:
-    SourceFolder: 'EventFinder'
-    Contents: |
-      'dist/**'
-      'firebase.json'
+    SourceFolder: 'EventFinder/'
+    Contents: 'dist/**'
     TargetFolder: '$(Build.ArtifactStagingDirectory)'
     CleanTargetFolder: true
     OverWrite: true
