@@ -39,7 +39,7 @@ steps:
 - task: CopyFiles@2
   inputs:
     SourceFolder: 'EventFinder/'
-    Contents: '+(firestore.* | *.rules* | firebase.json)'
+    Contents: 'firebase.json'
     TargetFolder: '$(Build.ArtifactStagingDirectory)'
     OverWrite: true
 
