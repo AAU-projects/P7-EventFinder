@@ -19,14 +19,13 @@ steps:
 
 - script: |
     npm install -g @angular/cli
-    npm install firebase @angular/fire
     npm install
   displayName: 'npm install'
   workingDirectory: EventFinder/
 
 - script: |
     ng build
-  displayName: ng Build
+  displayName: BuildApp
   workingDirectory: EventFinder/
 
 - task: CopyFiles@2
