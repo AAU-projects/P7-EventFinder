@@ -25,7 +25,7 @@ steps:
   workingDirectory: EventFinder/
 
 - script: |
-    ng build --prod
+    ng build
   displayName: ng Build
   workingDirectory: EventFinder/
 
