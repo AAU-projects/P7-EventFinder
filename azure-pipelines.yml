@@ -4,9 +4,6 @@
 # Add steps that analyze code, save build artifacts, deploy, and more:
 # https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
 
-trigger:
-- master
-
 pool:
   vmImage: 'ubuntu-latest'
 
@@ -42,6 +39,11 @@ steps:
     TargetFolder: '$(Build.ArtifactStagingDirectory)'
     CleanTargetFolder: true
     OverWrite: true
+
+- task: CopyFiles@2
+  inputs:
+    Contents: 'deploy.ps1'
+    TargetFolder: '$(Build.ArtifactStagingDirectory)'
 
 - task: PublishBuildArtifacts@1
   inputs:
