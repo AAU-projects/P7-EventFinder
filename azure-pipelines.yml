@@ -31,7 +31,8 @@ steps:
 - task: CopyFiles@2
   inputs:
     SourceFolder: 'EventFinder/'
-    Contents: 'dist/**'
+    Contents: |
+      'dist/**'
     TargetFolder: '$(Build.ArtifactStagingDirectory)'
     CleanTargetFolder: true
     OverWrite: true
