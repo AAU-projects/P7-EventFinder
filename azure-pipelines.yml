@@ -30,7 +30,7 @@ steps:
 
 - task: CopyFiles@2
   inputs:
-    SourceFolder: 'EventFinder/'
+    SourceFolder: 'EventFinder'
     Contents: |
       'dist/**'
       'firebase.json'
