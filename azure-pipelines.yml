@@ -39,7 +39,7 @@ steps:
       'firestore.rules'
       'firestore.indexes.json'
       'storage.rules'
-    TargetFolder: '$(Build.ArtifactStagingDirectory)/dist'
+    TargetFolder: '$(Build.ArtifactStagingDirectory)'
     CleanTargetFolder: true
     OverWrite: true
 
