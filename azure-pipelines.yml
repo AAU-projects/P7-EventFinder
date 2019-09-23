@@ -32,7 +32,7 @@ steps:
   inputs:
     SourceFolder: 'EventFinder/'
     Contents: 'dist/**'
-    TargetFolder: '$(Build.ArtifactStagingDirectory)'
+    TargetFolder: '$(Build.ArtifactStagingDirectory)/dist'
     CleanTargetFolder: true
     OverWrite: true
 
