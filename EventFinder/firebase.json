@@ -13,7 +13,7 @@
     ]
   },
   "hosting": {
-    "public": "dist/EventFinder",
+    "public": "dist/",
     "ignore": [
       "firebase.json",
       "**/.*",
