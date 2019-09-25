@@ -11,14 +11,16 @@ import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { AngularFireAuthModule } from '@angular/fire/auth';
+import { LoginComponent } from './login/login.component';
 
 
 @NgModule({
-  declarations: [
+  declarations: [   // Components that the app uses
     AppComponent,
-    TestComponent
+    TestComponent,
+    LoginComponent
   ],
-  imports: [
+  imports: [      // Modules that are used in the app
     BrowserModule,
     AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebase),
