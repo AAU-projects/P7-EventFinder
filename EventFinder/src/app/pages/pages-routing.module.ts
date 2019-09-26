@@ -5,6 +5,7 @@ import { LoginComponent } from './login/login.component';
 import { FirebaseTestComponent } from './firebase-test/firebase-test.component';
 
 
+// All paths starts from root (/)
 const routes: Routes = [
   {path: '', component: HomeComponent},
   {path: 'login', component: LoginComponent},
