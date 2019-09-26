@@ -13,11 +13,7 @@
     ]
   },
   "hosting": {
-<<<<<<< HEAD
     "public": "dist/",
-=======
-    "public": "dist/EventFinder",
->>>>>>> develop
     "ignore": [
       "firebase.json",
       "**/.*",
