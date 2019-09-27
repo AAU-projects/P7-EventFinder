@@ -1,0 +1,13 @@
+<div *ngIf="auth.account | async as user; else bob">
+  <pre>
+    {{ user | json }}
+  </pre>
+
+  <hr>
+  <button class="button" (click)="auth.logout()">Sign Out</button>
+
+</div>
+
+<ng-template #bob>
+  <h1>Error!</h1>
+</ng-template>

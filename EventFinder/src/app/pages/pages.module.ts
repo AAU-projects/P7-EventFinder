@@ -7,6 +7,10 @@ import { PagesRoutingModule } from './pages-routing.module';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { FirebaseTestComponent } from './firebase-test/firebase-test.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { UserComponent } from './user/user.component';
+import { RegisterComponent } from './register/register.component';
 
 /* How to add a new page:
     ng g c pages/[name]
@@ -15,11 +19,12 @@ import { FirebaseTestComponent } from './firebase-test/firebase-test.component';
 */
 
 @NgModule({
-  declarations: [HomeComponent, LoginComponent, FirebaseTestComponent],
+  declarations: [HomeComponent, LoginComponent, FirebaseTestComponent, PageNotFoundComponent, UserComponent, RegisterComponent],
   imports: [
     CommonModule,
     PagesRoutingModule,
     ComponentsModule,
+    ReactiveFormsModule
   ]
 })
 export class PagesModule { }

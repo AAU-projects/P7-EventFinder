@@ -3,13 +3,20 @@ import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { FirebaseTestComponent } from './firebase-test/firebase-test.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { UserComponent } from './user/user.component';
+import { RegisterComponent } from './register/register.component';
 
 
 // All paths starts from root (/)
 const routes: Routes = [
   {path: '', component: HomeComponent},
   {path: 'login', component: LoginComponent},
-  {path: 'firebase', component: FirebaseTestComponent}
+  {path: 'register', component: RegisterComponent},
+  {path: 'firebase', component: FirebaseTestComponent},
+  {path: 'user', component: UserComponent},
+
+  {path: '**', component: PageNotFoundComponent}, // Skal ligge nederst!!!!
 ];
 
 @NgModule({

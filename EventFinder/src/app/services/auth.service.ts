@@ -7,7 +7,7 @@ import { User as fireUser} from 'firebase/app';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 
-import { Observable, of } from 'rxjs';
+import { Observable, of, merge } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 
 @Injectable({
@@ -42,13 +42,29 @@ export class AuthService {
     return this.updateUserData(credentials.user);
   }
 
-  updateUserData(user: fireUser) {
-    if (this.type === UserTypes.User) {
-      const userRef: AngularFirestoreDocument<User> = this.firestore.doc('users/${user.uid}');
-    } else {
-      const userRef: AngularFirestoreDocument<Organizer> = this.firestore.doc('organizers/${user.uid}');
-    }
+  async register(value) {
+    const credentials = await this.fireAuth.auth.createUserWithEmailAndPassword(value.email, value.password);
 
+    return this.updateUserData(credentials.user, value);
+  }
+
+  updateUserData(user: fireUser, value?) {
+    let userRef;
+
+    userRef = this.firestore.doc(`users/${user.uid}`);
+
+    const data = {
+      uid: user.uid,
+      email: user.email,
+      name: value.name,
+      zip: value.zip,
+      country: value.country,
+      phone: value.phone
+    };
+
+    userRef.set(data, {merge: true});
+
+    return userRef.snapshotChanges();
 
   }
 
