@@ -14,11 +14,6 @@ export class LoginComponent {
   loginForm: FormGroup;
   errorMessage?: string;
 
-  // TwoStateButton
-  width = '500px';
-  options = {optionOne: 'User', optionTwo: 'Organizer'};
-  actions = {actionOne: this.authService.setUserType, actionTwo: this.authService.setOrganizerType};
-
   constructor(
     public authService: AuthService,
     private router: Router,

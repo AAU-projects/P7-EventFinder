@@ -24,7 +24,7 @@ export class AuthService {
     private firestore: AngularFirestore,
     private router: Router
   ) {
-    this.account = this.fireAuth.authState.pipe(
+    /* this.account = this.fireAuth.authState.pipe(
       switchMap(account => {
         if (account && this.type === UserTypes.User) {
           this.loggedIn = true;
@@ -37,7 +37,7 @@ export class AuthService {
           return of(null);
         }
       })
-    );
+    ); */
   }
 
   setOrganizerType() {
@@ -49,7 +49,22 @@ export class AuthService {
   }
 
   async login(email, password) {
-    const credentials = await this.fireAuth.auth.signInWithEmailAndPassword(email, password);
+    let credentials = await this.fireAuth.auth.signInWithEmailAndPassword(email, password);
+
+
+    /* let bob = await credentials.user.getIdToken();
+
+    credentials = await this.fireAuth.auth.signInWithCredential(credentials.credential); */
+
+    this.firestore.doc<User>(`users/${credentials.user.uid}`).snapshotChanges()
+    .subscribe(user => {
+      if (user.payload.exists) {
+        this.setUserType();
+      } else {
+        this.setOrganizerType();
+      }
+    });
+
     this.loggedIn = true;
     return this.updateUserData(credentials.user);
   }
@@ -63,7 +78,11 @@ export class AuthService {
   updateUserData(user: fireUser, value?) {
     let userRef;
 
-    userRef = this.firestore.doc(`users/${user.uid}`);
+    if (this.type === UserTypes.User) {
+      userRef = this.firestore.doc(`users/${user.uid}`);
+    } else {
+      userRef = this.firestore.doc(`organizers/${user.uid}`);
+    }
 
     if (value) {
       if (this.type === UserTypes.User) {
@@ -97,7 +116,7 @@ export class AuthService {
     }
 
     this.account = userRef.valueChanges();
-    return userRef.snapshotChanges();
+    return userRef.valueChanges();
 
   }
 
