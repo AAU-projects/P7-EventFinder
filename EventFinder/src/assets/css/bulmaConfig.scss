@@ -2,10 +2,11 @@
 
 // Colors.
 $greyedOut: #9A9AB2;
-$accent: #507FCC;
+$accent: #6D9CE9;
 $purple: #5C5C80;
 $purpleDark: #323259;
 $purpleDarker: #1B1B38;
+$white : #FFFFFF;
 
 // Update Bulma's global variables
 $warning: #FED88F;
@@ -13,6 +14,7 @@ $info: #A6DAEF;
 $confirm: #BFE2CA;
 $danger: #F4858E;
 $primary: $accent;
+$dark: $purpleDark;
 
 // Update some of Bulma's component variables
 $body-background-color: $purple;
@@ -23,6 +25,22 @@ $background: $purple;
 $control-border-width: 2px;
 $input-border-color: $purpleDark;
 $input-shadow: none;
+$border-hover: $accent;
+
+
+
+.input, .textarea, .select select {
+  background-color: $purple !important;
+  color: $white !important; }
+
+.input::-moz-placeholder, .textarea::-moz-placeholder, .select select::-moz-placeholder {
+  color: $greyedOut !important; }
+.input::-webkit-input-placeholder, .textarea::-webkit-input-placeholder, .select select::-webkit-input-placeholder {
+  color:$greyedOut !important; }
+.input:-moz-placeholder, .textarea:-moz-placeholder, .select select:-moz-placeholder {
+  color: $greyedOut !important; }
+.input:-ms-input-placeholder, .textarea:-ms-input-placeholder, .select select:-ms-input-placeholder {
+  color: $greyedOut !important; }
 
 // Import bulma after settings variables.
 @import "../../../node_modules/bulma/bulma.sass";

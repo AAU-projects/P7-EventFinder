@@ -1,7 +1,7 @@
 <div class="columns is-centered">
   <div class="column is-narrow">
     <div class="notification">
-      <h1 class="title has-text-weight-bold is-size-1">
+      <h1 class="title has-text-weight-bold is-size-1 has-text-white">
         Create user
       </h1>
       <form [formGroup]="registerForm">
@@ -14,13 +14,13 @@
                 <figure class="image is-128x128 is-inline-block">
                   <img src="../../../assets/images/logo.png">
                 </figure>
-                <h1><strong>EVENT</strong>FINDER</h1>
+                <h1 class="has-text-white"><strong>EVENT</strong>FINDER</h1>
               </div>
             </div>
 
             <div class="field">
               <p class="control has-icons-left">
-                <input class="input is-rounded" type="text" formControlName="username" placeholder="Username" />
+                <input class="input is-rounded has-background-purple" type="text" formControlName="username" placeholder="Username"/>
                 <span class="icon is-small is-left">
                   <i class="fas fa-envelope"></i>
                 </span>
@@ -137,20 +137,20 @@
               </p>
             </div>
           </div>
-          <!-- RIGHT SIDE ENDS HERE -->
-
-
+          <!-- RIGHT SIDE ENDS HERE -->       
         </div>
-        <div class="columns is-centered">
+
+        <br>
+        <div class="columns is-centered remove-bottom-margin">
           <div class="column is-5">
-              <button type="submit" class="button is-info is-large is-rounded is-fullwidth" (click)="register(registerForm.value)">
+              <button type="submit" class="button is-primary is-large is-rounded is-fullwidth" (click)="register(registerForm.value)">
                   Register
                 </button>
           </div>
         </div>
         <div class="columns is-centered">
-            <div class="column is-3">
-                <a class="button is-danger is-small is-rounded is-fullwidth" [routerLink]="['/']">
+            <div class="column is-2">
+                <a class="button is-dark is-small is-rounded is-fullwidth" [routerLink]="['/']">
                   Cancel
                 </a>
             </div>

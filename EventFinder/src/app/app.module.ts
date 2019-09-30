@@ -13,6 +13,8 @@ import { AppComponent } from './app.component';
 import { PagesModule } from './pages/pages.module';
 import { ComponentsModule } from './components/components.module';
 
+// Font Awesome
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [   // Components that the app uses
@@ -26,9 +28,11 @@ import { ComponentsModule } from './components/components.module';
     AngularFireAuthModule, // auth
     AngularFireStorageModule, // storage
     PagesModule,
-    ComponentsModule
+    ComponentsModule,
+    FontAwesomeModule // font awesome
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule { 
+}
