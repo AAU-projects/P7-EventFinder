@@ -1,0 +1,35 @@
+@charset "utf-8";
+
+// Colors.
+$greyedOut: #9A9AB2;
+$accent: #507FCC;
+$purple: #5C5C80;
+$purpleDark: #323259;
+$purpleDarker: #1B1B38;
+
+// Update Bulma's global variables
+$warning: #FED88F;
+$info: #A6DAEF;
+$confirm: #BFE2CA;
+$danger: #F4858E;
+
+// Update some of Bulma's component variables
+$body-background-color: $purple;
+
+// Input.
+$input-border-color: $purpledark;
+$input-shadow: none;
+
+// Import bulma after settings variables.
+@import "../../../node_modules/bulma/bulma.sass";
+
+// Import only what you need from Bulma
+@import "../../../node_modules/bulma/sass/utilities/_all.sass";
+@import "../../../node_modules/bulma/sass/base/_all.sass";
+@import "../../../node_modules/bulma/sass/elements/button.sass";
+@import "../../../node_modules/bulma/sass/elements/container.sass";
+@import "../../../node_modules/bulma/sass/elements/title.sass";
+@import "../../../node_modules/bulma/sass/form/_all.sass";
+@import "../../../node_modules/bulma/sass/components/navbar.sass";
+@import "../../../node_modules/bulma/sass/layout/hero.sass";
+@import "../../../node_modules/bulma/sass/layout/section.sass";
