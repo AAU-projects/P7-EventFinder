@@ -49,7 +49,12 @@ export class AuthService {
   }
 
   async login(email, password) {
-    const credentials = await this.fireAuth.auth.signInWithEmailAndPassword(email, password);
+    let credentials = await this.fireAuth.auth.signInWithEmailAndPassword(email, password);
+
+
+    /* let bob = await credentials.user.getIdToken();
+
+    credentials = await this.fireAuth.auth.signInWithCredential(credentials.credential); */
 
     this.firestore.doc<User>(`users/${credentials.user.uid}`).snapshotChanges()
     .subscribe(user => {
