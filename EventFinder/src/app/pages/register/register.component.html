@@ -1,9 +1,18 @@
 <div class="columns is-centered">
-  <div class="column is-narrow">
+  <div class="column is-8">
     <div class="notification">
       <h1 class="title has-text-weight-bold is-size-1 has-text-white">
-        Create user
+          <div *ngIf="auth.type == UserTypes.User">Create User</div>
+          <ng-template #elseBlock>Create Organizer</ng-template>
       </h1>
+      <app-two-state-button
+      [width]="width"
+      [height]="height"
+      [options]="options"
+      [actions]="actions"
+      ></app-two-state-button>
+      <br>
+
       <form [formGroup]="registerForm">
         <div class="columns remove-bottom-margin">
 
@@ -20,7 +29,7 @@
 
             <div class="field">
               <p class="control has-icons-left">
-                <input class="input is-rounded has-background-purple" type="text" formControlName="username" placeholder="Username"/>
+                <input required class="input is-rounded has-text-centered is-medium is-size-6" type="text" formControlName="username" placeholder="Username">
                 <span class="icon is-small is-left">
                   <i class="fas fa-user"></i>
                 </span>
@@ -28,7 +37,7 @@
             </div>
             <div class="field">
               <p class="control has-icons-left">
-                <input class="input is-rounded" type="email" formControlName="email" placeholder="Email" />
+                <input required class="input is-rounded has-text-centered is-medium is-size-6" type="email" formControlName="email" placeholder="Email" />
                 <span class="icon is-small is-left">
                   <i class="fas fa-envelope"></i>
                 </span>
@@ -36,7 +45,7 @@
             </div>
             <div class="field">
               <p class="control has-icons-left">
-                <input class="input is-rounded" type="password" formControlName="password" placeholder="Password" />
+                <input required class="input is-rounded has-text-centered is-medium is-size-6" type="password" formControlName="password" placeholder="Password" />
                 <span class="icon is-small is-left">
                   <i class="fas fa-lock"></i>
                 </span>
@@ -44,7 +53,7 @@
             </div>
             <div class="field">
               <p class="control has-icons-left">
-                <input class="input is-rounded" type="password" formControlName="confirmPassword"
+                <input required class="input is-rounded has-text-centered is-medium is-size-6" type="password" formControlName="confirmPassword"
                   placeholder="Confirm password" />
                 <span class="icon is-small is-left">
                   <i class="fas fa-lock"></i>
@@ -55,10 +64,10 @@
           <!-- LEFT SIDE ENDS HERE -->
 
           <!-- RIGHT SIDE STARTS HERE -->
-          <div class="column">
+          <div class="column allign-bottom">
             <div class="field">
               <p class="control has-icons-left">
-                <input class="input is-rounded" type="text" formControlName="firstname" placeholder="Firstname" />
+                <input required class="input is-rounded has-text-centered is-medium is-size-6" type="text" formControlName="firstname" placeholder="Firstname" />
                 <span class="icon is-small is-left">
                   <i class="fas fa-user"></i>
                 </span>
@@ -66,7 +75,7 @@
             </div>
             <div class="field">
               <p class="control has-icons-left">
-                <input class="input is-rounded" type="text" formControlName="lastname" placeholder="Lastname" />
+                <input required class="input is-rounded has-text-centered is-medium is-size-6" type="text" formControlName="lastname" placeholder="Lastname" />
                 <span class="icon is-small is-left">
                   <i class="fas fa-user"></i>
                 </span>
@@ -77,7 +86,7 @@
               <div class="column is-4">
                 <div class="field">
                   <p class="control has-icons-left">
-                    <input class="input is-rounded" type="text" formControlName="zip" placeholder="Zip" />
+                    <input required class="input is-rounded has-text-centered is-medium is-size-6" type="text" formControlName="zip" placeholder="Zip" />
                     <span class="icon is-small is-left">
                       <i class="fas fa-city"></i>
                     </span>
@@ -87,24 +96,24 @@
               <div class="column">
                 <div class="field">
                   <div class="control">
-                    <input class="input is-rounded" type="text" formControlName="city" placeholder="City"/>
+                    <input required class="input is-rounded has-text-centered is-medium is-size-6" type="text" formControlName="city" placeholder="City"/>
                   </div>
                 </div>
               </div>
             </div>
             <div class="field">
               <p class="control has-icons-left">
-                <input class="input is-rounded" type="text" formControlName="country" placeholder="Country" />
+                <input required class="input is-rounded has-text-centered is-medium is-size-6" type="text" formControlName="country" placeholder="Country" />
                 <span class="icon is-small is-left">
                   <i class="fas fa-globe"></i>
                 </span>
               </p>
             </div>
             <div class="columns remove-bottom-margin">
-              <div class="column is-8">
+              <div class="column is-7">
                 <div class="field">
                   <p class="control has-icons-left">
-                    <input class="input is-rounded" type="tel" formControlName="phone" placeholder="Phone" />
+                    <input required class="input is-rounded has-text-centered is-medium is-size-6" type="tel" formControlName="phone" placeholder="Phone" />
                     <span class="icon is-small is-left">
                       <i class="fas fa-phone"></i>
                     </span>
@@ -114,11 +123,11 @@
               <div class="column">
                 <div class="field">
                   <div class="control">
-                    <div class="select is-rounded is-fullwidth">
-                      <select>
-                        <option selected disabled hidden>Sex</option>
-                        <option>Male</option>
-                        <option>Female</option>
+                    <div class="select is-rounded is-fullwidth has-text-centered is-medium is-size-6">
+                      <select required>
+                        <option value="" selected disabled>Gender</option>
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
                       </select>
                     </div>
                   </div>
@@ -127,7 +136,7 @@
             </div>
             <div class="field">
               <p class="control has-icons-left">
-                <input class="input is-rounded" type="date" formControlName="birthdate" placeholder="Birthdate" />
+                <input required class="input is-rounded has-text-centered is-medium is-size-6" type="text" onfocus="(this.type='date')" formControlName="birthdate" placeholder="Birthdate" />
                 <span class="icon is-small is-left">
                   <i class="fas fa-calendar-alt"></i>
                 </span>

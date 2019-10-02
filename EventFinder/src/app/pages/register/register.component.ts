@@ -11,9 +11,16 @@ import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firest
   styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent {
+  get UserTypes() { return UserTypes; }
   registerForm: FormGroup;
   errorMessage = '';
   successMessage = '';
+
+  // Two State Button
+  width = '500px';
+  height = '20px';
+  options = {optionOne: 'User', optionTwo: 'Organizer'};
+  actions = {actionOne: this.auth.setUserType, actionTwo: this.auth.setOrganizerType};
 
   constructor(
     public auth: AuthService,
@@ -51,4 +58,6 @@ export class RegisterComponent {
       this.successMessage = '';
     });
   }
+
+
 }

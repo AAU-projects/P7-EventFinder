@@ -20,3 +20,16 @@
 .remove-bottom-margin {
   margin-bottom: 0 !important;
 }
+
+select:required:invalid {
+  color: #7E7E9B !important;
+}
+
+.column.allign-bottom {
+  margin-top: auto !important;
+}
+
+.input {
+  height: 3em;
+  padding: calc(0.875em - 1px) calc(1em - 1px);
+}
