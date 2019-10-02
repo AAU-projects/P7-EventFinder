@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { User, Organizer, Account } from '../models/account.model';
-import { UserTypes } from "../models/user.types.enum";
+import { UserTypes } from '../models/user.types.enum';
 
 import { User as fireUser} from 'firebase/app';
 import { AngularFireAuth } from '@angular/fire/auth';
@@ -9,6 +9,7 @@ import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firest
 
 import { Observable, of} from 'rxjs';
 import { switchMap } from 'rxjs/operators';
+import { CookieService } from 'ngx-cookie-service';
 
 @Injectable({
   providedIn: 'root'
@@ -17,12 +18,12 @@ export class AuthService {
 
   account: Observable<Account> = null;
   type: UserTypes = UserTypes.User;
-  loggedIn = false;
 
   constructor(
     private fireAuth: AngularFireAuth,
     private firestore: AngularFirestore,
-    private router: Router
+    private router: Router,
+    private cookie: CookieService
   ) {
     /* this.account = this.fireAuth.authState.pipe(
       switchMap(account => {
@@ -40,6 +41,14 @@ export class AuthService {
     ); */
   }
 
+  setCookieVar(variable: string, value: string) {
+    this.cookie.set(variable, value);
+  }
+
+  getCookieVar(variable: string): string {
+    return this.cookie.get(variable);
+  }
+
   setOrganizerType() {
     this.type = UserTypes.Organizer;
   }
@@ -48,9 +57,13 @@ export class AuthService {
     this.type = UserTypes.User;
   }
 
+  isLoggedIn(): boolean {
+    const result = this.getCookieVar('loggedIn');
+    return result === 'true';                    // Converts the value to a boolean
+  }
+
   async login(email, password) {
     let credentials = await this.fireAuth.auth.signInWithEmailAndPassword(email, password);
-
 
     /* let bob = await credentials.user.getIdToken();
 
@@ -65,13 +78,13 @@ export class AuthService {
       }
     });
 
-    this.loggedIn = true;
+    this.setCookieVar('loggedIn', 'true');
     return this.updateUserData(credentials.user);
   }
 
   async register(value) {
     const credentials = await this.fireAuth.auth.createUserWithEmailAndPassword(value.email, value.password);
-    this.loggedIn = true;
+    this.setCookieVar('loggedIn', 'true');
     return this.updateUserData(credentials.user, value);
   }
 
@@ -122,7 +135,7 @@ export class AuthService {
 
   async logout() {
     await this.fireAuth.auth.signOut();
-    this.loggedIn = false;
+    this.setCookieVar('loggedIn', 'false');
     this.account = null;
     return this.router.navigate(['/']);
   }

@@ -10,6 +10,7 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { CookieService } from 'ngx-cookie-service';
 import { PagesModule } from './pages/pages.module';
 import { ComponentsModule } from './components/components.module';
 
@@ -29,10 +30,10 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     AngularFireStorageModule, // storage
     PagesModule,
     ComponentsModule,
-    FontAwesomeModule // font awesome
+    FontAwesomeModule, // font awesome
   ],
-  providers: [],
+  providers: [CookieService],
   bootstrap: [AppComponent]
 })
-export class AppModule { 
+export class AppModule {
 }

@@ -3,6 +3,7 @@ import { AuthService } from '../../services/auth.service';
 import { Router, Params } from '@angular/router';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { Location } from '@angular/common';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-login',
@@ -18,7 +19,8 @@ export class LoginComponent {
     public authService: AuthService,
     private router: Router,
     private fb: FormBuilder,
-    private location: Location
+    private location: Location,
+    private cookie: CookieService
   ) {
     this.createForm();
    }

@@ -17,10 +17,10 @@
         <div class="navbar-end">
           <!-- Here we use a Request to check what route the current active is. If true: add 'is-active' to the class -->
           <a [routerLink]="['']" routerLinkActive="is-active" [routerLinkActiveOptions]="{ exact: true }" class="navbar-item">Home</a>
-          <a *ngIf="!auth.loggedIn" [routerLink]="['/login']" routerLinkActive="is-active" class="navbar-item">Login</a>
-          <a *ngIf="!auth.loggedIn" [routerLink]="['/register']" routerLinkActive="is-active" class="navbar-item">Register</a>
-          <a *ngIf="auth.loggedIn" [routerLink]="['/user']" routerLinkActive="is-active" class="navbar-item">Profile</a>
-          <a *ngIf="auth.loggedIn" (click)="auth.logout()" class="navbar-item">Logout</a>
+          <a *ngIf="!auth.isLoggedIn()" [routerLink]="['/login']" routerLinkActive="is-active" class="navbar-item">Login</a>
+          <a *ngIf="!auth.isLoggedIn()" [routerLink]="['/register']" routerLinkActive="is-active" class="navbar-item">Register</a>
+          <a *ngIf="auth.isLoggedIn()" [routerLink]="['/user']" routerLinkActive="is-active" class="navbar-item">Profile</a>
+          <a *ngIf="auth.isLoggedIn()" (click)="auth.logout()" class="navbar-item">Logout</a>
         </div>
       </div>
     </div>
