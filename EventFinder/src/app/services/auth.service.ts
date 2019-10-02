@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { User, Organizer, Account } from '../models/account.model';
-import { UserTypes } from "../models/user.types.enum";
+import { UserTypes } from '../models/user.types.enum';
 
 import { User as fireUser} from 'firebase/app';
 import { AngularFireAuth } from '@angular/fire/auth';

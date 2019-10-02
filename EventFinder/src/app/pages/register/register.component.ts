@@ -46,6 +46,7 @@ export class RegisterComponent {
       this.registerForm.addControl('sex', new FormControl(Validators.required));
     } else if (type === UserTypes.Organizer) {
       this.registerForm.addControl('address', new FormControl(Validators.required));
+      this.registerForm.addControl('organization', new FormControl(Validators.required));
     }
   }
 

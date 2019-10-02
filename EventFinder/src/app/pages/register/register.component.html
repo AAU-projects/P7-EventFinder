@@ -2,15 +2,11 @@
   <div class="column is-8">
     <div class="notification">
       <h1 class="title has-text-weight-bold is-size-1 has-text-white">
-          <div *ngIf="auth.type == UserTypes.User">Create User</div>
-          <ng-template #elseBlock>Create Organizer</ng-template>
+        <div *ngIf="auth.type == UserTypes.User; else elseBlock">Create User</div>
+        <ng-template #elseBlock>Create Organizer</ng-template>
       </h1>
-      <app-two-state-button
-      [width]="width"
-      [height]="height"
-      [options]="options"
-      [actions]="actions"
-      ></app-two-state-button>
+      <app-two-state-button [width]="width" [height]="height" [options]="options" [actions]="actions">
+      </app-two-state-button>
       <br>
 
       <form [formGroup]="registerForm">
@@ -29,7 +25,8 @@
 
             <div class="field">
               <p class="control has-icons-left">
-                <input required class="input is-rounded has-text-centered is-medium is-size-6" type="text" formControlName="username" placeholder="Username">
+                <input required class="input is-rounded has-text-centered is-medium is-size-6" type="text"
+                  formControlName="username" placeholder="Username">
                 <span class="icon is-small is-left">
                   <i class="fas fa-user"></i>
                 </span>
@@ -37,7 +34,8 @@
             </div>
             <div class="field">
               <p class="control has-icons-left">
-                <input required class="input is-rounded has-text-centered is-medium is-size-6" type="email" formControlName="email" placeholder="Email" />
+                <input required class="input is-rounded has-text-centered is-medium is-size-6" type="email"
+                  formControlName="email" placeholder="Email" />
                 <span class="icon is-small is-left">
                   <i class="fas fa-envelope"></i>
                 </span>
@@ -45,7 +43,8 @@
             </div>
             <div class="field">
               <p class="control has-icons-left">
-                <input required class="input is-rounded has-text-centered is-medium is-size-6" type="password" formControlName="password" placeholder="Password" />
+                <input required class="input is-rounded has-text-centered is-medium is-size-6" type="password"
+                  formControlName="password" placeholder="Password" />
                 <span class="icon is-small is-left">
                   <i class="fas fa-lock"></i>
                 </span>
@@ -53,8 +52,8 @@
             </div>
             <div class="field">
               <p class="control has-icons-left">
-                <input required class="input is-rounded has-text-centered is-medium is-size-6" type="password" formControlName="confirmPassword"
-                  placeholder="Confirm password" />
+                <input required class="input is-rounded has-text-centered is-medium is-size-6" type="password"
+                  formControlName="confirmPassword" placeholder="Confirm password" />
                 <span class="icon is-small is-left">
                   <i class="fas fa-lock"></i>
                 </span>
@@ -64,84 +63,160 @@
           <!-- LEFT SIDE ENDS HERE -->
 
           <!-- RIGHT SIDE STARTS HERE -->
-          <div class="column allign-bottom">
-            <div class="field">
-              <p class="control has-icons-left">
-                <input required class="input is-rounded has-text-centered is-medium is-size-6" type="text" formControlName="firstname" placeholder="Firstname" />
-                <span class="icon is-small is-left">
-                  <i class="fas fa-user"></i>
-                </span>
-              </p>
-            </div>
-            <div class="field">
-              <p class="control has-icons-left">
-                <input required class="input is-rounded has-text-centered is-medium is-size-6" type="text" formControlName="lastname" placeholder="Lastname" />
-                <span class="icon is-small is-left">
-                  <i class="fas fa-user"></i>
-                </span>
-              </p>
-            </div>
 
-            <div class="columns remove-bottom-margin">
-              <div class="column is-4">
-                <div class="field">
-                  <p class="control has-icons-left">
-                    <input required class="input is-rounded has-text-centered is-medium is-size-6" type="text" formControlName="zip" placeholder="Zip" />
-                    <span class="icon is-small is-left">
-                      <i class="fas fa-city"></i>
-                    </span>
-                  </p>
-                </div>
+          <div class="column allign-bottom">
+            <div *ngIf="auth.type == UserTypes.User; then userBlock else organizationBlock"></div>
+            <!-- USER FIELDS START HERE -->
+            <ng-template #userBlock>
+              <div class="field">
+                <p class="control has-icons-left">
+                  <input required class="input is-rounded has-text-centered is-medium is-size-6" type="text"
+                    formControlName="firstname" placeholder="Firstname" />
+                  <span class="icon is-small is-left">
+                    <i class="fas fa-user"></i>
+                  </span>
+                </p>
               </div>
-              <div class="column">
-                <div class="field">
-                  <div class="control">
-                    <input required class="input is-rounded has-text-centered is-medium is-size-6" type="text" formControlName="city" placeholder="City"/>
+              <div class="field">
+                <p class="control has-icons-left">
+                  <input required class="input is-rounded has-text-centered is-medium is-size-6" type="text"
+                    formControlName="lastname" placeholder="Lastname" />
+                  <span class="icon is-small is-left">
+                    <i class="fas fa-user"></i>
+                  </span>
+                </p>
+              </div>
+
+              <div class="columns remove-bottom-margin">
+                <div class="column is-4">
+                  <div class="field">
+                    <p class="control has-icons-left">
+                      <input required class="input is-rounded has-text-centered is-medium is-size-6" type="text"
+                        formControlName="zip" placeholder="Zip" />
+                      <span class="icon is-small is-left">
+                        <i class="fas fa-city"></i>
+                      </span>
+                    </p>
+                  </div>
+                </div>
+                <div class="column">
+                  <div class="field">
+                    <div class="control">
+                      <input required class="input is-rounded has-text-centered is-medium is-size-6" type="text"
+                        formControlName="city" placeholder="City" />
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-            <div class="field">
-              <p class="control has-icons-left">
-                <input required class="input is-rounded has-text-centered is-medium is-size-6" type="text" formControlName="country" placeholder="Country" />
-                <span class="icon is-small is-left">
-                  <i class="fas fa-globe"></i>
-                </span>
-              </p>
-            </div>
-            <div class="columns remove-bottom-margin">
-              <div class="column is-7">
+              <div class="field">
+                <p class="control has-icons-left">
+                  <input required class="input is-rounded has-text-centered is-medium is-size-6" type="text"
+                    formControlName="country" placeholder="Country" />
+                  <span class="icon is-small is-left">
+                    <i class="fas fa-globe"></i>
+                  </span>
+                </p>
+              </div>
+              <div class="columns remove-bottom-margin">
+                <div class="column is-7">
+                  <div class="field">
+                    <p class="control has-icons-left">
+                      <input required class="input is-rounded has-text-centered is-medium is-size-6" type="tel"
+                        formControlName="phone" placeholder="Phone" />
+                      <span class="icon is-small is-left">
+                        <i class="fas fa-phone"></i>
+                      </span>
+                    </p>
+                  </div>
+                </div>
+                <div class="column">
+                  <div class="field">
+                    <div class="control">
+                      <div class="select is-rounded is-fullwidth has-text-centered is-medium is-size-6"
+                        formControlName="sex" placeholder="Sex">
+                        <select required>
+                          <option value="" selected disabled>Gender</option>
+                          <option value="male">Male</option>
+                          <option value="female">Female</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="field">
+                <p class="control has-icons-left">
+                  <input required class="input is-rounded has-text-centered is-medium is-size-6" type="text"
+                    onfocus="(this.type='date')" formControlName="birthdate" placeholder="Birthdate" />
+                  <span class="icon is-small is-left">
+                    <i class="fas fa-calendar-alt"></i>
+                  </span>
+                </p>
+              </div>
+            </ng-template>
+            <!-- USER FIELDS ENDS HERE -->
+            <!-- ORGANIZATION FIELDS START HERE -->
+            <ng-template #organizationBlock>
+              <div class="field">
+                  <p class="control has-icons-left">
+                    <input required class="input is-rounded has-text-centered is-medium is-size-6" type="text"
+                      formControlName="organization" placeholder="Organization" />
+                    <span class="icon is-small is-left">
+                      <i class="fas fa-user"></i>
+                    </span>
+                  </p>
+                </div>
                 <div class="field">
                   <p class="control has-icons-left">
-                    <input required class="input is-rounded has-text-centered is-medium is-size-6" type="tel" formControlName="phone" placeholder="Phone" />
+                    <input required class="input is-rounded has-text-centered is-medium is-size-6" type="text"
+                      formControlName="address" placeholder="Address" />
+                    <span class="icon is-small is-left">
+                      <i class="fas fa-user"></i>
+                    </span>
+                  </p>
+                </div>
+
+                <div class="columns remove-bottom-margin">
+                  <div class="column is-4">
+                    <div class="field">
+                      <p class="control has-icons-left">
+                        <input required class="input is-rounded has-text-centered is-medium is-size-6" type="text"
+                          formControlName="zip" placeholder="Zip" />
+                        <span class="icon is-small is-left">
+                          <i class="fas fa-city"></i>
+                        </span>
+                      </p>
+                    </div>
+                  </div>
+                  <div class="column">
+                    <div class="field">
+                      <div class="control">
+                        <input required class="input is-rounded has-text-centered is-medium is-size-6" type="text"
+                          formControlName="city" placeholder="City" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="field">
+                  <p class="control has-icons-left">
+                    <input required class="input is-rounded has-text-centered is-medium is-size-6" type="text"
+                      formControlName="country" placeholder="Country" />
+                    <span class="icon is-small is-left">
+                      <i class="fas fa-globe"></i>
+                    </span>
+                  </p>
+                </div>
+                <div class="field">
+                  <p class="control has-icons-left">
+                    <input required class="input is-rounded has-text-centered is-medium is-size-6" type="tel"
+                      formControlName="phone" placeholder="Phone" />
                     <span class="icon is-small is-left">
                       <i class="fas fa-phone"></i>
                     </span>
                   </p>
                 </div>
-              </div>
-              <div class="column">
-                <div class="field">
-                  <div class="control">
-                    <div class="select is-rounded is-fullwidth has-text-centered is-medium is-size-6">
-                      <select required>
-                        <option value="" selected disabled>Gender</option>
-                        <option value="male">Male</option>
-                        <option value="female">Female</option>
-                      </select>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="field">
-              <p class="control has-icons-left">
-                <input required class="input is-rounded has-text-centered is-medium is-size-6" type="text" onfocus="(this.type='date')" formControlName="birthdate" placeholder="Birthdate" />
-                <span class="icon is-small is-left">
-                  <i class="fas fa-calendar-alt"></i>
-                </span>
-              </p>
-            </div>
+            </ng-template>
+            <!-- ORGANIZATION FIELDS END HERE -->
           </div>
           <!-- RIGHT SIDE ENDS HERE -->
         </div>
@@ -149,18 +224,19 @@
         <br>
         <div class="columns is-centered remove-bottom-margin">
           <div class="column is-5">
-              <button type="submit" class="button is-primary is-large is-rounded is-fullwidth" (click)="register(registerForm.value)">
-                  Register
-                </button>
+            <button type="submit" class="button is-primary is-large is-rounded is-fullwidth"
+              (click)="register(registerForm.value)">
+              Register
+            </button>
           </div>
         </div>
         <div class="columns is-centered">
-            <div class="column is-2">
-                <a class="button is-dark is-small is-rounded is-fullwidth" [routerLink]="['/']">
-                  Cancel
-                </a>
-            </div>
+          <div class="column is-2">
+            <a class="button is-dark is-small is-rounded is-fullwidth" [routerLink]="['/']">
+              Cancel
+            </a>
           </div>
+        </div>
 
       </form>
     </div>

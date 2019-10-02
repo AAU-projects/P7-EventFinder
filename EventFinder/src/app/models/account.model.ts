@@ -13,6 +13,7 @@ export interface User extends Account {
 }
 
 export interface Organizer extends Account {
+    organization: string;
     address: string;
 }
 
