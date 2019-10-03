@@ -16,3 +16,38 @@
 .form-control {
   margin: 5px;
 }
+
+.input, .textarea, .select select {
+  background-color: #323259 !important;
+  color: white !important;
+}
+
+.create-account {
+  background-color: #323259 !important;
+  border: 0px solid transparent;
+  margin: 5px;
+}
+
+.event-finder-logo{
+  font-size: 20px;
+}
+
+.login-button {
+  background-color: #4770b4;
+}
+
+.modal-content {
+  border-radius: 25px;
+  // width: 75%;
+  // height: 75%;
+}
+
+.small_text {
+  font-size: 12px;
+}
+
+.input {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

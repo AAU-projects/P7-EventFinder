@@ -1,17 +1,17 @@
 <div class="modal is-active">
-  <div class="modal-background"></div>
+  <div class="modal-background" (click)="cancel()"></div>
   <div class="modal-content">
     <div class="notification">
       <button class="delete" (click)="cancel()"></button>
       <div class="columns is-centered">
         <div class="column">
-          <h1 class="title has-text-weight-bold is-size-1">
+          <h1 class="title has-text-white has-text-weight-bold is-size-1">
             Login
           </h1>
           <figure class="image is-128x128 is-inline-block">
             <img src="../../../assets/images/logo.png" />
           </figure>
-          <h1><strong>EVENT</strong>FINDER</h1>
+          <h1 class="has-text-white event-finder-logo has-text-weight-light"><strong>EVENT</strong>FINDER</h1>
           <br />
 
           <div class="notification is-danger" *ngIf="errorMessage">
@@ -23,7 +23,7 @@
             <div class="field">
               <p class="control has-icons-left">
                 <input
-                  class="input is-rounded"
+                  class="input is-rounded is-dark is-large"
                   type="email"
                   formControlName="email"
                   placeholder="Email"
@@ -36,7 +36,7 @@
             <div class="field">
               <p class="control has-icons-left">
                 <input
-                  class="input is-rounded"
+                  class="input is-rounded is-dark is-large"
                   type="password"
                   formControlName="password"
                   placeholder="Password"
@@ -50,15 +50,18 @@
               <!-- Left side -->
               <div class="level-left">
                 <div class="level-item">
-                  <label class="checkbox">
-                    <input type="checkbox" />
+                  <label class="checkbox has-text-white-bis">
+                    <input
+                    type="checkbox"
+                    [checked]="rememberMe"
+                    (change)="rememberMe = !rememberMe"/>
                     Remember me
                   </label>
                 </div>
               </div>
 
               <!-- Right side -->
-              <div class="level-right">
+              <div class="level-right has-text-white-bis">
                 <div class="level-item">
                   <a>Forgot password?</a>
                 </div>
@@ -67,7 +70,7 @@
 
             <button
               type="submit"
-              class="button is-info is-medium is-fullwidth is-rounded"
+              class="login-button button is-info is-medium is-fullwidth is-rounded is-large"
               (click)="login(loginForm.value)"
             >
               Login
@@ -76,9 +79,10 @@
 
           <br /><br />
 
-          <p><strong>Not a member?</strong></p>
+          <p class="has-text-white-bis small_text">Not a member?</p>
           <a
-            class="button is-rounded has-background-grey-darker has-text-white-bis"
+            [routerLink]="['/register']" routerLinkActive="is-active"
+            class="create-account button is-rounded has-text-white-bis"
             >Create an account</a
           >
         </div>
@@ -86,3 +90,4 @@
     </div>
   </div>
 </div>
+

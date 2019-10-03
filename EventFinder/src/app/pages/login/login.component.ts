@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { Router, Params } from '@angular/router';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { Location } from '@angular/common';
 import { CookieService } from 'ngx-cookie-service';
+
 
 @Component({
   selector: 'app-login',
@@ -14,6 +15,7 @@ export class LoginComponent {
 
   loginForm: FormGroup;
   errorMessage?: string;
+  rememberMe: boolean;
 
   constructor(
     public authService: AuthService,
@@ -33,7 +35,7 @@ export class LoginComponent {
   }
 
   login(value) {
-    this.authService.login(value.email, value.password)
+    this.authService.login(value.email, value.password, this.rememberMe)
     .then(res => {
       this.errorMessage = null;
       this.router.navigate(['/user']);
@@ -50,4 +52,14 @@ export class LoginComponent {
   closeErrorMessage() {
     this.errorMessage = null;
   }
+
+  @HostListener('document:keydown', ['$event']) onKeydownHandler(event: KeyboardEvent) {
+    if (event.key === 'Escape') {
+        this.cancel();
+    }
+
+    if (event.key === 'Enter') {
+        this.login(this.loginForm.value);
+    }
+}
 }
