@@ -15,12 +15,13 @@ export class RegisterComponent {
   registerForm: FormGroup;
   errorMessage = '';
   successMessage = '';
+  localUserType: UserTypes = UserTypes.User;
 
   // Two State Button
   width = '500px';
   height = '20px';
   options = {optionOne: 'User', optionTwo: 'Organizer'};
-  actions = {actionOne: this.auth.setUserType, actionTwo: this.auth.setOrganizerType};
+  actions = {actionOne: this.setToUser, actionTwo: this.setToOrganizer};
 
   constructor(
     public auth: AuthService,
@@ -31,10 +32,21 @@ export class RegisterComponent {
     this.createForm(this.auth.type);
   }
 
+  setToUser() {
+    this.localUserType = UserTypes.User;
+    this.auth.setUserType();
+  }
+
+  setToOrganizer() {
+    this.localUserType = UserTypes.Organizer;
+    this.auth.setOrganizerType();
+  }
+
   createForm(type: UserTypes) {
     this.registerForm = this.fb.group({
       email: ['', Validators.required],
       password: ['', Validators.required],
+      confirmPassword: ['', Validators.required],
       name: ['', Validators.required],
       zip: ['', Validators.required],
       country: ['', Validators.required],
@@ -42,6 +54,8 @@ export class RegisterComponent {
     });
 
     if (type === UserTypes.User) {
+      this.registerForm.addControl('firstname', new FormControl(Validators.required));
+      this.registerForm.addControl('lastname', new FormControl(Validators.required));
       this.registerForm.addControl('birthday', new FormControl(Validators.required));
       this.registerForm.addControl('sex', new FormControl(Validators.required));
     } else if (type === UserTypes.Organizer) {

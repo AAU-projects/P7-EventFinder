@@ -2,7 +2,7 @@
   <div class="column is-8">
     <div class="notification">
       <h1 class="title has-text-weight-bold is-size-1 has-text-white">
-        <div *ngIf="auth.type == UserTypes.User; else elseBlock">Create User</div>
+        <div *ngIf="localUserType == UserTypes.User; else elseBlock">Create User</div>
         <ng-template #elseBlock>Create Organizer</ng-template>
       </h1>
       <app-two-state-button [width]="width" [height]="height" [options]="options" [actions]="actions">
@@ -19,19 +19,10 @@
                 <figure class="image is-128x128 is-inline-block">
                   <img src="../../../assets/images/logo.png">
                 </figure>
-                <h1 class="has-text-white"><strong>EVENT</strong>FINDER</h1>
+                <h1 class="has-text-white has-text-weight-light"><strong>EVENT</strong>FINDER</h1>
               </div>
             </div>
 
-            <div class="field">
-              <p class="control has-icons-left">
-                <input required class="input is-rounded has-text-centered is-medium is-size-6" type="text"
-                  formControlName="username" placeholder="Username">
-                <span class="icon is-small is-left">
-                  <i class="fas fa-user"></i>
-                </span>
-              </p>
-            </div>
             <div class="field">
               <p class="control has-icons-left">
                 <input required class="input is-rounded has-text-centered is-medium is-size-6" type="email"
@@ -65,7 +56,7 @@
           <!-- RIGHT SIDE STARTS HERE -->
 
           <div class="column allign-bottom">
-            <div *ngIf="auth.type == UserTypes.User; then userBlock else organizationBlock"></div>
+            <div *ngIf="localUserType == UserTypes.User; then userBlock else organizationBlock"></div>
             <!-- USER FIELDS START HERE -->
             <ng-template #userBlock>
               <div class="field">

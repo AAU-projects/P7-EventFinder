@@ -7,7 +7,7 @@ import { User as fireUser} from 'firebase/app';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 
-import { Observable, of} from 'rxjs';
+import { Observable, of, BehaviorSubject} from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 
 @Injectable({
@@ -22,7 +22,9 @@ export class AuthService {
   constructor(
     private fireAuth: AngularFireAuth,
     private firestore: AngularFirestore,
-    private router: Router
+    private router: Router,
+
+
   ) {
     /* this.account = this.fireAuth.authState.pipe(
       switchMap(account => {
