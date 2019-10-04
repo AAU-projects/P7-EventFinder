@@ -19,12 +19,19 @@ export class AuthService {
 
   account: Observable<Account> = null;
   type: UserTypes = UserTypes.User;
+  user = null;
+
   constructor(
     private fireAuth: AngularFireAuth,
     private firestore: AngularFirestore,
     private router: Router,
     private cookie: CookieService
   ) {
+
+    this.fireAuth.authState.subscribe(user => {
+      this.user = user;
+    });
+
     this.account = this.fireAuth.authState.pipe(
       switchMap(account => {
         if (account && this.type === UserTypes.User) {
@@ -55,9 +62,8 @@ export class AuthService {
     this.type = UserTypes.User;
   }
 
-  isLoggedIn(): boolean{
-
-    return this.fireAuth.auth.currentUser !== null;
+  isLoggedIn() {
+    return this.user !== null;
   }
 
   async login(email: string, password: string, rememberMe: boolean) {

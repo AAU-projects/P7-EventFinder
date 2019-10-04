@@ -1,53 +1,27 @@
-.header {
-  text-align: center;
-  font-size: 30px;
-  margin-bottom: 40px;
-}
-
-.row {
-  text-align: center;
-  margin-top: 10px;
-}
-
-.error {
-  color: red;
-}
-
-.form-control {
-  margin: 5px;
-}
-
-.input, .textarea, .select select {
+.input-field-background {
   background-color: #323259 !important;
-  color: white !important;
-}
-
-.create-account {
-  background-color: #323259 !important;
-  border: 0px solid transparent;
-  margin: 5px;
 }
 
 .event-finder-logo{
   font-size: 20px;
 }
 
-.login-button {
-  background-color: #4770b4;
-}
-
-.modal-content {
+.round-corners {
   border-radius: 25px;
-  // width: 75%;
-  // height: 75%;
 }
 
-.small_text {
-  font-size: 12px;
+.remember-me {
+  margin-left: 10px;
 }
 
-.input {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.forgot-password {
+  margin-right: 10px;
+}
+
+.not-member {
+  margin-bottom: 2px;
+}
+
+.bottom-margin-login {
+  margin-bottom: 12px;
 }

@@ -7,15 +7,16 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { UserComponent } from './user/user.component';
 import { RegisterComponent } from './register/register.component';
 import { AuthGuard } from '../guards/auth.guard';
+import { EventsComponent } from './events/events.component';
 
 
 // All paths starts from root (/)
 const routes: Routes = [
   {path: '', component: HomeComponent},
-  {path: 'login', component: LoginComponent},
   {path: 'register', component: RegisterComponent},
   {path: 'firebase', component: FirebaseTestComponent},
   {path: 'user', component: UserComponent, canActivate: [AuthGuard]},
+  {path: 'events', component: EventsComponent},
 
   {path: '**', component: PageNotFoundComponent}, // Skal ligge nederst!!!!
 ];
