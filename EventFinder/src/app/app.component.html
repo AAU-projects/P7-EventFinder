@@ -2,10 +2,10 @@
   <app-header></app-header>
   <div class="hero-body">
     <div class="container has-text-centered">
+      <div *ngIf="showLogin">
+        <app-login></app-login>
+      </div>
       <router-outlet></router-outlet>
     </div>
   </div>
 </section>
-
-
-

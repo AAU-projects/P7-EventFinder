@@ -10,9 +10,12 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { CookieService } from 'ngx-cookie-service';
 import { PagesModule } from './pages/pages.module';
 import { ComponentsModule } from './components/components.module';
 
+// Font Awesome
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [   // Components that the app uses
@@ -26,9 +29,11 @@ import { ComponentsModule } from './components/components.module';
     AngularFireAuthModule, // auth
     AngularFireStorageModule, // storage
     PagesModule,
-    ComponentsModule
+    ComponentsModule,
+    FontAwesomeModule, // font awesome
   ],
-  providers: [],
+  providers: [CookieService],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}

@@ -1,3 +1,168 @@
+<div class="columns is-centered">
+  <div class="column is-narrow">
+    <div class="notification">
+      <h1 class="title has-text-weight-bold is-size-1 has-text-white">
+        Create user
+      </h1>
+      <form [formGroup]="registerForm">
+        <div class="columns remove-bottom-margin">
+
+          <!-- LEFT SIDE STARTS HERE -->
+          <div class="column">
+            <div class="columns is-centered">
+              <div class="column">
+                <figure class="image is-128x128 is-inline-block">
+                  <img src="../../../assets/images/logo.png">
+                </figure>
+                <h1 class="has-text-white"><strong>EVENT</strong>FINDER</h1>
+              </div>
+            </div>
+
+            <div class="field">
+              <p class="control has-icons-left">
+                <input class="input is-rounded has-background-purple" type="text" formControlName="username" placeholder="Username"/>
+                <span class="icon is-small is-left">
+                  <i class="fas fa-user"></i>
+                </span>
+              </p>
+            </div>
+            <div class="field">
+              <p class="control has-icons-left">
+                <input class="input is-rounded" type="email" formControlName="email" placeholder="Email" />
+                <span class="icon is-small is-left">
+                  <i class="fas fa-envelope"></i>
+                </span>
+              </p>
+            </div>
+            <div class="field">
+              <p class="control has-icons-left">
+                <input class="input is-rounded" type="password" formControlName="password" placeholder="Password" />
+                <span class="icon is-small is-left">
+                  <i class="fas fa-lock"></i>
+                </span>
+              </p>
+            </div>
+            <div class="field">
+              <p class="control has-icons-left">
+                <input class="input is-rounded" type="password" formControlName="confirmPassword"
+                  placeholder="Confirm password" />
+                <span class="icon is-small is-left">
+                  <i class="fas fa-lock"></i>
+                </span>
+              </p>
+            </div>
+          </div>
+          <!-- LEFT SIDE ENDS HERE -->
+
+          <!-- RIGHT SIDE STARTS HERE -->
+          <div class="column">
+            <div class="field">
+              <p class="control has-icons-left">
+                <input class="input is-rounded" type="text" formControlName="firstname" placeholder="Firstname" />
+                <span class="icon is-small is-left">
+                  <i class="fas fa-user"></i>
+                </span>
+              </p>
+            </div>
+            <div class="field">
+              <p class="control has-icons-left">
+                <input class="input is-rounded" type="text" formControlName="lastname" placeholder="Lastname" />
+                <span class="icon is-small is-left">
+                  <i class="fas fa-user"></i>
+                </span>
+              </p>
+            </div>
+
+            <div class="columns remove-bottom-margin">
+              <div class="column is-4">
+                <div class="field">
+                  <p class="control has-icons-left">
+                    <input class="input is-rounded" type="text" formControlName="zip" placeholder="Zip" />
+                    <span class="icon is-small is-left">
+                      <i class="fas fa-city"></i>
+                    </span>
+                  </p>
+                </div>
+              </div>
+              <div class="column">
+                <div class="field">
+                  <div class="control">
+                    <input class="input is-rounded" type="text" formControlName="city" placeholder="City"/>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="field">
+              <p class="control has-icons-left">
+                <input class="input is-rounded" type="text" formControlName="country" placeholder="Country" />
+                <span class="icon is-small is-left">
+                  <i class="fas fa-globe"></i>
+                </span>
+              </p>
+            </div>
+            <div class="columns remove-bottom-margin">
+              <div class="column is-8">
+                <div class="field">
+                  <p class="control has-icons-left">
+                    <input class="input is-rounded" type="tel" formControlName="phone" placeholder="Phone" />
+                    <span class="icon is-small is-left">
+                      <i class="fas fa-phone"></i>
+                    </span>
+                  </p>
+                </div>
+              </div>
+              <div class="column">
+                <div class="field">
+                  <div class="control">
+                    <div class="select is-rounded is-fullwidth">
+                      <select>
+                        <option selected disabled hidden>Sex</option>
+                        <option>Male</option>
+                        <option>Female</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="field">
+              <p class="control has-icons-left">
+                <input class="input is-rounded" type="date" formControlName="birthdate" placeholder="Birthdate" />
+                <span class="icon is-small is-left">
+                  <i class="fas fa-calendar-alt"></i>
+                </span>
+              </p>
+            </div>
+          </div>
+          <!-- RIGHT SIDE ENDS HERE -->
+        </div>
+
+        <br>
+        <div class="columns is-centered remove-bottom-margin">
+          <div class="column is-5">
+              <button type="submit" class="button is-primary is-large is-rounded is-fullwidth" (click)="register(registerForm.value)">
+                  Register
+                </button>
+          </div>
+        </div>
+        <div class="columns is-centered">
+            <div class="column is-2">
+                <a class="button is-dark is-small is-rounded is-fullwidth" [routerLink]="['/']">
+                  Cancel
+                </a>
+            </div>
+          </div>
+
+      </form>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+<!--
 <div class="header">
   <div class="row">
     <form [formGroup]="registerForm">
@@ -51,3 +216,4 @@
     </div>
   </div>
 </div>
+-->

@@ -1,11 +1,14 @@
 <!-- Header -->
 <div class="hero-head">
-  <header class="navbar is-info">
+  <header class="navbar is-primary">
     <div class="container">
       <div class="navbar-brand">
         <a class="navbar-item" href="#">
-          <img src="../../../assets/images/logo.png" alt="Logo">
-          &nbsp;&nbsp;<strong>EVENT</strong>FINDER
+          <img src="../../../assets/images/logo.png" alt="Logo" />
+          &nbsp;&nbsp;
+          <h1 class="has-text-white event-finder-logo has-text-weight-light">
+            <strong>EVENT</strong>FINDER
+          </h1>
         </a>
         <span class="navbar-burger burger" data-target="navbarMenuHeroC">
           <span></span>
@@ -15,10 +18,65 @@
       </div>
       <div id="navbarMenuHeroC" class="navbar-menu">
         <div class="navbar-end">
-          <!-- Here we use a Request to check what route the current active is. If true: add 'is-active' to the class -->
-          <a href="#" class="navbar-item is-active">Home</a>
-          <a href="#" class="navbar-item">Menupunkt</a>
-          <a href="#" class="navbar-item">Menupunkt</a>
+          <a
+            [routerLink]="['']"
+            routerLinkActive="is-active"
+            [routerLinkActiveOptions]="{ exact: true }"
+            class="navbar-item"
+            >Home</a
+          >
+          <a class="navbar-item" [routerLink]="['/events']" routerLinkActive="is-active" >Events</a>
+          <div
+            class="navbar-item has-dropdown is-hoverable is-dark"
+            *ngIf="auth.isLoggedIn()" >
+            <a class="navbar-link is-arrowless"
+              ><span class="icon"><i class="fa fa-user"></i></span
+            ></a>
+            <div class="navbar-dropdown is-right">
+              <a class="navbar-item" [routerLink]="['/user']" routerLinkActive="is-active" >
+                <span class="icon has-text-dark"
+                  ><i class="fa fa-user"></i></span
+                >Profile
+              </a>
+              <a
+              [routerLink]="['/events']"
+              class="navbar-item"
+              class="navbar-item">
+                <span class="icon has-text-dark"
+                  ><i class="fa fa-calendar-alt"></i></span
+                >Booked events
+              </a>
+              <a class="navbar-item">
+                <span class="icon has-text-dark"
+                  ><i class="fa fa-bell"></i></span
+                >Notifications
+              </a>
+              <a class="navbar-item">
+                <span class="icon has-text-dark"><i class="fa fa-cog"></i></span
+                >Settings
+              </a>
+              <hr class="navbar-divider" />
+              <a class="navbar-item "(click)="auth.logout()">
+                <span class="icon has-text-dark"
+                  ><i class="fa fa-sign-out-alt"></i></span
+                >Logout
+              </a>
+            </div>
+          </div>
+          <div
+            class="navbar-item has-dropdown is-hoverable"
+            *ngIf="!auth.isLoggedIn()">
+            <a class="navbar-link is-arrowless"
+              ><span class="icon"><i class="fa fa-user"></i></span
+            ></a>
+            <div class="navbar-dropdown is-right">
+                <a class="navbar-item" (click)="openLogin()">
+                  <span class="icon has-text-dark"
+                    ><i class="fa fa-user"></i></span
+                  >Login
+                </a>
+              </div>
+          </div>
         </div>
       </div>
     </div>

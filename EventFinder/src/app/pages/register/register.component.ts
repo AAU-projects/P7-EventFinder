@@ -4,7 +4,6 @@ import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { UserTypes } from 'src/app/models/user.types.enum';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
-import { User } from 'src/app/models/account.model';
 
 @Component({
   selector: 'app-register',

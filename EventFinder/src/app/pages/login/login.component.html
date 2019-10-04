@@ -1,33 +1,93 @@
-<h1 class="header">Login</h1>
-<div class="container">
-  <div class="row">
-    <div>
-      <form [formGroup]="loginForm">
-        <div class="form-control">
-          <label>Email address</label>
-          <input type="email" formControlName="email" class="form-control" />
+<div class="modal is-active">
+  <div class="modal-background" (click)="cancel()"></div>
+  <div class="modal-content">
+    <div class="notification round-corners">
+      <button class="delete" (click)="cancel()"></button>
+      <div class="columns is-centered">
+        <div class="column">
+          <h1 class="title has-text-white has-text-weight-bold is-size-1">
+            Login
+          </h1>
+          <figure class="image is-128x128 is-inline-block">
+            <img src="../../../assets/images/logo.png" />
+          </figure>
+          <h1 class="has-text-white event-finder-logo has-text-weight-light"><strong>EVENT</strong>FINDER</h1>
+          <br />
+
+          <div class="notification is-danger" *ngIf="errorMessage">
+            <button class="delete" (click)="closeErrorMessage()"></button>
+            {{ errorMessage }}
+          </div>
+
+          <form [formGroup]="loginForm">
+            <div class="field">
+              <p class="control has-icons-left">
+                <input
+                  class="input is-rounded is-dark is-large input-field-background"
+                  type="email"
+                  formControlName="email"
+                  placeholder="Email"
+                />
+                <span class="icon is-small is-left">
+                  <i class="fas fa-envelope"></i>
+                </span>
+              </p>
+            </div>
+            <div class="field">
+              <p class="control has-icons-left">
+                <input
+                  class="input is-rounded is-dark is-large input-field-background"
+                  type="password"
+                  formControlName="password"
+                  placeholder="Password"
+                />
+                <span class="icon is-small is-left">
+                  <i class="fas fa-lock"></i>
+                </span>
+              </p>
+            </div>
+            <nav class="level">
+              <!-- Left side -->
+              <div class="level-left">
+                <div class="level-item">
+                  <label class="checkbox has-text-white-bis remember-me">
+                    <input
+                    type="checkbox"
+                    [checked]="rememberMe"
+                    (change)="rememberMe = !rememberMe"/>
+                    Remember me
+                  </label>
+                </div>
+              </div>
+
+              <!-- Right side -->
+              <div class="level-right has-text-white-bis forgot-password">
+                <div class="level-item">
+                  <a>Forgot password?</a>
+                </div>
+              </div>
+            </nav>
+
+            <button
+              type="submit"
+              class="login-button button is-primary is-medium is-fullwidth is-rounded is-large"
+              (click)="login(loginForm.value)"
+            >
+              Login
+            </button>
+          </form>
+
+          <br /><br />
+
+          <p class="has-text-white-bis is-size-7 is-centered not-member">Not a member?</p>
+          <a
+            [routerLink]="['/register']" routerLinkActive="is-active"
+            class="is-dark button is-rounded has-text-white-bis bottom-margin-login"
+            >Create an account</a
+          >
         </div>
-        <div>
-          <label>Password</label>
-          <input
-            type="password"
-            class="form-control"
-            formControlName="password"
-          />
-          <label class="error">{{ errorMessage }}</label>
-        </div>
-        <button
-          type="submit"
-          (click)="login(loginForm.value)"
-        >
-          Login
-        </button>
-      </form>
-    </div>
-  </div>
-  <div class="row">
-    <div>
-      <p>No account yet? <a href="/register">Create an account</a></p>
+      </div>
     </div>
   </div>
 </div>
+

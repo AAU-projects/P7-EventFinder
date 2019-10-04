@@ -1,13 +1,23 @@
-<div *ngIf="auth.account | async as user; else bob">
-  <pre>
-    {{ user | json }}
-  </pre>
-
-  <hr>
-  <button class="button" (click)="auth.logout()">Sign Out</button>
-
+<div class="notification is-dark" *ngIf="auth.account | async as user">
+  <div class="column">
+    <figure class="image">
+      <img
+        class="image is-inline is-rounded"
+        src="https://scontent.fbll1-1.fna.fbcdn.net/v/t31.0-8/30052077_10215194120182807_528950147898175989_o.jpg?_nc_cat=103&_nc_oc=AQklgOGdXBakoGCH7Z5OyA6CRBh0H09fyuI5cncMWrhtYDLXQ65KMPGGvYBaSwNecE4&_nc_ht=scontent.fbll1-1.fna&oh=d690dea342608737abe43b1912bb8da6&oe=5E30602E"
+      />
+    </figure>
+    <h1 class="title has-text-weight-bold is-size-1">
+      {{ user.name }}
+    </h1>
+    <h3>
+      {{ user.email }} <br />
+      {{ user.phone }} <br />
+      {{ user.zip }} <br />
+      {{ user.country }} <br />
+      {{ user.birthday }}Sex: Binary <br />
+      {{ user.sex }}<br />
+    </h3>
+    <hr />
+    <button class="button" (click)="auth.logout()">Logout</button>
+  </div>
 </div>
-
-<ng-template #bob>
-  <h1>Error!</h1>
-</ng-template>
