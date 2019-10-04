@@ -150,9 +150,3 @@ export class AuthService {
     return user;
   }
 }
-
-// https://fireship.io/lessons/angularfire-google-oauth/
-// https://angularfirebase.com/lessons/role-based-authorization-with-firestore-nosql-and-angular-5/
-
-// https://github.com/fireship-io/55-angularfire-google-auth/blob/master/src/app/services/auth.service.ts
-// https://github.com/AngularTemplates/firebase-authentication-with-angular-7/blob/master/src/app/core/auth.service.ts
