@@ -16,8 +16,11 @@ import { switchMap } from 'rxjs/operators';
 export class AuthService {
 
   account: Observable<Account> = null;
-  type: UserTypes = UserTypes.User;
+  userType: UserTypes = UserTypes.User;
   loggedIn = false;
+
+  isUserSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
+  public isUserObs: Observable<boolean> = this.isUserSubject.asObservable();
 
   constructor(
     private fireAuth: AngularFireAuth,
@@ -43,11 +46,17 @@ export class AuthService {
   }
 
   setOrganizerType() {
-    this.type = UserTypes.Organizer;
+    console.log('SET TO ORGANIZER');
+    this.userType = UserTypes.Organizer;
+    this.isUserSubject.next(false);
+    console.log(this.userType);
   }
 
   setUserType() {
-    this.type = UserTypes.User;
+    console.log('SET TO USER');
+    this.userType = UserTypes.User;
+    this.isUserSubject.next(true);
+    console.log(this.userType);
   }
 
   async login(email, password) {
@@ -80,14 +89,14 @@ export class AuthService {
   updateUserData(user: fireUser, value?) {
     let userRef;
 
-    if (this.type === UserTypes.User) {
+    if (this.userType === UserTypes.User) {
       userRef = this.firestore.doc(`users/${user.uid}`);
     } else {
       userRef = this.firestore.doc(`organizers/${user.uid}`);
     }
 
     if (value) {
-      if (this.type === UserTypes.User) {
+      if (this.userType === UserTypes.User) {
         userRef.set({
           uid: user.uid,
           email: user.email,

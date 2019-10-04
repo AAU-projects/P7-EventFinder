@@ -2,17 +2,38 @@
   <div class="column is-8">
     <div class="notification">
       <h1 class="title has-text-weight-bold is-size-1 has-text-white">
-        <div *ngIf="localUserType == UserTypes.User; else elseBlock">Create User</div>
+        <div *ngIf="auth.isUserObs | async; else elseBlock">Create User</div>
         <ng-template #elseBlock>Create Organizer</ng-template>
       </h1>
-      <app-two-state-button [width]="width" [height]="height" [options]="options" [actions]="actions">
-      </app-two-state-button>
+      <div class="columns is-centered">
+
+        <div *ngIf="auth.isUserObs | async; then UserBlock else organizerBlock"></div>
+        <ng-template #UserBlock>
+          <div class="column is-half">
+            <a class="button is-primary is-small is-fullwidth is-rounded">User</a>
+          </div>
+          <div class="column is-half">
+            <a class="button is-dark is-small is-fullwidth is-rounded" (click)="this.setToOrganizer()">Organizer</a>
+          </div>
+        </ng-template>
+        <ng-template #organizerBlock>
+          <div class="column is-half">
+            <a class="button is-dark is-small is-fullwidth is-rounded" (click)="this.setToUser()">User</a>
+          </div>
+          <div class="column is-half">
+            <a class="button is-primary is-small is-fullwidth is-rounded">Organizer</a>
+          </div>
+        </ng-template>
+      </div>
+      <!--<app-two-state-button [width]="width" [height]="height" [options]="options" [actions]="actions">
+      </app-two-state-button>-->
       <br>
 
-      <form [formGroup]="registerForm">
+      <form [formGroup]="registerForm" (ngSubmit)="register(registerForm.value)" validate>
         <div class="columns remove-bottom-margin">
 
           <!-- LEFT SIDE STARTS HERE -->
+          <!-- LOGO -->
           <div class="column">
             <div class="columns is-centered">
               <div class="column">
@@ -23,27 +44,33 @@
               </div>
             </div>
 
+            <!-- INPUT: EMAIL -->
+
             <div class="field">
-              <p class="control has-icons-left">
-                <input required class="input is-rounded has-text-centered is-medium is-size-6" type="email"
-                  formControlName="email" placeholder="Email" />
+              <div class="control has-icons-left">
+                <input [ngClass]="(registerForm.controls['email'].invalid && registerForm.controls['email'].dirty) ? 'is-danger' : ''" required class="input is-rounded has-text-centered is-medium is-size-6" type="email"
+                    formControlName="email" placeholder="Email" />
                 <span class="icon is-small is-left">
                   <i class="fas fa-envelope"></i>
                 </span>
-              </p>
+              </div>
             </div>
+
+            <!-- INPUT: PASSWORD -->
             <div class="field">
               <p class="control has-icons-left">
-                <input required class="input is-rounded has-text-centered is-medium is-size-6" type="password"
+                <input [ngClass]="(registerForm.controls['password'].invalid && registerForm.controls['password'].dirty) ? 'is-danger' : ''" required class="input is-rounded has-text-centered is-medium is-size-6" type="password"
                   formControlName="password" placeholder="Password" />
                 <span class="icon is-small is-left">
                   <i class="fas fa-lock"></i>
                 </span>
               </p>
             </div>
+
+            <!-- INPUT: CONFIRM PASSWORD -->
             <div class="field">
               <p class="control has-icons-left">
-                <input required class="input is-rounded has-text-centered is-medium is-size-6" type="password"
+                <input [ngClass]="(registerForm.controls['confirmPassword'].invalid && registerForm.controls['confirmPassword'].dirty) ? 'is-danger' : ''" required class="input is-rounded has-text-centered is-medium is-size-6" type="password"
                   formControlName="confirmPassword" placeholder="Confirm password" />
                 <span class="icon is-small is-left">
                   <i class="fas fa-lock"></i>
@@ -54,23 +81,27 @@
           <!-- LEFT SIDE ENDS HERE -->
 
           <!-- RIGHT SIDE STARTS HERE -->
-
           <div class="column allign-bottom">
-            <div *ngIf="localUserType == UserTypes.User; then userBlock else organizationBlock"></div>
+            <div *ngIf="auth.isUserObs | async; then userBlock else organizationBlock"></div>
+
             <!-- USER FIELDS START HERE -->
             <ng-template #userBlock>
+
+              <!-- INPUT: FIRSTNAME -->
               <div class="field">
                 <p class="control has-icons-left">
-                  <input required class="input is-rounded has-text-centered is-medium is-size-6" type="text"
+                  <input [ngClass]="(registerForm.controls['firstname'].invalid && registerForm.controls['firstname'].dirty) ? 'is-danger' : ''" required class="input is-rounded has-text-centered is-medium is-size-6" type="text"
                     formControlName="firstname" placeholder="Firstname" />
                   <span class="icon is-small is-left">
                     <i class="fas fa-user"></i>
                   </span>
                 </p>
               </div>
+
+              <!-- INPUT: LASTNAME -->
               <div class="field">
                 <p class="control has-icons-left">
-                  <input required class="input is-rounded has-text-centered is-medium is-size-6" type="text"
+                  <input [ngClass]="(registerForm.controls['lastname'].invalid && registerForm.controls['lastname'].dirty) ? 'is-danger' : ''" required class="input is-rounded has-text-centered is-medium is-size-6" type="text"
                     formControlName="lastname" placeholder="Lastname" />
                   <span class="icon is-small is-left">
                     <i class="fas fa-user"></i>
@@ -80,9 +111,11 @@
 
               <div class="columns remove-bottom-margin">
                 <div class="column is-4">
+
+                  <!-- INPUT: ZIP -->
                   <div class="field">
                     <p class="control has-icons-left">
-                      <input required class="input is-rounded has-text-centered is-medium is-size-6" type="text"
+                      <input [ngClass]="(registerForm.controls['zip'].invalid && registerForm.controls['zip'].dirty) ? 'is-danger' : ''" required class="input is-rounded has-text-centered is-medium is-size-6" type="text"
                         formControlName="zip" placeholder="Zip" />
                       <span class="icon is-small is-left">
                         <i class="fas fa-city"></i>
@@ -91,28 +124,35 @@
                   </div>
                 </div>
                 <div class="column">
+
+                  <!-- INPUT: CITY -->
                   <div class="field">
                     <div class="control">
-                      <input required class="input is-rounded has-text-centered is-medium is-size-6" type="text"
+                      <input [ngClass]="(registerForm.controls['city'].invalid && registerForm.controls['city'].dirty) ? 'is-danger' : ''" required class="input is-rounded has-text-centered is-medium is-size-6" type="text"
                         formControlName="city" placeholder="City" />
                     </div>
                   </div>
                 </div>
               </div>
+
+              <!-- INPUT: COUNTRY -->
               <div class="field">
                 <p class="control has-icons-left">
-                  <input required class="input is-rounded has-text-centered is-medium is-size-6" type="text"
+                  <input [ngClass]="(registerForm.controls['country'].invalid && registerForm.controls['country'].dirty) ? 'is-danger' : ''" required class="input is-rounded has-text-centered is-medium is-size-6" type="text"
                     formControlName="country" placeholder="Country" />
                   <span class="icon is-small is-left">
                     <i class="fas fa-globe"></i>
                   </span>
                 </p>
               </div>
+
               <div class="columns remove-bottom-margin">
                 <div class="column is-7">
+
+                  <!-- INPUT: PHONE -->
                   <div class="field">
                     <p class="control has-icons-left">
-                      <input required class="input is-rounded has-text-centered is-medium is-size-6" type="tel"
+                      <input [ngClass]="(registerForm.controls['phone'].invalid && registerForm.controls['phone'].dirty) ? 'is-danger' : ''" required class="input is-rounded has-text-centered is-medium is-size-6" type="tel"
                         formControlName="phone" placeholder="Phone" />
                       <span class="icon is-small is-left">
                         <i class="fas fa-phone"></i>
@@ -120,13 +160,16 @@
                     </p>
                   </div>
                 </div>
+
                 <div class="column">
+
+                  <!-- INPUT: SEX -->
                   <div class="field">
                     <div class="control">
-                      <div class="select is-rounded is-fullwidth has-text-centered is-medium is-size-6"
-                        formControlName="sex" placeholder="Sex">
-                        <select required>
-                          <option value="" selected disabled>Gender</option>
+                      <div class="select is-rounded is-fullwidth has-text-centered is-medium is-size-5"
+                        placeholder="Sex">
+                        <select [ngClass]="(registerForm.controls['sex'].invalid && registerForm.controls['sex'].dirty) ? 'is-danger' : ''" required formControlName="sex">
+                          <option value="" selected disabled>Sex</option>
                           <option value="male">Male</option>
                           <option value="female">Female</option>
                         </select>
@@ -135,9 +178,11 @@
                   </div>
                 </div>
               </div>
+
+              <!-- INPUT: BIRTHDATE -->
               <div class="field">
                 <p class="control has-icons-left">
-                  <input required class="input is-rounded has-text-centered is-medium is-size-6" type="text"
+                  <input [ngClass]="(registerForm.controls['birthdate'].invalid && registerForm.controls['birthdate'].dirty) ? 'is-danger' : ''" required class="input is-rounded has-text-centered is-medium is-size-6" type="text"
                     onfocus="(this.type='date')" formControlName="birthdate" placeholder="Birthdate" />
                   <span class="icon is-small is-left">
                     <i class="fas fa-calendar-alt"></i>
@@ -146,77 +191,91 @@
               </div>
             </ng-template>
             <!-- USER FIELDS ENDS HERE -->
+
             <!-- ORGANIZATION FIELDS START HERE -->
             <ng-template #organizationBlock>
-              <div class="field">
-                  <p class="control has-icons-left">
-                    <input required class="input is-rounded has-text-centered is-medium is-size-6" type="text"
-                      formControlName="organization" placeholder="Organization" />
-                    <span class="icon is-small is-left">
-                      <i class="fas fa-user"></i>
-                    </span>
-                  </p>
-                </div>
-                <div class="field">
-                  <p class="control has-icons-left">
-                    <input required class="input is-rounded has-text-centered is-medium is-size-6" type="text"
-                      formControlName="address" placeholder="Address" />
-                    <span class="icon is-small is-left">
-                      <i class="fas fa-user"></i>
-                    </span>
-                  </p>
-                </div>
 
-                <div class="columns remove-bottom-margin">
-                  <div class="column is-4">
-                    <div class="field">
-                      <p class="control has-icons-left">
-                        <input required class="input is-rounded has-text-centered is-medium is-size-6" type="text"
-                          formControlName="zip" placeholder="Zip" />
-                        <span class="icon is-small is-left">
-                          <i class="fas fa-city"></i>
-                        </span>
-                      </p>
+              <!-- INPUT: ORGANIZATION -->
+              <div class="field">
+                <p class="control has-icons-left">
+                  <input  [ngClass]="(registerForm.controls['organization'].invalid && registerForm.controls['organization'].dirty) ? 'is-danger' : ''" required class="input is-rounded has-text-centered is-medium is-size-6" type="text"
+                    formControlName="organization" placeholder="Organization" />
+                  <span class="icon is-small is-left">
+                    <i class="fas fa-user"></i>
+                  </span>
+                </p>
+              </div>
+
+              <!-- INPUT: ADDRESS -->
+              <div class="field">
+                <p class="control has-icons-left">
+                  <input [ngClass]="(registerForm.controls['address'].invalid && registerForm.controls['address'].dirty) ? 'is-danger' : ''" required class="input is-rounded has-text-centered is-medium is-size-6" type="text"
+                    formControlName="address" placeholder="Address" />
+                  <span class="icon is-small is-left">
+                    <i class="fas fa-user"></i>
+                  </span>
+                </p>
+              </div>
+
+              <div class="columns remove-bottom-margin">
+                <div class="column is-4">
+
+                  <!-- INPUT: ZIP -->
+                  <div class="field">
+                    <p class="control has-icons-left">
+                      <input [ngClass]="(registerForm.controls['zip'].invalid && registerForm.controls['zip'].dirty) ? 'is-danger' : ''" required class="input is-rounded has-text-centered is-medium is-size-6" type="text"
+                        formControlName="zip" placeholder="Zip" />
+                      <span class="icon is-small is-left">
+                        <i class="fas fa-city"></i>
+                      </span>
+                    </p>
+                  </div>
+                </div>
+                <div class="column">
+
+                  <!-- INPUT: CITY -->
+                  <div class="field">
+                    <div class="control">
+                      <input [ngClass]="(registerForm.controls['city'].invalid && registerForm.controls['city'].dirty) ? 'is-danger' : ''" required class="input is-rounded has-text-centered is-medium is-size-6" type="text"
+                        formControlName="city" placeholder="City" />
                     </div>
                   </div>
-                  <div class="column">
-                    <div class="field">
-                      <div class="control">
-                        <input required class="input is-rounded has-text-centered is-medium is-size-6" type="text"
-                          formControlName="city" placeholder="City" />
-                      </div>
-                    </div>
-                  </div>
                 </div>
-                <div class="field">
-                  <p class="control has-icons-left">
-                    <input required class="input is-rounded has-text-centered is-medium is-size-6" type="text"
-                      formControlName="country" placeholder="Country" />
-                    <span class="icon is-small is-left">
-                      <i class="fas fa-globe"></i>
-                    </span>
-                  </p>
-                </div>
-                <div class="field">
-                  <p class="control has-icons-left">
-                    <input required class="input is-rounded has-text-centered is-medium is-size-6" type="tel"
-                      formControlName="phone" placeholder="Phone" />
-                    <span class="icon is-small is-left">
-                      <i class="fas fa-phone"></i>
-                    </span>
-                  </p>
-                </div>
+              </div>
+
+              <!-- INPUT: COUNTRY -->
+              <div class="field">
+                <p class="control has-icons-left">
+                  <input [ngClass]="(registerForm.controls['country'].invalid && registerForm.controls['country'].dirty) ? 'is-danger' : ''" required class="input is-rounded has-text-centered is-medium is-size-6" type="text"
+                    formControlName="country" placeholder="Country" />
+                  <span class="icon is-small is-left">
+                    <i class="fas fa-globe"></i>
+                  </span>
+                </p>
+              </div>
+
+              <!-- INPUT: PHONE -->
+              <div class="field">
+                <p class="control has-icons-left">
+                  <input [ngClass]="(registerForm.controls['phone'].invalid && registerForm.controls['phone'].dirty) ? 'is-danger' : ''" required class="input is-rounded has-text-centered is-medium is-size-6" type="tel"
+                    formControlName="phone" placeholder="Phone" />
+                  <span class="icon is-small is-left">
+                    <i class="fas fa-phone"></i>
+                  </span>
+                </p>
+              </div>
             </ng-template>
             <!-- ORGANIZATION FIELDS END HERE -->
+
           </div>
           <!-- RIGHT SIDE ENDS HERE -->
+
         </div>
 
         <br>
         <div class="columns is-centered remove-bottom-margin">
           <div class="column is-5">
-            <button type="submit" class="button is-primary is-large is-rounded is-fullwidth"
-              (click)="register(registerForm.value)">
+            <button type="submit" class="button is-primary is-large is-rounded is-fullwidth" [disabled]="!registerForm.valid">
               Register
             </button>
           </div>
@@ -233,63 +292,3 @@
     </div>
   </div>
 </div>
-
-
-
-
-
-<!--
-<div class="header">
-  <div class="row">
-    <form [formGroup]="registerForm">
-      <div>
-        <label> Email:</label>
-        <input type="email" formControlName="email" class="form-control" />
-      </div>
-      <div>
-        <label> Password:</label>
-        <input
-          type="password"
-          formControlName="password"
-          class="form-control"
-        />
-      </div>
-      <div>
-        <label>Name:</label>
-        <input type="text" formControlName="name" class="form-control" />
-      </div>
-      <div>
-        <label> Zip:</label>
-        <input type="text" formControlName="zip" class="form-control" />
-      </div>
-      <div>
-        <label>Country:</label>
-        <input type="text" formControlName="country" class="form-control" />
-      </div>
-      <div>
-        <label> Phone Number:</label>
-        <input type="text" formControlName="phone" class="form-control" />
-      </div>
-      <div>
-        <label> Birthday:</label>
-        <input type="date" formControlName="birthday" class="form-control" />
-      </div>
-      <div>
-        <label> Sex:</label>
-        <input type="radio" value="Male">Male <input type="radio" value="Female">Female
-      </div>
-      <button type="submit" (click)="register(registerForm.value)">
-        Register
-      </button>
-      <div>
-      <label class="error">{{ errorMessage }}</label>
-      </div>
-    </form>
-  </div>
-  <div class="row">
-    <div class="col-md-4 col-md-offset-4">
-      <p>Already have an account? <a href="/login">Login</a></p>
-    </div>
-  </div>
-</div>
--->
