@@ -1,13 +1,15 @@
 export interface Account {
     uid: string;
     email: string;
-    name: string;
     zip: string;
     country: string;
     phone: string;
+    city: string;
 }
 
 export interface User extends Account {
+    firstname: string;
+    lastname: string;
     birthday: Date;
     sex: Sex;
 }

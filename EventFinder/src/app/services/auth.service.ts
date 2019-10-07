@@ -114,20 +114,23 @@ export class AuthService {
         userRef.set({
           uid: user.uid,
           email: user.email,
-          name: value.name,
+          firstname: value.firstname,
+          lastname: value.lastname,
           zip: value.zip,
           country: value.country,
+          city: value.city,
           phone: value.phone,
-          // sex: value.sex,
+          sex: value.sex,
           birthday: value.birthday
         }, {merge: true});
       } else {
         userRef.set({
           uid: user.uid,
+          organization: value.organization,
           email: user.email,
-          name: value.name,
           address: value.address,
           zip: value.zip,
+          city: value.city,
           country: value.country,
           phone: value.phone,
         }, {merge: true});

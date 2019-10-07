@@ -28,7 +28,7 @@
           <a class="navbar-item" [routerLink]="['/events']" routerLinkActive="is-active" >Events</a>
           <div
             class="navbar-item has-dropdown is-hoverable is-dark"
-            *ngIf="auth.isLoggedIn" >
+            *ngIf="auth.isLoggedIn()" >
             <a class="navbar-link is-arrowless"
               ><span class="icon"><i class="fa fa-user"></i></span
             ></a>
