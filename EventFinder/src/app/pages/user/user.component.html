@@ -1,20 +1,3 @@
-<<<<<<< HEAD
-<div class="box" *ngIf="auth.account | async as user">
-  <div class="column">
-    <h1 class="title has-text-weight-bold is-size-1">
-      {{user.name}}
-    </h1>
-    <h3>
-      {{user.email}} <br>
-      {{user.phone}} <br>
-      {{user.zip}} <br>
-      {{user.country}} <br>
-      {{user.birthday}} <br>
-      {{user.sex}} <br>
-    </h3>
-    <hr>
-    <button class="button" (click)="auth.logout()">Sign Out</button>
-=======
 <div class="notification is-dark" *ngIf="auth.account | async as user">
   <div class="column">
     <figure class="image">
@@ -36,6 +19,5 @@
     </h3>
     <hr />
     <button class="button" (click)="auth.logout()">Logout</button>
->>>>>>> develop
   </div>
 </div>

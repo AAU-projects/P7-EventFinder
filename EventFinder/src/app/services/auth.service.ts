@@ -56,17 +56,13 @@ export class AuthService {
   }
 
   setOrganizerType() {
-    console.log('SET TO ORGANIZER');
     this.userType = UserTypes.Organizer;
     this.isUserSubject.next(false);
-    console.log(this.userType);
   }
 
   setUserType() {
-    console.log('SET TO USER');
     this.userType = UserTypes.User;
     this.isUserSubject.next(true);
-    console.log(this.userType);
   }
 
   isLoggedIn() {

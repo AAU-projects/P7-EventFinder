@@ -36,13 +36,11 @@ export class RegisterComponent {
   }
 
   setToUser() {
-    console.log('SET TO USER');
     this.auth.setUserType();
     this.createForm(this.auth.userType);
   }
 
   setToOrganizer() {
-    console.log('SET TO ORGANIZER');
     this.auth.setOrganizerType();
     this.createForm(this.auth.userType);
   }
@@ -78,13 +76,11 @@ export class RegisterComponent {
   }
 
   register(value) {
-    console.log('REGISTER USER CALLED');
     this.auth.register(value)
     .then(res => {
       this.router.navigate(['/user']);
     }, err => {
       this.errorMessage = err.message;
-      console.log(err.message);
       this.successMessage = '';
     });
   }
