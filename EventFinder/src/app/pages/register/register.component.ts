@@ -19,7 +19,6 @@ export class RegisterComponent {
 
   // Two State Button
   width = '500px';
-  height = '20px';
   options = {optionOne: 'User', optionTwo: 'Organizer'};
   actions = {actionOne: this.auth.setUserType, actionTwo: this.auth.setOrganizerType};
 
@@ -47,8 +46,7 @@ export class RegisterComponent {
 
   createForm(userType: UserTypes) {
     if (userType === UserTypes.User)
-    {
-      this.registerForm = this.fb.group({
+    {   this.registerForm = this.fb.group({
         email: ['', [Validators.required, Validators.email]],
         password: ['', [Validators.required, Validators.minLength(6)]],
         confirmPassword: ['', [Validators.required]],

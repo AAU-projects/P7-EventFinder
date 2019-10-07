@@ -1,8 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { Router, Params } from '@angular/router';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { Location } from '@angular/common';
+import { CookieService } from 'ngx-cookie-service';
+import { SharedService } from 'src/app/services/shared.service';
 
 @Component({
   selector: 'app-login',
@@ -13,12 +15,15 @@ export class LoginComponent {
 
   loginForm: FormGroup;
   errorMessage?: string;
+  rememberMe: boolean;
 
   constructor(
     public authService: AuthService,
     private router: Router,
     private fb: FormBuilder,
-    private location: Location
+    private location: Location,
+    private cookie: CookieService,
+    private shared: SharedService
   ) {
     this.createForm();
    }
@@ -31,9 +36,10 @@ export class LoginComponent {
   }
 
   login(value) {
-    this.authService.login(value.email, value.password)
+    this.authService.login(value.email, value.password, this.rememberMe)
     .then(res => {
       this.errorMessage = null;
+      this.shared.changeLogin(false);
       this.router.navigate(['/user']);
     }, err => {
       console.log(err);
@@ -42,10 +48,20 @@ export class LoginComponent {
   }
 
   cancel() {
-    this.location.back();
+    this.shared.changeLogin(false);
   }
 
   closeErrorMessage() {
     this.errorMessage = null;
+  }
+
+  @HostListener('document:keydown', ['$event']) onKeydownHandler(event: KeyboardEvent) {
+    if (event.key === 'Escape') {
+      this.cancel();
+    }
+
+    if (event.key === 'Enter') {
+        this.login(this.loginForm.value);
+    }
   }
 }

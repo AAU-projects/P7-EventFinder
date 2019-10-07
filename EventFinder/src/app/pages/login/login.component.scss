@@ -1,18 +1,27 @@
-.header {
-  text-align: center;
-  font-size: 30px;
-  margin-bottom: 40px;
+.input-field-background {
+  background-color: #323259 !important;
 }
 
-.row {
-  text-align: center;
-  margin-top: 10px;
+.event-finder-logo{
+  font-size: 20px;
 }
 
-.error {
-  color: red;
+.round-corners {
+  border-radius: 25px;
 }
 
-.form-control {
-  margin: 5px;
+.remember-me {
+  margin-left: 10px;
+}
+
+.forgot-password {
+  margin-right: 10px;
+}
+
+.not-member {
+  margin-bottom: 2px;
+}
+
+.bottom-margin-login {
+  margin-bottom: 12px;
 }

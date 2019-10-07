@@ -2,13 +2,13 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { User, Organizer, Account } from '../models/account.model';
 import { UserTypes } from '../models/user.types.enum';
-
+import { auth } from 'firebase/app';
 import { User as fireUser} from 'firebase/app';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
-
 import { Observable, of, BehaviorSubject} from 'rxjs';
 import { switchMap } from 'rxjs/operators';
+import { CookieService } from 'ngx-cookie-service';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +17,7 @@ export class AuthService {
 
   account: Observable<Account> = null;
   userType: UserTypes = UserTypes.User;
-  loggedIn = false;
+  user = null;
 
   isUserSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
   public isUserObs: Observable<boolean> = this.isUserSubject.asObservable();
@@ -26,23 +26,33 @@ export class AuthService {
     private fireAuth: AngularFireAuth,
     private firestore: AngularFirestore,
     private router: Router,
-
-
+    private cookie: CookieService
   ) {
-    /* this.account = this.fireAuth.authState.pipe(
+
+    this.fireAuth.authState.subscribe(user => {
+      this.user = user;
+    });
+
+    this.account = this.fireAuth.authState.pipe(
       switchMap(account => {
-        if (account && this.type === UserTypes.User) {
-          this.loggedIn = true;
+        if (account && this.userType === UserTypes.User) {
           return this.firestore.doc<User>(`users/${account.uid}`).valueChanges();
-        } else if (account && this.type === UserTypes.Organizer) {
-          this.loggedIn = true;
+        } else if (account && this.userType === UserTypes.Organizer) {
           return this.firestore.doc<Organizer>(`organizers/${account.uid}`).valueChanges();
         } else {
-          this.loggedIn = false;
           return of(null);
         }
       })
-    ); */
+    );
+
+  }
+
+  setCookieVar(variable: string, value: string) {
+    this.cookie.set(variable, value, 10, '/', 'localhost');
+  }
+
+  getCookieVar(variable: string): string {
+    return this.cookie.get(variable);
   }
 
   setOrganizerType() {
@@ -59,13 +69,20 @@ export class AuthService {
     console.log(this.userType);
   }
 
-  async login(email, password) {
-    let credentials = await this.fireAuth.auth.signInWithEmailAndPassword(email, password);
+  isLoggedIn() {
+    return this.user !== null;
+  }
 
+  async login(email: string, password: string, rememberMe: boolean) {
 
-    /* let bob = await credentials.user.getIdToken();
+    if (rememberMe) {
+      this.fireAuth.auth.setPersistence(auth.Auth.Persistence.LOCAL);
+    } else {
+      this.fireAuth.auth.setPersistence(auth.Auth.Persistence.SESSION);
+    }
 
-    credentials = await this.fireAuth.auth.signInWithCredential(credentials.credential); */
+    const credentials = await this.fireAuth.auth.signInWithEmailAndPassword(email, password);
+
 
     this.firestore.doc<User>(`users/${credentials.user.uid}`).snapshotChanges()
     .subscribe(user => {
@@ -75,14 +92,11 @@ export class AuthService {
         this.setOrganizerType();
       }
     });
-
-    this.loggedIn = true;
     return this.updateUserData(credentials.user);
   }
 
   async register(value) {
     const credentials = await this.fireAuth.auth.createUserWithEmailAndPassword(value.email, value.password);
-    this.loggedIn = true;
     return this.updateUserData(credentials.user, value);
   }
 
@@ -133,7 +147,6 @@ export class AuthService {
 
   async logout() {
     await this.fireAuth.auth.signOut();
-    this.loggedIn = false;
     this.account = null;
     return this.router.navigate(['/']);
   }
@@ -144,9 +157,3 @@ export class AuthService {
     return user;
   }
 }
-
-// https://fireship.io/lessons/angularfire-google-oauth/
-// https://angularfirebase.com/lessons/role-based-authorization-with-firestore-nosql-and-angular-5/
-
-// https://github.com/fireship-io/55-angularfire-google-auth/blob/master/src/app/services/auth.service.ts
-// https://github.com/AngularTemplates/firebase-authentication-with-angular-7/blob/master/src/app/core/auth.service.ts

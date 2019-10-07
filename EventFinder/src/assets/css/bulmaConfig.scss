@@ -27,6 +27,9 @@ $input-border-color: $purpleDark;
 $input-shadow: none;
 $border-hover: $accent;
 
+// Navbar Dropdown
+$navbar-dropdown-background-color: $purple;
+$navbar-dropdown-border-top: 2px solid $purpleDarker;
 
 
 .input, .textarea, .select select {

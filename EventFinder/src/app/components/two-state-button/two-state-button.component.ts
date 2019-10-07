@@ -9,7 +9,6 @@ import { UserTypes } from 'src/app/models/user.types.enum';
 })
 export class TwoStateButtonComponent implements OnInit {
   @Input() width: string;
-  @Input() height: string;
   @Input() options: {optionOne: string, optionTwo: string};
   @Input() actions: {actionOne: any, actionTwo: any};
 
@@ -19,7 +18,6 @@ export class TwoStateButtonComponent implements OnInit {
 
   ngOnInit() {
     this.elementRef.nativeElement.style.setProperty('--mywidth', this.width);
-    this.elementRef.nativeElement.style.setProperty('--myheight', this.height);
   }
 
   onClick() {
