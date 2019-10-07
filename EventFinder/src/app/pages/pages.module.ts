@@ -10,6 +10,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { UserComponent } from './user/user.component';
 import { RegisterComponent } from './register/register.component';
 import { EventsComponent } from './events/events.component';
+import { ForgotpasswordComponent } from './forgotpassword/forgotpassword.component';
 
 
 /* How to add a new page:
@@ -26,7 +27,8 @@ import { EventsComponent } from './events/events.component';
     PageNotFoundComponent,
     UserComponent,
     RegisterComponent,
-    EventsComponent],
+    EventsComponent,
+    ForgotpasswordComponent],
   imports: [
     CommonModule,
     PagesRoutingModule,

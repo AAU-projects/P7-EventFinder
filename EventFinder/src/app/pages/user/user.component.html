@@ -1,23 +1,77 @@
-<div class="notification is-dark" *ngIf="auth.account | async as user">
-  <div class="column">
-    <figure class="image">
-      <img
-        class="image is-inline is-rounded"
-        src="https://scontent.fbll1-1.fna.fbcdn.net/v/t31.0-8/30052077_10215194120182807_528950147898175989_o.jpg?_nc_cat=103&_nc_oc=AQklgOGdXBakoGCH7Z5OyA6CRBh0H09fyuI5cncMWrhtYDLXQ65KMPGGvYBaSwNecE4&_nc_ht=scontent.fbll1-1.fna&oh=d690dea342608737abe43b1912bb8da6&oe=5E30602E"
-      />
-    </figure>
-    <h1 class="title has-text-weight-bold is-size-1">
-      {{ user.name }}
-    </h1>
-    <h3>
-      {{ user.email }} <br />
-      {{ user.phone }} <br />
-      {{ user.zip }} <br />
-      {{ user.country }} <br />
-      {{ user.birthday }}Sex: Binary <br />
-      {{ user.sex }}<br />
-    </h3>
-    <hr />
-    <button class="button" (click)="auth.logout()">Logout</button>
+<div *ngIf="auth.account | async as user">
+  <div class="notification has-background-dark has-text-white top">
+    <div class="columns is-gapless is-multiline">
+      <div class="column is-5">
+        <h1 class="title has-text-left">
+          {{ user.name }}
+          <a class="button is-small is-black is-rounded">
+            <span>Edit</span>
+          </a>
+        </h1>
+        <div class="columns is-gapless is-multiline">
+          <div class="column">
+            <h3 class="has-text-left">
+              <span class="icon"><i class="fa fa-envelope"></i></span>
+              {{ user.email }}
+            </h3>
+          </div>
+          <div class="column">
+            <h3 class="has-text-left">
+              <span class="icon"><i class="fa fa-mobile-alt"></i></span>
+              {{ user.phone }}
+            </h3>
+          </div>
+        </div>
+      </div>
+      <div class="column has-text-right">
+        <div class="dropdown is-right is-hoverable">
+          <div class="dropdown-trigger">
+            <button
+              class="button is-rounded is-primary"
+              aria-haspopup="true"
+              aria-controls="profile-settings"
+            >
+              <span class="icon is-small">
+                <i class="fa fa-cog" aria-hidden="true"></i>
+              </span>
+            </button>
+          </div>
+          <div class="dropdown-menu" id="profile-settings" role="menu">
+            <div class="dropdown-content">
+              <a class="dropdown-item">
+                <span class="icon"> <i class="fa fa-cog"></i></span>
+                Notification Settings</a
+              >
+              <a class="dropdown-item">
+                <span class="icon"> <i class="fa fa-cog"></i></span>
+                Notification Settings</a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="columns is-gapless">
+    <div class="column is-2">
+      <div class="notification bottom-left has-background-dark">
+        <hr>
+          <aside class="menu has-text-white">
+              <ul class="menu-list">
+                <li><a class="selected no-decoration">Profile</a></li>
+                <li><a class="no-decoration">Activity</a></li>
+                <li><a class="no-decoration">Feedback</a></li>
+                <li><a class="no-decoration">Tickets</a></li>
+                <li><a class="no-decoration">Preferences</a></li>
+              </ul>
+            </aside>
+      </div>
+    </div>
+    <div class="column">
+        <div class="notification bottom-right has-background-darker">
+          <app-user-info [user]="user"></app-user-info>
+        </div>
+      </div>
   </div>
 </div>

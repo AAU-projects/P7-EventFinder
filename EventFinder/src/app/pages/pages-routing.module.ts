@@ -8,6 +8,7 @@ import { UserComponent } from './user/user.component';
 import { RegisterComponent } from './register/register.component';
 import { AuthGuard } from '../guards/auth.guard';
 import { EventsComponent } from './events/events.component';
+import { ForgotpasswordComponent } from './forgotpassword/forgotpassword.component';
 
 
 // All paths starts from root (/)
@@ -17,6 +18,7 @@ const routes: Routes = [
   {path: 'firebase', component: FirebaseTestComponent},
   {path: 'user', component: UserComponent, canActivate: [AuthGuard]},
   {path: 'events', component: EventsComponent},
+  {path: 'forgotpassword', component: ForgotpasswordComponent},
 
   {path: '**', component: PageNotFoundComponent}, // Skal ligge nederst!!!!
 ];
