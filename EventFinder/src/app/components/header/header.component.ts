@@ -7,15 +7,10 @@ import { SharedService } from 'src/app/services/shared.service';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent{
 
-  constructor(public auth: AuthService, private shared: SharedService) {
+  constructor(public auth: AuthService) {
    }
 
-  ngOnInit() {
-  }
 
-  openLogin() {
-    this.shared.changeLogin(true);
-  }
 }

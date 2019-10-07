@@ -25,58 +25,13 @@
             class="navbar-item"
             >Home</a
           >
-          <a class="navbar-item" [routerLink]="['/events']" routerLinkActive="is-active" >Events</a>
-          <div
-            class="navbar-item has-dropdown is-hoverable is-dark"
-            *ngIf="auth.isLoggedIn()" >
-            <a class="navbar-link is-arrowless"
-              ><span class="icon"><i class="fa fa-user"></i></span
-            ></a>
-            <div class="navbar-dropdown is-right">
-              <a class="navbar-item" [routerLink]="['/user']" routerLinkActive="is-active" >
-                <span class="icon has-text-dark"
-                  ><i class="fa fa-user"></i></span
-                >Profile
-              </a>
-              <a
-              [routerLink]="['/events']"
-              class="navbar-item"
-              class="navbar-item">
-                <span class="icon has-text-dark"
-                  ><i class="fa fa-calendar-alt"></i></span
-                >Booked events
-              </a>
-              <a class="navbar-item">
-                <span class="icon has-text-dark"
-                  ><i class="fa fa-bell"></i></span
-                >Notifications
-              </a>
-              <a class="navbar-item">
-                <span class="icon has-text-dark"><i class="fa fa-cog"></i></span
-                >Settings
-              </a>
-              <hr class="navbar-divider" />
-              <a class="navbar-item "(click)="auth.logout()">
-                <span class="icon has-text-dark"
-                  ><i class="fa fa-sign-out-alt"></i></span
-                >Logout
-              </a>
-            </div>
-          </div>
-          <div
-            class="navbar-item has-dropdown is-hoverable"
-            *ngIf="!auth.isLoggedIn()">
-            <a class="navbar-link is-arrowless"
-              ><span class="icon"><i class="fa fa-user"></i></span
-            ></a>
-            <div class="navbar-dropdown is-right">
-                <a class="navbar-item" (click)="openLogin()">
-                  <span class="icon has-text-dark"
-                    ><i class="fa fa-user"></i></span
-                  >Login
-                </a>
-              </div>
-          </div>
+          <a
+            class="navbar-item"
+            [routerLink]="['/events']"
+            routerLinkActive="is-active"
+            >Events</a>
+            <app-navbar-user-dropdown
+            class="navbar-item has-dropdown"></app-navbar-user-dropdown>
         </div>
       </div>
     </div>

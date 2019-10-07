@@ -21,6 +21,9 @@ $body-background-color: $purple;
 $pre-background: $purple;
 $background: $purple;
 
+// notification
+$notification-padding: 1.25rem 1.5rem 1.25rem 1.5rem;
+
 // Input.
 $control-border-width: 2px;
 $input-border-color: $purpleDark;
@@ -28,8 +31,16 @@ $input-shadow: none;
 $border-hover: $accent;
 
 // Navbar Dropdown
-$navbar-dropdown-background-color: $purple;
-$navbar-dropdown-border-top: 2px solid $purpleDarker;
+$navbar-dropdown-background-color: $purpleDarker;
+$navbar-dropdown-border-top: 4px solid #323232;
+
+// Dropdown Menu
+$dropdown-content-background-color: $purpleDarker;
+$dropdown-item-hover-background-color: $purpleDark;
+$dropdown-item-active-background-color: $primary;
+$dropdown-item-active-color: $white;
+$dropdown-item-color: $white;
+$dropdown-item-hover-color: $white;
 
 
 .input, .textarea, .select select {

@@ -69,6 +69,10 @@ export class AuthService {
     return this.user !== null;
   }
 
+  async reset_email(email: string) {
+    this.fireAuth.auth.sendPasswordResetEmail(email);
+  }
+
   async login(email: string, password: string, rememberMe: boolean) {
 
     if (rememberMe) {
@@ -76,6 +80,7 @@ export class AuthService {
     } else {
       this.fireAuth.auth.setPersistence(auth.Auth.Persistence.SESSION);
     }
+
 
     const credentials = await this.fireAuth.auth.signInWithEmailAndPassword(email, password);
 
