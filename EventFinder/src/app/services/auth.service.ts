@@ -3,12 +3,10 @@ import { Router } from '@angular/router';
 import { User, Organizer, Account } from '../models/account.model';
 import { UserTypes } from '../models/user.types.enum';
 import { auth } from 'firebase/app';
-
 import { User as fireUser} from 'firebase/app';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
-
-import { Observable, of} from 'rxjs';
+import { Observable, of, BehaviorSubject} from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { CookieService } from 'ngx-cookie-service';
 
@@ -18,8 +16,11 @@ import { CookieService } from 'ngx-cookie-service';
 export class AuthService {
 
   account: Observable<Account> = null;
-  type: UserTypes = UserTypes.User;
+  userType: UserTypes = UserTypes.User;
   user = null;
+
+  isUserSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
+  public isUserObs: Observable<boolean> = this.isUserSubject.asObservable();
 
   constructor(
     private fireAuth: AngularFireAuth,
@@ -34,9 +35,9 @@ export class AuthService {
 
     this.account = this.fireAuth.authState.pipe(
       switchMap(account => {
-        if (account && this.type === UserTypes.User) {
+        if (account && this.userType === UserTypes.User) {
           return this.firestore.doc<User>(`users/${account.uid}`).valueChanges();
-        } else if (account && this.type === UserTypes.Organizer) {
+        } else if (account && this.userType === UserTypes.Organizer) {
           return this.firestore.doc<Organizer>(`organizers/${account.uid}`).valueChanges();
         } else {
           return of(null);
@@ -55,11 +56,13 @@ export class AuthService {
   }
 
   setOrganizerType() {
-    this.type = UserTypes.Organizer;
+    this.userType = UserTypes.Organizer;
+    this.isUserSubject.next(false);
   }
 
   setUserType() {
-    this.type = UserTypes.User;
+    this.userType = UserTypes.User;
+    this.isUserSubject.next(true);
   }
 
   isLoggedIn() {
@@ -101,31 +104,34 @@ export class AuthService {
   updateUserData(user: fireUser, value?) {
     let userRef;
 
-    if (this.type === UserTypes.User) {
+    if (this.userType === UserTypes.User) {
       userRef = this.firestore.doc(`users/${user.uid}`);
     } else {
       userRef = this.firestore.doc(`organizers/${user.uid}`);
     }
 
     if (value) {
-      if (this.type === UserTypes.User) {
+      if (this.userType === UserTypes.User) {
         userRef.set({
           uid: user.uid,
           email: user.email,
-          name: value.name,
+          firstname: value.firstname,
+          lastname: value.lastname,
           zip: value.zip,
           country: value.country,
+          city: value.city,
           phone: value.phone,
-          // sex: value.sex,
+          sex: value.sex,
           birthday: value.birthday
         }, {merge: true});
       } else {
         userRef.set({
           uid: user.uid,
+          organization: value.organization,
           email: user.email,
-          name: value.name,
           address: value.address,
           zip: value.zip,
+          city: value.city,
           country: value.country,
           phone: value.phone,
         }, {merge: true});
