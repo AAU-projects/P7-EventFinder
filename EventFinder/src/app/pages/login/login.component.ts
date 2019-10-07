@@ -6,7 +6,6 @@ import { Location } from '@angular/common';
 import { CookieService } from 'ngx-cookie-service';
 import { SharedService } from 'src/app/services/shared.service';
 
-
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',

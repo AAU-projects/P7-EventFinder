@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { UserTypes } from 'src/app/models/user.types.enum';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
+import { RegExValidator } from 'src/app/directives/regEx.directive';
+import { SharedService } from 'src/app/services/shared.service';
 
 @Component({
   selector: 'app-register',
@@ -11,34 +13,65 @@ import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firest
   styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent {
+  get UserTypes() { return UserTypes; }
   registerForm: FormGroup;
   errorMessage = '';
   successMessage = '';
+
+  // Two State Button
+  width = '500px';
+  options = {optionOne: 'User', optionTwo: 'Organizer'};
+  actions = {actionOne: this.auth.setUserType, actionTwo: this.auth.setOrganizerType};
 
   constructor(
     public auth: AuthService,
     private router: Router,
     private fb: FormBuilder,
-    private firestore: AngularFirestore
-  ) {
-    this.createForm(this.auth.type);
+    private firestore: AngularFirestore,
+    private shared: SharedService
+  )  {
+    this.shared.changeLogin(false);
+    this.createForm(this.auth.userType);
+    this.auth.isUserObs.subscribe();
   }
 
-  createForm(type: UserTypes) {
-    this.registerForm = this.fb.group({
-      email: ['', Validators.required],
-      password: ['', Validators.required],
-      name: ['', Validators.required],
-      zip: ['', Validators.required],
-      country: ['', Validators.required],
-      phone: ['', Validators.required]
-    });
+  setToUser() {
+    this.auth.setUserType();
+    this.createForm(this.auth.userType);
+  }
 
-    if (type === UserTypes.User) {
-      this.registerForm.addControl('birthday', new FormControl(Validators.required));
-      this.registerForm.addControl('sex', new FormControl(Validators.required));
-    } else if (type === UserTypes.Organizer) {
-      this.registerForm.addControl('address', new FormControl(Validators.required));
+  setToOrganizer() {
+    this.auth.setOrganizerType();
+    this.createForm(this.auth.userType);
+  }
+
+  createForm(userType: UserTypes) {
+    if (userType === UserTypes.User) {
+      this.registerForm = this.fb.group({
+        email: ['', [Validators.required, Validators.email]],
+        password: ['', [Validators.required, Validators.minLength(6)]],
+        confirmPassword: ['', [Validators.required]],
+        zip: ['', [Validators.required, RegExValidator(/^[0-9]{4}$/i)]],
+        city: ['', [Validators.required, Validators.minLength(3), RegExValidator(/[a-z, ,A-Z,ÆæØøÅå]*/i)]],
+        country: ['', [Validators.required, Validators.minLength(3), RegExValidator(/[a-z, ,A-Z,ÆæØøÅå]*/i)]],
+        phone: ['', [Validators.required, RegExValidator(/^[0-9]{8}$/i)]],
+        firstname: ['', [Validators.required, Validators.minLength(2), RegExValidator(/[a-z, ,A-Z, ÆæØøÅå]*/i)]],
+        lastname: ['', [Validators.required, Validators.minLength(2), RegExValidator(/[a-z, ,A-Z,ÆæØøÅå]*/i)]],
+        birthday: ['', [Validators.required]],
+        sex: ['', [Validators.required]]
+      });
+    } else {
+      this.registerForm = this.fb.group({
+        email: ['', [Validators.required, Validators.email]],
+        password: ['', [Validators.required, Validators.minLength(6)]],
+        confirmPassword: ['', [Validators.required]],
+        zip: ['', [Validators.required, RegExValidator(/^[0-9]{4}$/i)]],
+        city: ['', [Validators.required, Validators.minLength(3), RegExValidator(/[a-z, ,A-Z,ÆæØøÅå]*/i)]],
+        country: ['', [Validators.required, Validators.minLength(3), RegExValidator(/[a-z, ,A-Z,ÆæØøÅå]*/i)]],
+        phone: ['', [Validators.required, RegExValidator(/^[0-9]{8}$/i)]],
+        address: ['', [Validators.required, Validators.minLength(3), RegExValidator(/[a-z, ,A-Z,ÆæØøÅå,0-9]*/i)]],
+        organization: ['', [Validators.required, Validators.minLength(3), RegExValidator(/[a-z, ,A-Z,ÆæØøÅå,0-9]*/i)]]
+      });
     }
   }
 
