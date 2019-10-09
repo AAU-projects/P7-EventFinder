@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
-import { UserTypes } from 'src/app/models/user.types.enum';
+import { AccountTypes } from 'src/app/models/account.types.enum';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { RegExValidator } from 'src/app/directives/regEx.directive';
 import { SharedService } from 'src/app/services/shared.service';
@@ -13,7 +13,7 @@ import { SharedService } from 'src/app/services/shared.service';
   styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent {
-  get UserTypes() { return UserTypes; }
+  get AccountTypes() { return AccountTypes; }
   registerForm: FormGroup;
   errorMessage = '';
   successMessage = '';
@@ -45,8 +45,8 @@ export class RegisterComponent {
     this.createForm(this.auth.userType);
   }
 
-  createForm(userType: UserTypes) {
-    if (userType === UserTypes.User) {
+  createForm(userType: AccountTypes) {
+    if (userType === AccountTypes.User) {
       this.registerForm = this.fb.group({
         email: ['', [Validators.required, Validators.email]],
         password: ['', [Validators.required, Validators.minLength(6)]],
@@ -78,7 +78,11 @@ export class RegisterComponent {
   register(value) {
     this.auth.register(value)
     .then(res => {
-      this.router.navigate(['/user']);
+      if (this.auth.userType === AccountTypes.User) {
+        this.router.navigate(['/user']);
+      } else {
+      this.router.navigate(['/organizer']);
+      }
     }, err => {
       this.errorMessage = err.message;
       this.successMessage = '';

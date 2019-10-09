@@ -1,12 +1,11 @@
 import { Component, OnInit, Input, HostBinding, ElementRef } from '@angular/core';
-import { MethodCall } from '@angular/compiler';
-import { UserTypes } from 'src/app/models/user.types.enum';
 
 @Component({
   selector: 'app-two-state-button',
   templateUrl: './two-state-button.component.html',
   styleUrls: ['./two-state-button.component.scss'],
 })
+
 export class TwoStateButtonComponent implements OnInit {
   @Input() width: string;
   @Input() options: {optionOne: string, optionTwo: string};
@@ -27,5 +26,4 @@ export class TwoStateButtonComponent implements OnInit {
       this.actions.actionOne();
     }
   }
-
 }

@@ -7,9 +7,12 @@ import { SharedService } from 'src/app/services/shared.service';
   templateUrl: './navbar-user-dropdown.component.html',
   styleUrls: ['./navbar-user-dropdown.component.scss']
 })
+
 export class NavbarUserDropdownComponent{
 
-  constructor(public auth: AuthService, private shared: SharedService) { }
+  constructor(public auth: AuthService, private shared: SharedService) {
+    auth.isUserObs.subscribe();
+  }
 
   openLogin() {
     this.shared.changeLogin(true);

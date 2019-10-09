@@ -1,14 +1,36 @@
+<!-- Loggedin dropdown -->
 <div
   class="navbar-item has-dropdown is-hoverable is-dark"
   *ngIf="auth.isLoggedIn()"
 >
   <a
     class="navbar-link is-arrowless"
-    [routerLink]="['/user']"
+    [routerLink]="auth.isUserObs?['/organizer']:['/user']"
     routerLinkActive="is-active"
   >
     <span class="icon"><i class="fa fa-user"></i></span>
   </a>
+  <div *ngIf="auth.isUserObs | async; then user; else organizer"></div>
+</div>
+
+<!-- Logout dropdown -->
+<div
+  class="navbar-item has-dropdown is-hoverable"
+  *ngIf="!auth.isLoggedIn()"
+  (click)="openLogin()"
+>
+  <a class="navbar-link is-arrowless"
+    ><span class="icon"><i class="fa fa-user"></i></span
+  ></a>
+  <div class="navbar-dropdown is-right has-text-white">
+    <a class="navbar-item has-text-white" (click)="openLogin()">
+      <span class="icon has-text-white"><i class="fa fa-user"></i></span>Login
+    </a>
+  </div>
+</div>
+
+<!-- User Dropdown -->
+<ng-template #user>
   <div class="navbar-dropdown is-right">
     <a
       class="navbar-item has-text-white"
@@ -39,18 +61,14 @@
       >Logout
     </a>
   </div>
-</div>
-<div
-  class="navbar-item has-dropdown is-hoverable"
-  *ngIf="!auth.isLoggedIn()"
-  (click)="openLogin()"
->
-  <a class="navbar-link is-arrowless"
-    ><span class="icon"><i class="fa fa-user"></i></span
-  ></a>
-  <div class="navbar-dropdown is-right has-text-white">
-    <a class="navbar-item has-text-white" (click)="openLogin()">
-      <span class="icon has-text-white"><i class="fa fa-user"></i></span>Login
+</ng-template>
+
+<!-- Organizer Dropdown -->
+<ng-template #organizer>
+  <div class="navbar-dropdown is-right">
+    <a class="navbar-item has-text-white" (click)="auth.logout()">
+      <span class="icon has-text-white"><i class="fa fa-sign-out-alt"></i></span
+      >Logout
     </a>
   </div>
-</div>
+</ng-template>

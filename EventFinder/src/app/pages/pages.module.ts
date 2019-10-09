@@ -11,6 +11,7 @@ import { UserComponent } from './user/user.component';
 import { RegisterComponent } from './register/register.component';
 import { EventsComponent } from './events/events.component';
 import { ForgotpasswordComponent } from './forgotpassword/forgotpassword.component';
+import { OrganizerComponent } from './organizer/organizer.component';
 
 
 /* How to add a new page:
@@ -28,7 +29,8 @@ import { ForgotpasswordComponent } from './forgotpassword/forgotpassword.compone
     UserComponent,
     RegisterComponent,
     EventsComponent,
-    ForgotpasswordComponent],
+    ForgotpasswordComponent,
+    OrganizerComponent],
   imports: [
     CommonModule,
     PagesRoutingModule,

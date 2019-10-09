@@ -5,6 +5,7 @@ import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms'
 import { Location } from '@angular/common';
 import { CookieService } from 'ngx-cookie-service';
 import { SharedService } from 'src/app/services/shared.service';
+import { AccountTypes } from 'src/app/models/account.types.enum';
 
 @Component({
   selector: 'app-login',
@@ -36,11 +37,11 @@ export class LoginComponent {
   }
 
   login(value) {
-    this.authService.login(value.email, value.password, this.rememberMe)
+    this.authService.login(value.email, value.password, this.rememberMe, true)
     .then(res => {
       this.errorMessage = null;
       this.shared.changeLogin(false);
-      this.router.navigate(['/user']);
+      console.log(this.authService.userType);
     }, err => {
       console.log(err);
       this.errorMessage = err.message;
