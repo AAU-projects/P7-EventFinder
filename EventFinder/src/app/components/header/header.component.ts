@@ -7,10 +7,11 @@ import { SharedService } from 'src/app/services/shared.service';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
-export class HeaderComponent{
+
+export class HeaderComponent {
 
   constructor(public auth: AuthService) {
+    auth.isUserObs.subscribe();
    }
-
 
 }

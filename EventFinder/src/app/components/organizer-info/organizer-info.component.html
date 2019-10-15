@@ -1,0 +1,53 @@
+<div class="tile is-ancestor">
+  <div class="tile is-parent">
+    <div class="tile is-child notification has-background-dark">
+      <div class="columns is-multiline">
+        <div class="column">
+          <h1 class="title has-text-left has-text-white is-6">
+            Organization Information
+          </h1>
+        </div>
+        <div class="column has-text-right">
+          <a>
+            <span class="icon has-text-white"><i class="fa fa-pen"></i></span>
+          </a>
+        </div>
+      </div>
+      <div class="columns has-text-left has-text-white">
+        <div class="column">
+          <ul>
+            <li>
+              <p>
+                <span class="icon"><i class="fas fa-home"></i></span>Address:
+              </p>
+            </li>
+            <li>
+              <p class="infoField">
+                {{ user.address }}, <br />
+                {{ user.zip }} {{ user.city }}, <br />
+                {{ user.country }}
+              </p>
+            </li>
+          </ul>
+        </div>
+        <div class="column">
+          <p>
+            <span class="icon"><i class="fas fa-mobile-alt"></i></span>Phone:
+            {{ user.phone }}
+          </p>
+          <br>
+          <p>
+            <span class="icon"><i class="fas fa-at"></i></span>Mail:
+            {{ user.email }}
+          </p>
+        </div>
+      </div>
+      <hr />
+    </div>
+  </div>
+  <div class="tile is-4 is-vertical is-parent">
+    <div class="tile is-child notification has-background-dark">
+
+    </div>
+  </div>
+</div>
