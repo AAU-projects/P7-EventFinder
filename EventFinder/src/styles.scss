@@ -1,1 +1,12 @@
 /* You can add global styles to this file, and also import other style files */
+@import "assets/css/styles.css";
+
+html {
+  background-color: black;
+}
+
+.has-bg-img {
+  background: url('assets/images/bg.jpg')center center;
+  background-size:cover;
+  background-attachment: fixed;
+}

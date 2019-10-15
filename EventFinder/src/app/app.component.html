@@ -1,4 +1,12 @@
-<h1><app-test></app-test></h1>
-<h2>Hej</h2>
+<section class="hero is-fullheight has-bg-img">
+  <app-header></app-header>
+  <div class="hero-body">
+    <div class="container has-text-centered">
+      <div *ngIf="showLogin">
+        <app-login></app-login>
+      </div>
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</section>
 
-<router-outlet></router-outlet>
