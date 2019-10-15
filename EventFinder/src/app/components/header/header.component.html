@@ -1,0 +1,41 @@
+<!-- Header -->
+<div class="hero-head">
+  <header class="navbar is-primary">
+    <div class="container">
+      <div class="navbar-brand">
+        <a class="navbar-item" href="#">
+          <img src="../../../assets/images/logo.png" alt="Logo" />
+          &nbsp;&nbsp;
+          <h1 class="has-text-white event-finder-logo has-text-weight-light">
+            <strong>EVENT</strong>FINDER
+          </h1>
+        </a>
+        <span class="navbar-burger burger" data-target="navbarMenuHeroC">
+          <span></span>
+          <span></span>
+          <span></span>
+        </span>
+      </div>
+      <div id="navbarMenuHeroC" class="navbar-menu">
+        <div class="navbar-end">
+          <a
+            [routerLink]="['']"
+            routerLinkActive="is-active"
+            [routerLinkActiveOptions]="{ exact: true }"
+            class="navbar-item"
+            >Home</a
+          >
+          <a
+            class="navbar-item"
+            [routerLink]="['/events']"
+            routerLinkActive="is-active"
+            >Events</a
+          >
+          <app-navbar-user-dropdown
+            class="navbar-item has-dropdown"
+          ></app-navbar-user-dropdown>
+        </div>
+      </div>
+    </div>
+  </header>
+</div>
