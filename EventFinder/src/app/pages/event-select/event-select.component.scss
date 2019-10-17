@@ -1,0 +1,19 @@
+.image-fill {
+    display:flex;
+    flex-direction:column;
+}
+
+.banner-background {
+    background-image: url('/../assets/images/testbanner.png');
+    height: 30%;
+    background-repeat: no-repeat;
+    background-position: center;
+    // position: relative;
+}
+
+.move-up-half {
+
+    position: relative; top: 50%;
+}
+
+

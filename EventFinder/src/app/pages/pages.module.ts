@@ -12,6 +12,7 @@ import { RegisterComponent } from './register/register.component';
 import { EventsComponent } from './events/events.component';
 import { ForgotpasswordComponent } from './forgotpassword/forgotpassword.component';
 import { OrganizerComponent } from './organizer/organizer.component';
+import { EventSelectComponent } from './event-select/event-select.component';
 
 
 /* How to add a new page:
@@ -30,7 +31,8 @@ import { OrganizerComponent } from './organizer/organizer.component';
     RegisterComponent,
     EventsComponent,
     ForgotpasswordComponent,
-    OrganizerComponent],
+    OrganizerComponent,
+    EventSelectComponent],
   imports: [
     CommonModule,
     PagesRoutingModule,

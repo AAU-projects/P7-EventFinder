@@ -1,5 +1,8 @@
 <h1 class="has-text-white is-size-1 has-text-weight-light">Event finder</h1>
 
 <div class="buttons is-centered">
-  <a [routerLink]="['/events']" class="button is-primary">See all hot available events in your neighbourhood ></a>
+    <div *ngIf="showSelectEvent">
+      <app-event-select></app-event-select>
+    </div>
+  <a class="button is-primary" (click)="showEventSelect()">*Select Event*</a>
 </div>

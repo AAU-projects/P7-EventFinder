@@ -30,7 +30,7 @@ export class RegisterComponent {
     private firestore: AngularFirestore,
     private shared: SharedService
   )  {
-    this.shared.changeLogin(false);
+    this.shared.showLogin(false);
     this.createForm(this.auth.userType);
     this.auth.isUserObs.subscribe();
   }
