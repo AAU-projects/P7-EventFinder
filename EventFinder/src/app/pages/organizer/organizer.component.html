@@ -59,20 +59,27 @@
           <hr>
             <aside class="menu has-text-white">
                 <ul class="menu-list">
-                  <li><a class="selected no-decoration">Profile</a></li>
-                  <li><a class="no-decoration">Activity</a></li>
-                  <li><a class="no-decoration">Events</a></li>
-                  <li><a class="no-decoration">Feedback</a></li>
-                  <li><a class="no-decoration">Tickets</a></li>
-                  <li><a class="no-decoration">Preferences</a></li>
+                  <li><a [ngClass]="((menuTabObs | async) == menuTabs.Profile) ? 'selected' : ''" class="no-decoration" (click)="onMenuClick('Profile')">Profile</a></li>
+                  <li><a [ngClass]="((menuTabObs | async) == menuTabs.Activity) ? 'selected' : ''" class="no-decoration" (click)="onMenuClick('Activity')">Activity</a></li>
+                  <li><a [ngClass]="((menuTabObs | async) == menuTabs.Events) ? 'selected' : ''" class="no-decoration" (click)="onMenuClick('Events')">Events</a></li>
+                  <li><a [ngClass]="((menuTabObs | async) == menuTabs.Feedback) ? 'selected' : ''" class="no-decoration" (click)="onMenuClick('Feedback')">Feedback</a></li>
+                  <li><a [ngClass]="((menuTabObs | async) == menuTabs.Tickets) ? 'selected' : ''" class="no-decoration" (click)="onMenuClick('Tickets')">Tickets</a></li>
+                  <li><a [ngClass]="((menuTabObs | async) == menuTabs.Preferences) ? 'selected' : ''" class="no-decoration" (click)="onMenuClick('Preferences')">Preferences</a></li>
                 </ul>
-              </aside>
+            </aside>
         </div>
       </div>
+
+      <!-- Main content is inserted here -->
       <div class="column">
-          <div class="notification bottom-right has-background-darker">
-            <app-organizer-info [user]="user"></app-organizer-info>
+        <div class="notification bottom-right has-background-darker">
+          <div [ngSwitch]="(menuTabObs | async)">
+              <app-organizer-info *ngSwitchCase="menuTabs.Profile" [user]="user"></app-organizer-info>
+              <app-event-form *ngSwitchCase="menuTabs.Events"></app-event-form>
           </div>
         </div>
+      </div>
+
     </div>
+
   </div>
