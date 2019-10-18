@@ -50,5 +50,4 @@ export class OrganizerComponent implements OnInit {
       }
     }
   }
-
 }

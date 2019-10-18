@@ -59,12 +59,12 @@
           <hr>
             <aside class="menu has-text-white">
                 <ul class="menu-list">
-                  <li><a [ngClass]="((menuTabObs | async) == menuTabs.Profile) ? 'selected' : ''" class="no-decoration" (click)="onMenuClick('Profile')">Profile</a></li>
-                  <li><a [ngClass]="((menuTabObs | async) == menuTabs.Activity) ? 'selected' : ''" class="no-decoration" (click)="onMenuClick('Activity')">Activity</a></li>
-                  <li><a [ngClass]="((menuTabObs | async) == menuTabs.Events) ? 'selected' : ''" class="no-decoration" (click)="onMenuClick('Events')">Events</a></li>
-                  <li><a [ngClass]="((menuTabObs | async) == menuTabs.Feedback) ? 'selected' : ''" class="no-decoration" (click)="onMenuClick('Feedback')">Feedback</a></li>
-                  <li><a [ngClass]="((menuTabObs | async) == menuTabs.Tickets) ? 'selected' : ''" class="no-decoration" (click)="onMenuClick('Tickets')">Tickets</a></li>
-                  <li><a [ngClass]="((menuTabObs | async) == menuTabs.Preferences) ? 'selected' : ''" class="no-decoration" (click)="onMenuClick('Preferences')">Preferences</a></li>
+                  <li><a [ngClass]="((menuTabObs | async) == menuTabs.Profile) ? 'is-active' : ''" class="no-decoration" (click)="onMenuClick('Profile')">Profile</a></li>
+                  <li><a [ngClass]="((menuTabObs | async) == menuTabs.Activity) ? 'is-active' : ''" class="no-decoration" (click)="onMenuClick('Activity')">Activity</a></li>
+                  <li><a [ngClass]="((menuTabObs | async) == menuTabs.Events) ? 'is-active' : ''" class="no-decoration" (click)="onMenuClick('Events')">Events</a></li>
+                  <li><a [ngClass]="((menuTabObs | async) == menuTabs.Feedback) ? 'is-active' : ''" class="no-decoration" (click)="onMenuClick('Feedback')">Feedback</a></li>
+                  <li><a [ngClass]="((menuTabObs | async) == menuTabs.Tickets) ? 'is-active' : ''" class="no-decoration" (click)="onMenuClick('Tickets')">Tickets</a></li>
+                  <li><a [ngClass]="((menuTabObs | async) == menuTabs.Preferences) ? 'is-active' : ''" class="no-decoration" (click)="onMenuClick('Preferences')">Preferences</a></li>
                 </ul>
             </aside>
         </div>

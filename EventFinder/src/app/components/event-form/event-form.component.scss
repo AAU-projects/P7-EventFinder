@@ -1,0 +1,47 @@
+.header {
+  text-align: center;
+  font-size: 30px;
+  margin-bottom: 40px;
+}
+
+.row {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.error {
+  color: red;
+}
+
+.form-control {
+  margin: 5px;
+}
+
+.remove-bottom-margin {
+  margin-bottom: 0 !important;
+}
+
+select:required:invalid {
+  color: #7E7E9B !important;
+}
+
+.column.allign-bottom {
+  margin-top: auto !important;
+}
+
+.input {
+  height: 3em;
+  padding: calc(0.875em - 1px) calc(1em - 1px);
+}
+
+.is-full-heigth {
+  height: 100% !important;
+}
+
+.tile.is-parent {
+  padding: 0.25rem !important;
+}
+
+.tile.is-vertical > .tile.is-child:not(:last-child) {
+  margin-bottom: 0.50rem !important;
+}

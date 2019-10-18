@@ -1,62 +1,265 @@
 <div class="tile is-ancestor ">
-  <div class="tile is-vertical is-parent">
+  <form [formGroup]="eventForm" (ngSubmit)="createEvent(eventForm.value)" validate>
+    <div class="tile is-vertical is-parent">
 
-    <div class="tile">
-      <div class="tile is-8 is-parent">
+      <div class="tile">
+        <div class="tile is-8 is-parent">
 
-        <!-- EVENT FORM TILE -->
-        <div class="tile is-child box notification has-background-dark has-text-white">
-          <p class="title">Create a New Event</p>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam semper diam at erat pulvinar, at pulvinar
-            felis blandit. Vestibulum volutpat tellus diam, consequat gravida libero rhoncus ut. Morbi maximus, leo sit
-            amet vehicula eleifend, nunc dui porta orci, quis semper odio felis ut quam.</p>
-          <p>Suspendisse varius ligula in molestie lacinia. Maecenas varius eget ligula a sagittis. Pellentesque
-            interdum,
-            nisl nec interdum maximus, augue diam porttitor lorem, et sollicitudin felis neque sit amet erat. Maecenas
-            imperdiet felis nisi, fringilla luctus felis hendrerit sit amet. Aenean vitae gravida diam, finibus
-            dignissim
-            turpis. Sed eget varius ligula, at volutpat tortor.</p>
-          <p>Integer sollicitudin, tortor a mattis commodo, velit urna rhoncus erat, vitae congue lectus dolor consequat
-            libero. Donec leo ligula, maximus et pellentesque sed, gravida a metus. Cras ullamcorper a nunc ac porta.
-            Aliquam ut aliquet lacus, quis faucibus libero. Quisque non semper leo.</p>
-        </div>
-      </div>
-      <div class="tile is-4 is-vertical is-parent">
-
-        <!-- BANNER UPLOAD TILE -->
-        <div class="tile is-child box notification has-background-dark has-text-white">
-          <p class="title">Event Banner</p>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ornare magna eros, eu pellentesque tortor
-            vestibulum ut. Maecenas non massa sem. Etiam finibus odio quis feugiat facilisis.</p>
-        </div>
-
-        <!-- TAGS TILE -->
-        <div class="tile is-child box notification has-background-dark has-text-white">
-          <p class="title">TAGS</p>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ornare magna eros, eu pellentesque tortor
-            vestibulum ut. Maecenas non massa sem. Etiam finibus odio quis feugiat facilisis.</p>
-        </div>
-      </div>
-    </div>
-
-    <div class="tile">
-
-      <!-- CREATE EVENT TILE -->
-      <div class="tile is-3 is-parent">
-        <div class="tile is-child box notification has-background-dark has-text-white">
-            <p class="title">Live Preview</p>
-        </div>
-      </div>
-
-      <!-- PREVIEW TILE -->
-      <div class="tile is-parent">
+          <!-- EVENT FORM TILE -->
           <div class="tile is-child box notification has-background-dark has-text-white">
-              <p class="title">-PREVIEW TILE-</p>
+            <p class="title">Create a New Event</p>
+
+            <div class="columns">
+
+              <div class="column is-half">
+
+                <!-- INPUT: TITLE -->
+                <div class="field">
+                  <p class="control has-icons-left">
+                    <input
+                      [ngClass]="(eventForm.controls['title'].invalid && eventForm.controls['title'].dirty) ? 'is-danger' : ''"
+                      required class="input is-rounded has-text-centered is-medium is-size-6" type="text"
+                      formControlName="title" placeholder="Title" />
+                    <span class="icon is-small is-left">
+                      <i class="fas fa-heading"></i>
+                    </span>
+                  </p>
+                </div>
+
+                <!-- INPUT: ADDRESS -->
+                <div class="field">
+                  <p class="control has-icons-left">
+                    <input
+                      [ngClass]="(eventForm.controls['address'].invalid && eventForm.controls['address'].dirty) ? 'is-danger' : ''"
+                      required class="input is-rounded has-text-centered is-medium is-size-6" type="text"
+                      formControlName="address" placeholder="Address" />
+                    <span class="icon is-small is-left">
+                      <i class="fas fa-map-marker-alt"></i>
+                    </span>
+                  </p>
+                </div>
+
+                <div class="columns remove-bottom-margin">
+                  <div class="column is-5">
+
+                    <!-- INPUT: ZIP -->
+                    <div class="field">
+                      <p class="control has-icons-left">
+                        <input
+                          [ngClass]="(eventForm.controls['zip'].invalid && eventForm.controls['zip'].dirty) ? 'is-danger' : ''"
+                          required class="input is-rounded has-text-centered is-medium is-size-6" type="text"
+                          formControlName="zip" placeholder="Zip" />
+                        <span class="icon is-small is-left">
+                          <i class="fas fa-city"></i>
+                        </span>
+                      </p>
+                    </div>
+                  </div>
+                  <div class="column">
+
+                    <!-- INPUT: CITY -->
+                    <div class="field">
+                      <div class="control">
+                        <input
+                          [ngClass]="(eventForm.controls['city'].invalid && eventForm.controls['city'].dirty) ? 'is-danger' : ''"
+                          required class="input is-rounded has-text-centered is-medium is-size-6" type="text"
+                          formControlName="city" placeholder="City" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- INPUT: COUNTRY -->
+                <div class="field">
+                  <p class="control has-icons-left">
+                    <input
+                      [ngClass]="(eventForm.controls['country'].invalid && eventForm.controls['country'].dirty) ? 'is-danger' : ''"
+                      required class="input is-rounded has-text-centered is-medium is-size-6" type="text"
+                      formControlName="country" placeholder="Country" />
+                    <span class="icon is-small is-left">
+                      <i class="fas fa-globe"></i>
+                    </span>
+                  </p>
+                </div>
+
+                <!-- INPUT: AGE REQUIREMENT -->
+                <div class="field">
+                  <p class="control has-icons-left">
+                    <input
+                      [ngClass]="(eventForm.controls['age'].invalid && eventForm.controls['age'].dirty) ? 'is-danger' : ''"
+                      required class="input is-rounded has-text-centered is-medium is-size-6" type="tel"
+                      formControlName="age" placeholder="Age Requirement" />
+                    <span class="icon is-small is-left">
+                      <i class="fas fa-american-sign-language-interpreting"></i>
+                    </span>
+                  </p>
+                </div>
+
+                <div class="columns remove-bottom-margin">
+                  <div class="column is-8">
+
+                    <!-- INPUT: PRICE -->
+                    <div class="field">
+                      <p class="control has-icons-left">
+                        <input
+                          [ngClass]="(eventForm.controls['price'].invalid && eventForm.controls['price'].dirty) ? 'is-danger' : ''"
+                          required class="input is-rounded has-text-centered is-medium is-size-6" type="number"
+                          formControlName="price" placeholder="Price" />
+                        <span class="icon is-small is-left">
+                          <i class="fas fa-money-bill-alt"></i>
+                        </span>
+                      </p>
+                    </div>
+                  </div>
+
+                  <div class="column has-text-centered">
+                    <!-- INPUT: FREE? -->
+                    <div class="field">
+                      <div class="control">
+                        <button class="button is-medium is-primary is-rounded">Free?</button>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+
+              </div>
+
+              <div class="column is-half">
+                <!-- INPUT: DESCRIPTION -->
+                <div class="field is-full-heigth">
+                  <div class="control is-full-heigth">
+                    <textarea
+                      [ngClass]="(eventForm.controls['description'].invalid && eventForm.controls['description'].dirty) ? 'is-danger' : ''"
+                      required class="textarea is-full-heigth" formControlName="description"
+                      placeholder="Enter description here..."></textarea>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+
+          </div>
+        </div>
+        <div class="tile is-4 is-vertical is-parent">
+
+          <!-- BANNER UPLOAD TILE -->
+          <div class="tile is-child box notification has-background-dark has-text-white">
+            <p class="title">Event Banner</p>
+            <div class="file has-name is-primary">
+              <label class="file-label">
+                <input class="file-input" type="file" name="resume">
+                <span class="file-cta">
+                  <span class="file-icon">
+                    <i class="fas fa-upload"></i>
+                  </span>
+                  <span class="file-label">
+                    Upload
+                  </span>
+                </span>
+                <span class="file-name">
+                  No Banner Selected
+                </span>
+              </label>
+            </div>
+          </div>
+
+          <!-- TAGS TILE -->
+          <div class="tile is-child box notification has-background-dark has-text-white is-vertical">
+            <h3 class="has-text-left">
+              <span class="icon"><i class="fas fa-music"></i></span>
+              Genre
+            </h3>
+            <h3 class="has-text-left">
+                <span class="icon"><i class="fas fa-wind"></i></span>
+                Atmosphere
+            </h3>
+            <div class="columns">
+              <div class="column is-fourth">
+                <label class="checkbox">
+                  <input type="checkbox">
+                  Box 1
+                </label>
+                <label class="checkbox">
+                  <input type="checkbox">
+                  Box 2
+                </label>
+              </div>
+              <div class="column is-fourth">
+                <label class="checkbox">
+                  <input type="checkbox">
+                  Box 3
+                  </label>
+                <label class="checkbox">
+                  <input type="checkbox">
+                  Box 4
+                </label>
+              </div>
+              <div class="column is-fourth">
+                <label class="checkbox">
+                  <input type="checkbox">
+                  Box 5
+                </label>
+                <label class="checkbox">
+                  <input type="checkbox">
+                  Box 6
+                </label>
+              </div>
+              <div class="column is-fourth">
+                <label class="checkbox">
+                  <input type="checkbox">
+                  Box 7
+                  </label>
+                <label class="checkbox">
+                  <input type="checkbox">
+                  Box 8
+                </label>
+
+              </div>
+            </div>
+            <div class="columns">
+              <div class="column is-4">
+                <label class="checkbox">
+                    <input type="checkbox">
+                    Specific
+                </label>
+              </div>
+              <div class="column is-8">
+                  <input class="input is-rounded has-text-centered is-small is-size-8" type="text"/>
+              </div>
+
+            </div>
+            <h3 class="has-text-left">
+                <span class="icon"><i class="fas fa-mask"></i></span>
+                Dresscode
+            </h3>
+          </div>
+        </div>
+      </div>
+
+      <div class="tile">
+
+        <!-- CREATE EVENT TILE -->
+        <div class="tile is-3 is-parent">
+          <div class="tile is-child box notification has-background-dark has-text-white">
+            <p class="title">Live Preview</p>
+            <button type="submit" class="button is-primary is-large is-rounded is-fullwidth"
+              [disabled]="!eventForm.valid">
+              Create Event
+            </button>
           </div>
         </div>
 
+        <!-- PREVIEW TILE -->
+        <div class="tile is-parent">
+          <div class="tile is-child box notification has-background-dark has-text-white">
+            <p class="title">-PREVIEW TILE-</p>
+          </div>
+        </div>
+
+      </div>
+
     </div>
-
-  </div>
-
+  </form>
 </div>
