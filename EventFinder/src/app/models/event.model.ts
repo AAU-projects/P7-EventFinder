@@ -1,4 +1,5 @@
 export interface Event {
+  organizerId: string;
   title: string;
   address: string;
   zip: string;
@@ -7,6 +8,8 @@ export interface Event {
   age: number;
   price: number;
   description: string;
+  startDate: Date;
+  endDate: Date;
   banner: string;
   genre: Genre[];
   genreCustom: string[];
