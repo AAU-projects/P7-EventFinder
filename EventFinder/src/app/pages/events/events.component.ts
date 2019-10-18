@@ -9,7 +9,7 @@ import { Subscription } from 'rxjs';
 })
 export class EventsComponent implements OnInit {
   subscription: Subscription;
-  showSelectEvent = false;
+  showSelectEvent = true; // TODO: Set this to false
 
   constructor(private shared: SharedService) { }
 

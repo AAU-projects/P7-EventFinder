@@ -5,15 +5,64 @@
 
 .banner-background {
     background-image: url('/../assets/images/testbanner.png');
-    height: 30%;
+    height: auto;
+    width: 100%;
+    background-color: #323259;
+    background-size: fill;
+    background-position: top;
     background-repeat: no-repeat;
-    background-position: center;
     // position: relative;
 }
 
-.move-up-half {
-
-    position: relative; top: 50%;
+.second-layer {
+    position: absolute;
+    right: 1%;
+    width: 98%;
+    height: 100%;
+    top: 300px;
+    background-color: #5C5C80;
 }
 
+.content {
+    margin-top: 100px;
+}
 
+.imagelogo {
+    justify-content: center;
+    position: absolute;
+    top: 220px;
+    left: 45%;
+}
+
+.title {
+  font-size: 4vh;
+}
+
+.small-text {
+    font-size: 2vh;
+}
+
+.delete {
+    position: absolute;
+    top: 1%;
+    right: 1%;
+}
+
+.banner-size {
+    height: 100em;
+    width: auto;
+}
+
+.panel-size {
+    overflow: hidden;
+    width: 1400px;
+    height: auto;
+}
+
+.red {
+  background-color: rgb(255, 0, 0);
+}
+
+.blue {
+  background-color: rgb(0, 0, 255);
+}
