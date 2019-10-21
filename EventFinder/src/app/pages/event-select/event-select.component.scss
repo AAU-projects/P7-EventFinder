@@ -18,7 +18,7 @@
     position: absolute;
     right: 1%;
     width: 98%;
-    height: 100%;
+    height: auto;
     top: 300px;
     background-color: #5C5C80;
 }
@@ -27,7 +27,7 @@
     margin-top: 100px;
 }
 
-.imagelogo {
+.image-logo {
     justify-content: center;
     position: absolute;
     top: 220px;
@@ -39,7 +39,23 @@
 }
 
 .small-text {
-    font-size: 2vh;
+    font-size: 1.5vh;
+}
+
+.panel-size {
+    width: 1400px;
+    height: auto;
+}
+
+.top-content {
+    align-content: center;
+    margin: auto;
+}
+
+// Banner
+.banner-size {
+    height: 100em;
+    width: auto;
 }
 
 .delete {
@@ -48,21 +64,50 @@
     right: 1%;
 }
 
-.banner-size {
-    height: 100em;
-    width: auto;
+// Left event content
+
+// Right event content
+
+.map-size {
+    width: 55vh;
 }
 
-.panel-size {
-    overflow: hidden;
-    width: 1400px;
-    height: auto;
+// Bottom event content
+
+// Event
+
+.event-data{
+    padding-left: 3vh;
+    padding-right: 3vh;
 }
 
-.red {
-  background-color: rgb(255, 0, 0);
+/* width */
+::-webkit-scrollbar {
+  width: 3px;
 }
 
-.blue {
-  background-color: rgb(0, 0, 255);
+/* Track */
+::-webkit-scrollbar-track {
+  background: #121118;
 }
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #5C5C80;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #7272A4;
+}
+
+
+// // Invisble scrollbar
+// ::-webkit-scrollbar {
+//     display: none;
+// }
+
+
+agm-map {
+    height: 300px;
+  }

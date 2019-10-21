@@ -2,40 +2,62 @@
   <div class="modal-background" (click)="close()"></div>
   <div class="modal-content panel-size">
     <div id="container">
-
       <div class="row banner-background banner-size">
         <button class="delete" (click)="close()"></button>
       </div>
-
       <div class="second-layer">
         <div class="content">
-          <h1 class="title has-text-white">A Conversation with Barack Obama</h1>
-          <h2 class="small-text has-text-white"> <i class="far fa-calendar has-text-white"></i> September 7th, 2019 from 16:30 -
-            18:30</h2>
-          <h2 class="small-text has-text-white"> <i class="fas fa-map-marker-alt has-text-white"></i> Musikkens Pl. 1, 9000 Aalborg
+          <h1 class="title has-text-white">{{ getTitle() }}</h1>
+          <h2 class="small-text has-text-white has-text-weight-normal">
+            <i class="far fa-calendar"></i> &nbsp; {{ getDate() }}
           </h2>
-          <div class="rows">
-            <div class="row is-full">
-              <div class="columns">
-                <div class="column is-half red">Lorem ipsum dolor sit amet
-                    Consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
-
-                    Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.
-
-                    Lorem ipsum dolor sit amet
-                    Consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.</div>
-                <div class="column is-half blue">ha</div>
+          <h2 class="small-text has-text-white has-text-weight-normal">
+            <i class="fas fa-map-marker-alt"></i> &nbsp; {{ getLocation() }}
+          </h2>
+          <div class="top-content">
+            <div class="column" style="white-space: pre-line;">
+              <div class="columns ">
+                <div class="column has-text-white has-text-left event-data">
+                  <b> {{ getEventTitleDescription() }} </b> <br />
+                  {{ getEventDescription() }}
+                </div>
+                <div class="is-divider-vertical"></div>
+                <div class="column">
+                    <agm-map [latitude]="latitude" [longitude]="longitude" *ngIf="location"></agm-map>
+                  <div class="columns event-data">
+                    <div class="column has-text-left">
+                      <h2 class="small-text has-text-white has-text-weight-normal">
+                        <i class="fab fa-itunes-note"></i> Lecture
+                      </h2>
+                      <h2 class="small-text has-text-white has-text-weight-normal">
+                        <i class="fas fa-wind"></i> Elegant
+                      </h2>
+                      <h2 class="small-text has-text-white has-text-weight-normal">
+                        <i class="fas fa-mask"></i> Elegant dress code enforced
+                      </h2>
+                    </div>
+                    <div class="column">
+                      <img class="" width="200" src="assets/images/testrating.png" />
+                    </div>
+                  </div>
+                  <button class="button is-primary  is-rounded is-large">
+                    4000 DKK
+                  </button>
+                </div>
               </div>
-              <div class="row is-full red">OM MUSIKKENS HUS
-                  På Aalborgs havnefront med frit udsyn over Limfjorden finder man Musikkens Hus; nordjydernes musikalske samlingspunkt og en arkitektonisk perle tegnet af det internationalt anerkendte arkitektfirma Coop Himmelb(l)au.
-                  Huset består af mere end 20.000 m2 fordelt på ni plan med bl.a. fire koncertsale, fem scener, en indbydende restaurant, en spændende foyer samt undervisnings- og administrationsfaciliteter. De faste beboere er Aalborg Symfoniorkester, Det Jyske Musikkonservatoriums Aalborgafdeling, Aalborg Universitets musikuddannelser og musikterapi, Musikkens Spisehus samt Musikkens Hus’ egen virksomhed.
-
-                  ET BEVÆGENDE HUS
-                  Husets mange arkitektoniske detaljer indbyder til udforskning og bevægelse. Når du bevæger dig rundt i huset, vil du opleve vægge, der skråner, trapper, der bugter og snor sig, runde vinduer i utallige størrelser og udskæringer, hyggelige lounges og altaner, smukke koncertsale med indkigspartier og meget mere. Når du har bevæget dig rundt i huset, er ønsket, at du skal bevæge dig ind i salene og lade musikken bevæge dig.</div>
+              <div class="is-divider"></div>
+              <div class="column has-text-white has-text-left" style="white-space: pre-line;">
+                <div>
+                  {{ getOrganizerDescription() }}
+                </div>
+                <button class="is-dark button is-rounded has-text-white-bis is-pulled-right">Læs mere</button>
+              </div>
             </div>
+
           </div>
         </div>
       </div>
-      <img class="imagelogo" src="assets/images/testlogo.png">
+      <img class="image-logo" src="assets/images/testlogo.png" />
     </div>
   </div>
+</div>

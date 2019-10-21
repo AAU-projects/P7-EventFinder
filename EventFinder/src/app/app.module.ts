@@ -14,6 +14,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { PagesModule } from './pages/pages.module';
 import { ComponentsModule } from './components/components.module';
 
+
 // Font Awesome
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
@@ -30,7 +31,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     AngularFireStorageModule, // storage
     PagesModule,
     ComponentsModule,
-    FontAwesomeModule // font awesome
+    FontAwesomeModule, // font awesome
+
   ],
   providers: [CookieService],
   bootstrap: [AppComponent]
