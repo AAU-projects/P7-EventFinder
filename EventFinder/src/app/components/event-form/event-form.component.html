@@ -11,7 +11,7 @@
 
             <div class="columns">
 
-              <div class="column is-half">
+              <div class="column is-7">
 
                 <!-- INPUT: TITLE -->
                 <div class="field">
@@ -24,6 +24,62 @@
                       <i class="fas fa-heading"></i>
                     </span>
                   </p>
+                </div>
+
+                <!-- INPUT: START DATE -->
+                <p class="help has-text-left">Start date of event</p>
+                <div class="columns remove-bottom-margin">
+                  <div class="column">
+                    <div class="field">
+                      <p class="control has-icons-left">
+                        <input
+                          [ngClass]="(eventForm.controls['startDate'].invalid && eventForm.controls['startDate'].dirty) ? 'is-danger' : ''"
+                          required class="input is-rounded has-text-centered is-medium is-size-6" type="date"
+                          formControlName="startDate" placeholder="Start date" />
+                        <span class="icon is-small is-left">
+                          <i class="fas fa-calendar"></i>
+                        </span>
+                      </p>
+                    </div>
+                  </div>
+                  <div class="column">
+                    <div class="field">
+                      <p class="control">
+                        <input
+                          [ngClass]="(eventForm.controls['startTime'].invalid && eventForm.controls['startTime'].dirty) ? 'is-danger' : ''"
+                          required class="input is-rounded has-text-centered is-medium is-size-6" type="time"
+                          formControlName="startTime" placeholder="Start time" />
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- INPUT: END DATE -->
+                <p class="help has-text-left">End date of event</p>
+                <div class="columns remove-bottom-margin">
+                  <div class="column">
+                    <div class="field">
+                      <p class="control has-icons-left">
+                        <input
+                          [ngClass]="(eventForm.controls['endDate'].invalid && eventForm.controls['endDate'].dirty) ? 'is-danger' : ''"
+                          required class="input is-rounded has-text-centered is-medium is-size-6" type="date"
+                          formControlName="endDate" placeholder="End date" />
+                        <span class="icon is-small is-left">
+                          <i class="fas fa-calendar"></i>
+                        </span>
+                      </p>
+                    </div>
+                  </div>
+                  <div class="column">
+                    <div class="field">
+                      <p class="control">
+                        <input
+                          [ngClass]="(eventForm.controls['endTime'].invalid && eventForm.controls['endTime'].dirty) ? 'is-danger' : ''"
+                          required class="input is-rounded has-text-centered is-medium is-size-6" type="time"
+                          formControlName="endTime" placeholder="End time" />
+                      </p>
+                    </div>
+                  </div>
                 </div>
 
                 <!-- INPUT: ADDRESS -->
@@ -104,7 +160,7 @@
                         <input
                           [ngClass]="(eventForm.controls['price'].invalid && eventForm.controls['price'].dirty) ? 'is-danger' : ''"
                           required class="input is-rounded has-text-centered is-medium is-size-6" type="number"
-                          formControlName="price" placeholder="Price" />
+                          formControlName="price" placeholder="Price" [disabled]="(isFree)"/>
                         <span class="icon is-small is-left">
                           <i class="fas fa-money-bill-alt"></i>
                         </span>
@@ -114,10 +170,8 @@
 
                   <div class="column has-text-centered">
                     <!-- INPUT: FREE? -->
-                    <div class="field">
-                      <div class="control">
-                        <button class="button is-medium is-primary is-rounded">Free?</button>
-                      </div>
+                    <div class="tags">
+                      <a class="tag is-medium is-rounded big-tag" (click)="isFree = !isFree" [ngClass]="(isFree) ? 'is-primary' : ''">Free?</a>
                     </div>
 
                   </div>
@@ -125,13 +179,13 @@
 
               </div>
 
-              <div class="column is-half">
+              <div class="column">
                 <!-- INPUT: DESCRIPTION -->
                 <div class="field is-full-heigth">
                   <div class="control is-full-heigth">
                     <textarea
                       [ngClass]="(eventForm.controls['description'].invalid && eventForm.controls['description'].dirty) ? 'is-danger' : ''"
-                      required class="textarea is-full-heigth" formControlName="description"
+                      required class="textarea is-full-heigth is-small" formControlName="description"
                       placeholder="Enter description here..."></textarea>
                   </div>
                 </div>
@@ -141,11 +195,6 @@
 
 
           </div>
-
-          <!-- BANNER PREVIEW TILE -->
-          <div class="tile is-child box notification has-background-dark has-text-white">
-            <p class="title">-BANNER PREVIEW-</p>
-          </div>
         </div>
         <div class="tile is-5 is-vertical is-parent">
 
@@ -154,7 +203,7 @@
             <p class="title">Event Banner</p>
             <div class="file has-name is-primary is-centered">
               <label class="file-label">
-                <input class="file-input" type="file" name="resume">
+                <input class="file-input" type="file" (change)="onFileInputChanged($event)" accept=".jpg,.jpeg,.png">
                 <span class="file-cta">
                   <span class="file-icon">
                     <i class="fas fa-upload"></i>
@@ -164,7 +213,7 @@
                   </span>
                 </span>
                 <span class="file-name">
-                  No Banner Selected
+                  {{(bannerEvent) ? bannerFileName : 'No Banner Selected' }}
                 </span>
               </label>
             </div>
@@ -180,19 +229,19 @@
             <br>
 
             <div class="tags">
-              <a class="tag" (click)="onGenreClick('Jazz')" [ngClass]="(genreList.includes('Jazz')) ? 'is-primary' : ''">Jazz</a>
-              <a class="tag" (click)="onGenreClick('Rock')" [ngClass]="(genreList.includes('Rock')) ? 'is-primary' : ''">Rock</a>
-              <a class="tag" (click)="onGenreClick('Hiphop')" [ngClass]="(genreList.includes('Hiphop')) ? 'is-primary' : ''">Hiphop</a>
-              <a class="tag" (click)="onGenreClick('Classical')" [ngClass]="(genreList.includes('Classical')) ? 'is-primary' : ''">Classical</a>
-              <a class="tag" (click)="onGenreClick('Country')" [ngClass]="(genreList.includes('Country')) ? 'is-primary' : ''">Country</a>
-              <a class="tag" (click)="onGenreClick('Pop')" [ngClass]="(genreList.includes('Pop')) ? 'is-primary' : ''">Pop</a>
-              <a class="tag" (click)="onGenreClick('EDM')" [ngClass]="(genreList.includes('EDM')) ? 'is-primary' : ''">EDM</a>
-              <a class="tag" (click)="onGenreClick('Rap')" [ngClass]="(genreList.includes('Rap')) ? 'is-primary' : ''">Rap</a>
-              <a class="tag" (click)="onGenreClick('Disco')" [ngClass]="(genreList.includes('Disco')) ? 'is-primary' : ''">Disco</a>
-              <a class="tag" (click)="onGenreClick('Techno')" [ngClass]="(genreList.includes('Techno')) ? 'is-primary' : ''">Techno</a>
-              <a class="tag" (click)="onGenreClick('Alternative')" [ngClass]="(genreList.includes('Alternative')) ? 'is-primary' : ''">Alternative</a>
-              <a class="tag" (click)="onGenreClick('Dance')" [ngClass]="(genreList.includes('Dance')) ? 'is-primary' : ''">Dance</a>
-              <a class="tag" (click)="onGenreClick('House')" [ngClass]="(genreList.includes('House')) ? 'is-primary' : ''">House</a>
+              <a class="tag" (click)="onGenreClick(Genre.Jazz)" [ngClass]="(genreList.includes(Genre.Jazz)) ? 'is-primary' : ''">Jazz</a>
+              <a class="tag" (click)="onGenreClick(Genre.Rock)" [ngClass]="(genreList.includes(Genre.Rock)) ? 'is-primary' : ''">Rock</a>
+              <a class="tag" (click)="onGenreClick(Genre.HipHop)" [ngClass]="(genreList.includes(Genre.HipHop)) ? 'is-primary' : ''">Hiphop</a>
+              <a class="tag" (click)="onGenreClick(Genre.Classical)" [ngClass]="(genreList.includes(Genre.Classical)) ? 'is-primary' : ''">Classical</a>
+              <a class="tag" (click)="onGenreClick(Genre.Country)" [ngClass]="(genreList.includes(Genre.Country)) ? 'is-primary' : ''">Country</a>
+              <a class="tag" (click)="onGenreClick(Genre.Pop)" [ngClass]="(genreList.includes(Genre.Pop)) ? 'is-primary' : ''">Pop</a>
+              <a class="tag" (click)="onGenreClick(Genre.EDM)" [ngClass]="(genreList.includes(Genre.EDM)) ? 'is-primary' : ''">EDM</a>
+              <a class="tag" (click)="onGenreClick(Genre.Rap)" [ngClass]="(genreList.includes(Genre.Rap)) ? 'is-primary' : ''">Rap</a>
+              <a class="tag" (click)="onGenreClick(Genre.Disco)" [ngClass]="(genreList.includes(Genre.Disco)) ? 'is-primary' : ''">Disco</a>
+              <a class="tag" (click)="onGenreClick(Genre.Techno)" [ngClass]="(genreList.includes(Genre.Techno)) ? 'is-primary' : ''">Techno</a>
+              <a class="tag" (click)="onGenreClick(Genre.Alternative)" [ngClass]="(genreList.includes(Genre.Alternative)) ? 'is-primary' : ''">Alternative</a>
+              <a class="tag" (click)="onGenreClick(Genre.Dance)" [ngClass]="(genreList.includes(Genre.Dance)) ? 'is-primary' : ''">Dance</a>
+              <a class="tag" (click)="onGenreClick(Genre.House)" [ngClass]="(genreList.includes(Genre.House)) ? 'is-primary' : ''">House</a>
             </div>
 
             <h3 class="has-text-left">
@@ -203,18 +252,18 @@
             <br>
 
             <div class="tags">
-              <a class="tag" (click)="onAtmosClick('Underground')" [ngClass]="(atmosList.includes('Underground')) ? 'is-primary' : ''">Underground</a>
-              <a class="tag" (click)="onAtmosClick('Alternative')" [ngClass]="(atmosList.includes('Alternative')) ? 'is-primary' : ''">Alternative</a>
-              <a class="tag" (click)="onAtmosClick('International')" [ngClass]="(atmosList.includes('International')) ? 'is-primary' : ''">International</a>
-              <a class="tag" (click)="onAtmosClick('Bar')" [ngClass]="(atmosList.includes('Bar')) ? 'is-primary' : ''">Bar</a>
-              <a class="tag" (click)="onAtmosClick('Student')" [ngClass]="(atmosList.includes('Student')) ? 'is-primary' : ''">Student </a>
-              <a class="tag" (click)="onAtmosClick('LivePerformance')" [ngClass]="(atmosList.includes('Live Performance')) ? 'is-primary' : ''">Live Performance</a>
-              <a class="tag" (click)="onAtmosClick('Hipster')" [ngClass]="(atmosList.includes('Hipster')) ? 'is-primary' : ''">Hipster </a>
+              <a class="tag" (click)="onAtmosClick(Atmosphere.Underground)" [ngClass]="(atmosList.includes(Atmosphere.Underground)) ? 'is-primary' : ''">Underground</a>
+              <a class="tag" (click)="onAtmosClick(Atmosphere.Alternative)" [ngClass]="(atmosList.includes(Atmosphere.Alternative)) ? 'is-primary' : ''">Alternative</a>
+              <a class="tag" (click)="onAtmosClick(Atmosphere.International)" [ngClass]="(atmosList.includes(Atmosphere.International)) ? 'is-primary' : ''">International</a>
+              <a class="tag" (click)="onAtmosClick(Atmosphere.Bar)" [ngClass]="(atmosList.includes(Atmosphere.Bar)) ? 'is-primary' : ''">Bar</a>
+              <a class="tag" (click)="onAtmosClick(Atmosphere.Student)" [ngClass]="(atmosList.includes(Atmosphere.Student)) ? 'is-primary' : ''">Student </a>
+              <a class="tag" (click)="onAtmosClick(Atmosphere.LivePerformance)" [ngClass]="(atmosList.includes(Atmosphere.LivePerformance)) ? 'is-primary' : ''">Live Performance</a>
+              <a class="tag" (click)="onAtmosClick(Atmosphere.Hipster)" [ngClass]="(atmosList.includes(Atmosphere.Hipster)) ? 'is-primary' : ''">Hipster </a>
             </div>
 
             <div class="field">
               <div class="control">
-                <input class="input is-rounded has-text-centered is-small" placeholder="Specific atmosphere" type="text"/>
+                <input class="input is-rounded has-text-centered is-small" formControlName="atmosphereCustom" placeholder="Specific atmosphere" type="text"/>
               </div>
             </div>
 
@@ -226,11 +275,11 @@
             <div class="columns is-gapless has-no-bottom-margin">
               <div class="column is-narrow has-padding-left is-gapless">
                 <label class="radio">
-                  <input type="radio" name="dress" (click)="onDressClick('Casual dress code')">
+                  <input type="radio" name="dress" (click)="onDressClick(Dresscode.Casual)">
                   Casual dress code
                 </label>
                 <label class="radio">
-                  <input type="radio" name="dress" (click)="onDressClick('Smart casual dress code')">
+                  <input type="radio" name="dress" (click)="onDressClick(Dresscode.Smart)">
                   Smart casual dress code
                 </label>
               </div>
@@ -238,24 +287,13 @@
             <div class="columns is-gapless">
               <div class="column is-narrow has-padding-left is-gapless">
                 <label class="radio">
-                  <input type="radio" name="dress" (click)="onDressClick('Elegant dross code enforced')">
-                  Elegant dross code enforced
+                  <input type="radio" name="dress" (click)="onDressClick(Dresscode.Elegant)">
+                  Elegant dress code enforced
                   </label>
                 <label class="radio">
-                  <input type="radio" name="dress" (click)="onDressClick('Come as you are')">
-                  Come as you are
+                  <input type="radio" name="dress" (click)="onDressClick(Dresscode.Masquerade)">
+                  Masquarade
                 </label>
-              </div>
-            </div>
-            <div class="columns is-narrow">
-              <div class="column is-3 is-narrow">
-                <label class="radio">
-                    <input type="radio" name="dress" id="Specific" (click)="onDressClick('Specific')">
-                    Specific
-                </label>
-              </div>
-              <div class="column">
-                  <input class="input is-rounded has-text-centered is-small is-size-8" type="text" [disabled]="!(dressChoice == 'Specific')"/>
               </div>
             </div>
           </div>
@@ -270,7 +308,7 @@
           <div class="tile is-child box notification has-background-dark has-text-white">
             <p class="title">Live Preview</p>
             <button type="submit" class="button is-primary is-large is-rounded is-fullwidth"
-              [disabled]="!eventForm.valid">
+              [disabled]="!eventForm.valid || genreList.length == 0 || atmosList.length == 0 || !dressChoice || !bannerEvent">
               Create Event
             </button>
           </div>

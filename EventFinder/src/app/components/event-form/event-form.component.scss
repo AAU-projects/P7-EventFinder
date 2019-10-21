@@ -69,3 +69,12 @@ a.tag:hover {
 .checkbox:hover, .radio:hover {
   color: #6294E7 !important;
 }
+
+.big-tag {
+  height: 3em;
+  padding: calc(0.875em - 1px) calc(1em - 1px);
+}
+
+input:focus + .fas {
+  color: palegreen !important;
+}
