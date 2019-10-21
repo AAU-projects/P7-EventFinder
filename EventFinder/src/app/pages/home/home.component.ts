@@ -22,7 +22,7 @@ export class HomeComponent implements OnInit {
     this.shared.changeLogin(true);
   }
 
-  create() {
+/*   create() {
     this.events.createEvent({
       organizerId: 'j0DFU9mDO1cTE8fC5VJiVDnfk502',
       title: 'Eebz Returns xx The Gap',
@@ -33,8 +33,8 @@ export class HomeComponent implements OnInit {
       age: 18,
       price: 0,
       description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-      startDate: new Date('September 6, 2019, 23:00:00 UTC').toISOString(),
-      endDate: new Date(Date.UTC(2019, 9, 7, 3, 0)).toISOString(),
+      startDate: new Date('September 25, 2019, 23:00:00 UTC').toISOString(),
+      endDate: new Date(Date.UTC(2019, 9, 26, 3, 0)).toISOString(),
       banner: this.file,
       genre: [Genre.Pop, Genre.Disco],
       genreCostum: [ ],
@@ -42,9 +42,9 @@ export class HomeComponent implements OnInit {
       atmosphereCustom: [],
       dresscode: Dresscode.Smart ,
     });
-  }
+  } */
 
-  handleFileInput(event) {
+/*   handleFileInput(event) {
     this.file = this.storage.uploadEventBanner(event, 'TestEvent');
-  }
+  } */
 }

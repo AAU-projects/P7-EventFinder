@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFireStorage } from '@angular/fire/storage';
-import { finalize } from 'rxjs/operators';
+import { finalize, retry } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { AuthService } from './auth.service';
 
@@ -26,8 +26,7 @@ export class StorageService {
   }
 
   getImageUrl(location) {
-    const ref = this.storage.ref(location);
-    return ref.getDownloadURL();
+    return this.storage.ref(location).getDownloadURL();
   }
 
 }

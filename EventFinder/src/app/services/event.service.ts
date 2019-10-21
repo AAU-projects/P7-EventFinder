@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/firestore';
+import { AngularFirestore, QueryFn } from '@angular/fire/firestore';
 
 @Injectable({
   providedIn: 'root'
@@ -10,16 +10,36 @@ export class EventService {
 
   async createEvent(values) {
     const id = this.firestore.createId();
-    const eventRef = this.firestore.collection('events').doc(id);
+    const eventRef = this.firestore.collection('events').doc<Event>(id);
 
     eventRef.set(values);
 
     return id;
   }
 
-  async updateEvnt() {}
+  async updateEvnt(id, values) {
+    const eventRef = this.firestore.collection('events').doc<Event>(id);
 
-  async getEvents() {}
+    eventRef.set(values, {merge: true});
 
-  async getEvent() {}
+    return eventRef;
+  }
+
+  /* To get the data from the documents, use subscribe.
+    .subscribe(snap => snap.forEach(docSnap => console.log(docSnap.id)))
+   */
+  async getEvents(limit: number = 5) {
+    this.firestore.collection('events', ref => ref.orderBy('startDate', 'asc').limit(limit))
+    .get();
+  }
+
+  async getEventsByQuery(query: QueryFn) {
+    return this.firestore.collection('events', query).get();
+  }
+
+  async getEvent(id) {
+    const eventRef = this.firestore.collection('events').doc<Event>(id);
+
+    return eventRef;
+  }
 }
