@@ -10,11 +10,17 @@ import { RegExValidator } from 'src/app/directives/regEx.directive';
 export class EventFormComponent implements OnInit {
 
   eventForm: FormGroup;
+  genreList: string[];
+  atmosList: string[];
+  dressChoice: string;
 
   constructor(
     private fb: FormBuilder,
   ) {
     this.createForm();
+    this.genreList = [];
+    this.atmosList = [];
+    this.dressChoice = '';
    }
 
   ngOnInit() {
@@ -41,6 +47,36 @@ export class EventFormComponent implements OnInit {
 
   createEvent(value) {
 
+  }
+
+  onGenreClick(text: string) {
+    if (this.genreList.includes(text)) {
+      this.genreList.splice(this.getListIndex(text, this.genreList), 1);
+    } else {
+      this.genreList.push(text);
+    }
+  }
+
+  onAtmosClick(text: string) {
+    if (this.atmosList.includes(text)) {
+      this.atmosList.splice(this.getListIndex(text, this.atmosList), 1);
+    } else {
+      this.atmosList.push(text);
+    }
+  }
+
+  onDressClick(text: string) {
+    this.dressChoice = text;
+    console.log(this.dressChoice);
+  }
+
+  getListIndex(text: string, list: string[]): number {
+    for (let i = 0; i < list.length; i++) {
+      if (list[i] === text) {
+        return i;
+      }
+    }
+    return 0;
   }
 
 }

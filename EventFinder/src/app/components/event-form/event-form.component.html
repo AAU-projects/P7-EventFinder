@@ -3,7 +3,7 @@
     <div class="tile is-vertical is-parent">
 
       <div class="tile">
-        <div class="tile is-8 is-parent">
+        <div class="tile is-7 is-parent is-vertical">
 
           <!-- EVENT FORM TILE -->
           <div class="tile is-child box notification has-background-dark has-text-white">
@@ -141,13 +141,18 @@
 
 
           </div>
+
+          <!-- BANNER PREVIEW TILE -->
+          <div class="tile is-child box notification has-background-dark has-text-white">
+            <p class="title">-BANNER PREVIEW-</p>
+          </div>
         </div>
-        <div class="tile is-4 is-vertical is-parent">
+        <div class="tile is-5 is-vertical is-parent">
 
           <!-- BANNER UPLOAD TILE -->
           <div class="tile is-child box notification has-background-dark has-text-white">
             <p class="title">Event Banner</p>
-            <div class="file has-name is-primary">
+            <div class="file has-name is-primary is-centered">
               <label class="file-label">
                 <input class="file-input" type="file" name="resume">
                 <span class="file-cta">
@@ -171,69 +176,89 @@
               <span class="icon"><i class="fas fa-music"></i></span>
               Genre
             </h3>
+
+            <br>
+
+            <div class="tags">
+              <a class="tag" (click)="onGenreClick('Jazz')" [ngClass]="(genreList.includes('Jazz')) ? 'is-primary' : ''">Jazz</a>
+              <a class="tag" (click)="onGenreClick('Rock')" [ngClass]="(genreList.includes('Rock')) ? 'is-primary' : ''">Rock</a>
+              <a class="tag" (click)="onGenreClick('Hiphop')" [ngClass]="(genreList.includes('Hiphop')) ? 'is-primary' : ''">Hiphop</a>
+              <a class="tag" (click)="onGenreClick('Classical')" [ngClass]="(genreList.includes('Classical')) ? 'is-primary' : ''">Classical</a>
+              <a class="tag" (click)="onGenreClick('Country')" [ngClass]="(genreList.includes('Country')) ? 'is-primary' : ''">Country</a>
+              <a class="tag" (click)="onGenreClick('Pop')" [ngClass]="(genreList.includes('Pop')) ? 'is-primary' : ''">Pop</a>
+              <a class="tag" (click)="onGenreClick('EDM')" [ngClass]="(genreList.includes('EDM')) ? 'is-primary' : ''">EDM</a>
+              <a class="tag" (click)="onGenreClick('Rap')" [ngClass]="(genreList.includes('Rap')) ? 'is-primary' : ''">Rap</a>
+              <a class="tag" (click)="onGenreClick('Disco')" [ngClass]="(genreList.includes('Disco')) ? 'is-primary' : ''">Disco</a>
+              <a class="tag" (click)="onGenreClick('Techno')" [ngClass]="(genreList.includes('Techno')) ? 'is-primary' : ''">Techno</a>
+              <a class="tag" (click)="onGenreClick('Alternative')" [ngClass]="(genreList.includes('Alternative')) ? 'is-primary' : ''">Alternative</a>
+              <a class="tag" (click)="onGenreClick('Dance')" [ngClass]="(genreList.includes('Dance')) ? 'is-primary' : ''">Dance</a>
+              <a class="tag" (click)="onGenreClick('House')" [ngClass]="(genreList.includes('House')) ? 'is-primary' : ''">House</a>
+            </div>
+
             <h3 class="has-text-left">
                 <span class="icon"><i class="fas fa-wind"></i></span>
                 Atmosphere
             </h3>
-            <div class="columns">
-              <div class="column is-fourth">
-                <label class="checkbox">
-                  <input type="checkbox">
-                  Box 1
-                </label>
-                <label class="checkbox">
-                  <input type="checkbox">
-                  Box 2
-                </label>
-              </div>
-              <div class="column is-fourth">
-                <label class="checkbox">
-                  <input type="checkbox">
-                  Box 3
-                  </label>
-                <label class="checkbox">
-                  <input type="checkbox">
-                  Box 4
-                </label>
-              </div>
-              <div class="column is-fourth">
-                <label class="checkbox">
-                  <input type="checkbox">
-                  Box 5
-                </label>
-                <label class="checkbox">
-                  <input type="checkbox">
-                  Box 6
-                </label>
-              </div>
-              <div class="column is-fourth">
-                <label class="checkbox">
-                  <input type="checkbox">
-                  Box 7
-                  </label>
-                <label class="checkbox">
-                  <input type="checkbox">
-                  Box 8
-                </label>
 
+            <br>
+
+            <div class="tags">
+              <a class="tag" (click)="onAtmosClick('Underground')" [ngClass]="(atmosList.includes('Underground')) ? 'is-primary' : ''">Underground</a>
+              <a class="tag" (click)="onAtmosClick('Alternative')" [ngClass]="(atmosList.includes('Alternative')) ? 'is-primary' : ''">Alternative</a>
+              <a class="tag" (click)="onAtmosClick('International')" [ngClass]="(atmosList.includes('International')) ? 'is-primary' : ''">International</a>
+              <a class="tag" (click)="onAtmosClick('Bar')" [ngClass]="(atmosList.includes('Bar')) ? 'is-primary' : ''">Bar</a>
+              <a class="tag" (click)="onAtmosClick('Student')" [ngClass]="(atmosList.includes('Student')) ? 'is-primary' : ''">Student </a>
+              <a class="tag" (click)="onAtmosClick('LivePerformance')" [ngClass]="(atmosList.includes('Live Performance')) ? 'is-primary' : ''">Live Performance</a>
+              <a class="tag" (click)="onAtmosClick('Hipster')" [ngClass]="(atmosList.includes('Hipster')) ? 'is-primary' : ''">Hipster </a>
+            </div>
+
+            <div class="field">
+              <div class="control">
+                <input class="input is-rounded has-text-centered is-small" placeholder="Specific atmosphere" type="text"/>
               </div>
             </div>
-            <div class="columns">
-              <div class="column is-4">
-                <label class="checkbox">
-                    <input type="checkbox">
-                    Specific
-                </label>
-              </div>
-              <div class="column is-8">
-                  <input class="input is-rounded has-text-centered is-small is-size-8" type="text"/>
-              </div>
 
-            </div>
             <h3 class="has-text-left">
                 <span class="icon"><i class="fas fa-mask"></i></span>
                 Dresscode
             </h3>
+            <div class="control">
+            <div class="columns is-gapless has-no-bottom-margin">
+              <div class="column is-narrow has-padding-left is-gapless">
+                <label class="radio">
+                  <input type="radio" name="dress" (click)="onDressClick('Casual dress code')">
+                  Casual dress code
+                </label>
+                <label class="radio">
+                  <input type="radio" name="dress" (click)="onDressClick('Smart casual dress code')">
+                  Smart casual dress code
+                </label>
+              </div>
+            </div>
+            <div class="columns is-gapless">
+              <div class="column is-narrow has-padding-left is-gapless">
+                <label class="radio">
+                  <input type="radio" name="dress" (click)="onDressClick('Elegant dross code enforced')">
+                  Elegant dross code enforced
+                  </label>
+                <label class="radio">
+                  <input type="radio" name="dress" (click)="onDressClick('Come as you are')">
+                  Come as you are
+                </label>
+              </div>
+            </div>
+            <div class="columns is-narrow">
+              <div class="column is-3 is-narrow">
+                <label class="radio">
+                    <input type="radio" name="dress" id="Specific" (click)="onDressClick('Specific')">
+                    Specific
+                </label>
+              </div>
+              <div class="column">
+                  <input class="input is-rounded has-text-centered is-small is-size-8" type="text" [disabled]="!(dressChoice == 'Specific')"/>
+              </div>
+            </div>
+          </div>
           </div>
         </div>
       </div>

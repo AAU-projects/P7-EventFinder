@@ -45,3 +45,27 @@ select:required:invalid {
 .tile.is-vertical > .tile.is-child:not(:last-child) {
   margin-bottom: 0.50rem !important;
 }
+
+a.tag{
+  text-decoration: none !important;
+}
+
+a.tag.is-primary:hover {
+  background-color: #6294E7 !important;
+}
+
+a.tag:hover {
+  background-color: #9A9AB2 !important;
+}
+
+.has-padding-left {
+  padding-left: 25px;
+}
+
+.has-no-bottom-margin {
+  margin-bottom: 0 !important;
+}
+
+.checkbox:hover, .radio:hover {
+  color: #6294E7 !important;
+}
