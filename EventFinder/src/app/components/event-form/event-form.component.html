@@ -151,30 +151,17 @@
                   </p>
                 </div>
 
-                <div class="columns remove-bottom-margin">
-                  <div class="column is-8">
-
-                    <!-- INPUT: PRICE -->
-                    <div class="field">
-                      <p class="control has-icons-left">
-                        <input
-                          [ngClass]="(eventForm.controls['price'].invalid && eventForm.controls['price'].dirty) ? 'is-danger' : ''"
-                          required class="input is-rounded has-text-centered is-medium is-size-6" type="number"
-                          formControlName="price" placeholder="Price" [disabled]="(isFree)"/>
-                        <span class="icon is-small is-left">
-                          <i class="fas fa-money-bill-alt"></i>
-                        </span>
-                      </p>
-                    </div>
-                  </div>
-
-                  <div class="column has-text-centered">
-                    <!-- INPUT: FREE? -->
-                    <div class="tags">
-                      <a class="tag is-medium is-rounded big-tag" (click)="isFree = !isFree" [ngClass]="(isFree) ? 'is-primary' : ''">Free?</a>
-                    </div>
-
-                  </div>
+                <!-- INPUT: PRICE -->
+                <div class="field">
+                  <p class="control has-icons-left">
+                    <input
+                      [ngClass]="(eventForm.controls['price'].invalid && eventForm.controls['price'].dirty) ? 'is-danger' : ''"
+                      required class="input is-rounded has-text-centered is-medium is-size-6" type="number"
+                      formControlName="price" placeholder="Price" id="priceBox"/>
+                    <span class="icon is-small is-left">
+                      <i class="fas fa-money-bill-alt"></i>
+                    </span>
+                  </p>
                 </div>
 
               </div>

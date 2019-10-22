@@ -21,7 +21,6 @@ export class EventFormComponent implements OnInit {
   genreList: Genre[];
   atmosList: Atmosphere[];
   dressChoice: Dresscode;
-  isFree = false;
   bannerFilePath = '';
   bannerFileName: string;
   bannerEvent: any;
@@ -64,9 +63,6 @@ export class EventFormComponent implements OnInit {
   }
 
   createEvent(value) {
-    if (this.isFree) {
-      value.price = 0;
-    }
 
     value.atmosphere = this.atmosList;
     value.genre = this.genreList;
@@ -81,9 +77,9 @@ export class EventFormComponent implements OnInit {
     this.eventService.createEvent(value);
   }
 
-  convertDateTime(inputDate, inputTime){
-    let date = new Date(inputDate);
-    let timeString = inputTime.toString();
+  convertDateTime(inputDate, inputTime) {
+    const date = new Date(inputDate);
+    const timeString = inputTime.toString();
     date.setHours(timeString.split(':')[0]);
     date.setMinutes(timeString.split(':')[1]);
     return date.toISOString();
@@ -126,5 +122,4 @@ export class EventFormComponent implements OnInit {
     }
     return 0;
   }
-
 }
