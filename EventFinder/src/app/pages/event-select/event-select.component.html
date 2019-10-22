@@ -1,63 +1,66 @@
-<div class="modal is-active">
-  <div class="modal-background" (click)="close()"></div>
-  <div class="modal-content panel-size">
-    <div id="container">
-      <div class="row banner-background banner-size">
-        <button class="delete" (click)="close()"></button>
-      </div>
-      <div class="second-layer">
-        <div class="content">
-          <h1 class="title has-text-white">{{ getTitle() }}</h1>
-          <h2 class="small-text has-text-white has-text-weight-normal">
-            <i class="far fa-calendar"></i> &nbsp; {{ getDate() }}
-          </h2>
-          <h2 class="small-text has-text-white has-text-weight-normal">
-            <i class="fas fa-map-marker-alt"></i> &nbsp; {{ getLocation() }}
-          </h2>
-          <div class="top-content">
-            <div class="column" style="white-space: pre-line;">
-              <div class="columns ">
-                <div class="column has-text-white has-text-left event-data">
-                  <b> {{ getEventTitleDescription() }} </b> <br />
-                  {{ getEventDescription() }}
-                </div>
-                <div class="is-divider-vertical"></div>
-                <div class="column">
-                    <agm-map [latitude]="latitude" [longitude]="longitude" *ngIf="location"></agm-map>
-                  <div class="columns event-data">
-                    <div class="column has-text-left">
-                      <h2 class="small-text has-text-white has-text-weight-normal">
-                        <i class="fab fa-itunes-note"></i> Lecture
-                      </h2>
-                      <h2 class="small-text has-text-white has-text-weight-normal">
-                        <i class="fas fa-wind"></i> Elegant
-                      </h2>
-                      <h2 class="small-text has-text-white has-text-weight-normal">
-                        <i class="fas fa-mask"></i> Elegant dress code enforced
-                      </h2>
-                    </div>
-                    <div class="column">
-                      <img class="" width="200" src="assets/images/testrating.png" />
-                    </div>
+<div *ngIf="!shared.isLoading ">
+  <div class="modal is-active">
+    <div class="modal-background" (click)="close()"></div>
+    <div class="modal-content panel-size">
+      <div id="container">
+        <div class="row banner-background banner-size">
+          <button class="delete" (click)="close()"></button>
+        </div>
+        <div class="second-layer">
+          <div class="content">
+            <h1 class="title has-text-white">{{ getTitle() }}</h1>
+            <h2 class="small-text has-text-white has-text-weight-normal">
+              <i class="far fa-calendar"></i> &nbsp; {{ getDate() }}
+            </h2>
+            <h2 class="small-text has-text-white has-text-weight-normal">
+              <i class="fas fa-map-marker-alt"></i> &nbsp; {{ getLocation() }}
+            </h2>
+            <div class="top-content">
+              <div class="column" style="white-space: pre-line;">
+                <div class="columns ">
+                  <div class="column has-text-white has-text-left event-data">
+                    <b> {{ getEventTitleDescription() }} </b> <br />
+                    {{ getEventDescription() }}
                   </div>
-                  <button class="button is-primary  is-rounded is-large">
-                    4000 DKK
-                  </button>
+                  <div class="is-divider-vertical"></div>
+                  <div class="column">
+                    <agm-map [latitude]="latitude" [longitude]="longitude" *ngIf="location"></agm-map>
+                    <div class="columns event-data">
+                      <div class="column has-text-left">
+                        <h2 class="small-text has-text-white has-text-weight-normal">
+                          <i class="fab fa-itunes-note"></i> Lecture
+                        </h2>
+                        <h2 class="small-text has-text-white has-text-weight-normal">
+                          <i class="fas fa-wind"></i> Elegant
+                        </h2>
+                        <h2 class="small-text has-text-white has-text-weight-normal">
+                          <i class="fas fa-mask"></i> Elegant dress code enforced
+                        </h2>
+                      </div>
+                      <div class="column">
+                        <img class="" width="200" src="assets/images/testrating.png" />
+                      </div>
+                    </div>
+                    <button class="button is-primary  is-rounded is-large">
+                      4000 DKK
+                    </button>
+                  </div>
+                </div>
+                <div class="is-divider"></div>
+                <div class="column has-text-white has-text-left" style="white-space: pre-line;">
+                  <div>
+                    {{ getOrganizerDescription() }}
+                  </div>
+                  <button class="is-dark button is-rounded has-text-white-bis is-pulled-right">Læs mere</button>
                 </div>
               </div>
-              <div class="is-divider"></div>
-              <div class="column has-text-white has-text-left" style="white-space: pre-line;">
-                <div>
-                  {{ getOrganizerDescription() }}
-                </div>
-                <button class="is-dark button is-rounded has-text-white-bis is-pulled-right">Læs mere</button>
-              </div>
-            </div>
 
+            </div>
           </div>
         </div>
+        <img class="image-logo" src="assets/images/testlogo.png" />
       </div>
-      <img class="image-logo" src="assets/images/testlogo.png" />
     </div>
   </div>
 </div>
+<ng-template #loading>loading animation...</ng-template>

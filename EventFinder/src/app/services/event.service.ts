@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore, QueryFn } from '@angular/fire/firestore';
+import { EventModel } from '../models/event.model';
 
 @Injectable({
   providedIn: 'root'
@@ -37,8 +38,8 @@ export class EventService {
     return this.firestore.collection('events', query).get();
   }
 
-  async getEvent(id) {
-    const eventRef = this.firestore.collection('events').doc<Event>(id);
+  getEvent(id) {
+    const eventRef = this.firestore.collection('events').doc<EventModel>(id);
 
     return eventRef;
   }

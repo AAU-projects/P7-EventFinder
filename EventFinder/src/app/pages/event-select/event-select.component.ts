@@ -3,6 +3,7 @@ import { SharedService } from 'src/app/services/shared.service';
 import { HttpClient } from '@angular/common/http';
 import { EventService } from 'src/app/services/event.service';
 import { AngularFirestoreDocument } from '@angular/fire/firestore';
+import { EventModel } from 'src/app/models/event.model';
 
 @Component({
   selector: 'app-event-select',
@@ -13,11 +14,29 @@ export class EventSelectComponent implements OnInit {
   location = null;
   latitude = 0;
   longitude = 0;
+  event: EventModel = null;
 
-  constructor(private shared: SharedService, private httpClient: HttpClient, private eventService: EventService) {
-    eventService.getEvent('QIZxLor0x7MnONTLN0Bi').then((result) => {
-      this.event = result;
+  constructor(
+    public shared: SharedService,
+    private httpClient: HttpClient,
+    private eventService: EventService
+  ) {
+    shared.isLoading.subscribe();
+    shared.setIsLoading(true);
+    const event: AngularFirestoreDocument<EventModel> = eventService.getEvent(
+      'KibTDPjICMHdYSvCQoEk'
+    );
+    event.valueChanges().subscribe(document => {
+      console.log(document);
+      this.event = document;
+      this.updateMap();
+      shared.setIsLoading(false);
     });
+  }
+
+  ngOnInit() {}
+
+  updateMap() {
     this.httpClient.get(this.apiAddress()).subscribe(result => {
       this.location = result['results'][0]['geometry']['location'];
       console.log(result['results'][0]['geometry']['location']);
@@ -26,10 +45,11 @@ export class EventSelectComponent implements OnInit {
     });
   }
 
-  ngOnInit() {}
-
   apiAddress() {
-    return 'https://maps.googleapis.com/maps/api/geocode/json?address=1600+Amphitheatre+Parkway,+Mountain+View,+CA&key=AIzaSyAxJpRUrMbG264kgpMZNhk916zvqP1K08U'
+    return (
+      'https://maps.googleapis.com/maps/api/geocode/json?address' +
+      '=1600+Amphitheatre+Parkway,+Mountain+View,+CA&key=AIzaSyCj6DAd2_FVNu73UmA41f4mjnbfP2Y2NhU'
+    );
   }
 
   close() {
@@ -37,31 +57,78 @@ export class EventSelectComponent implements OnInit {
   }
 
   getEventTitleDescription() {
-    return 'Lorem ipsum dolor sit amet';
+    return this.event.title;
   }
 
   getEventDescription() {
-    return (
-      'Consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.' +
-      '\n\n Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.' +
-      '\n\n Lorem ipsum dolor sit amet Consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.'
-    );
+    return this.event.description;
   }
 
   getOrganizerDescription() {
-    return ('');
+    return '';
   }
 
   getLocation() {
-    return 'Musikkens Pl. 1, 9000 Aalborg';
+    return this.event.address;
   }
 
   getDate() {
-    return 'September 7th, 2019 from 16:30 - 18:30';
+    const monthNames = [
+      'January',
+      'Febuary',
+      'March',
+      'April',
+      'May',
+      'June',
+      'July',
+      'August',
+      'September',
+      'October',
+      'November',
+      'December'
+    ];
+
+    const newDateStartString = new Date(this.event.startDate);
+    const newDateEndString = new Date(this.event.endDate);
+    const monthName = monthNames[this.event.startDate.getMonth()];
+
+    return (
+      `${monthName} ${this.dayFormat(newDateStartString.getDay())},` +
+      `${newDateStartString.getFullYear()} from ${newDateStartString.getTime()} to ${newDateEndString.getTime()}`
+    );
+  }
+
+  dayFormat(day) {
+    switch (day) {
+      case 1: {
+        return `${day}st`;
+        break;
+      }
+      case 2: {
+        return `${day}nd`;
+        break;
+      }
+      case 3: {
+        return `${day}rd`;
+        break;
+      }
+      default: {
+        return `${day}th`;
+        break;
+      }
+    }
   }
 
   getTitle() {
-    return 'A Conversation with President Barack Obama';
+    return this.event.title;
+  }
+
+  getPrice() {
+    return this.event.price;
+  }
+
+  getGenre() {
+    return this.event.genre;
   }
 
   @HostListener('document:keydown', ['$event']) onKeydownHandler(
