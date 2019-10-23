@@ -1,5 +1,6 @@
-import { Component, OnInit, ViewChild, Input, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, Input, ElementRef, Output, EventEmitter } from '@angular/core';
 import Cropper from 'cropperjs';
+import { SharedService } from 'src/app/services/shared.service';
 
 @Component({
   selector: 'app-image-cropper',
@@ -14,10 +15,17 @@ export class ImageCropperComponent implements OnInit {
     @Input()
     public imageSource: string;
 
-    public imageDestination: string;
+    @Output() imageDestination: EventEmitter<string> = new EventEmitter();
+
     private cropper: Cropper;
 
-  constructor() { }
+  constructor(public shared: SharedService) {
+  }
+
+  cancel() {
+    this.imageDestination.emit(null);
+    this.shared.showCropper(false);
+  }
 
   public ngAfterViewInit() {
     this.cropper = new Cropper(this.imageElement.nativeElement, {
@@ -38,7 +46,7 @@ export class ImageCropperComponent implements OnInit {
 
         crop: () => {
             const canvas = this.cropper.getCroppedCanvas();
-            this.imageDestination = canvas.toDataURL("image/png");
+            this.imageDestination.emit(canvas.toDataURL('image/png'));
         }
     });
 

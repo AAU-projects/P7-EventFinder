@@ -26,14 +26,29 @@ export class RegisterComponent {
     private router: Router,
     private fb: FormBuilder,
     private firestore: AngularFirestore,
-    private shared: SharedService,
-    private imageTools: ImageToolsService,
-    public sanitizer: DomSanitizer
+    public shared: SharedService,
+    private sanitizer: DomSanitizer
   )  {
     this.shared.changeLogin(false);
     this.createForm(this.auth.userType);
     this.auth.isUserObs.subscribe();
   }
+
+  uploadImage(image: File) {
+    console.log(image);
+
+    const reader: FileReader = new FileReader();
+    reader.readAsDataURL(image);
+    reader.onload = () => {
+      this.profileImage = reader.result;
+      this.shared.showCropper(true);
+    };
+   }
+
+   getImage(image: string) {
+     this.profileImage = image;
+   }
+
 
   setToUser() {
     this.auth.setUserType();
