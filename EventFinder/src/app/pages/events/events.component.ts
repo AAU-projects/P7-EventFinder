@@ -9,9 +9,9 @@ import { Subscription } from 'rxjs';
 })
 export class EventsComponent implements OnInit {
   subscription: Subscription;
-  showSelectEvent = true; // TODO: Set this to false
+  showSelectEvent: boolean;
 
-  constructor(private shared: SharedService) { }
+  constructor(public shared: SharedService) { }
 
   ngOnInit() {
     this.subscription = this.shared.getShowEventValue()
@@ -19,6 +19,6 @@ export class EventsComponent implements OnInit {
   }
 
   showEventSelect() {
-    this.shared.showEvent(true);
+    this.shared.showEvent('P35r5dDvnLbcwzYdwsyc');
   }
 }
