@@ -168,12 +168,9 @@
 
               <div class="column">
                 <!-- INPUT: DESCRIPTION -->
-                <div class="field is-full-heigth">
+                <div class="field is-full-heigth test-class">
                   <div class="control is-full-heigth">
-                    <textarea
-                      [ngClass]="(eventForm.controls['description'].invalid && eventForm.controls['description'].dirty) ? 'is-danger' : ''"
-                      required class="textarea is-full-heigth is-small" formControlName="description"
-                      placeholder="Enter description here..."></textarea>
+                      <quill-editor formControlName="description" [styles]="{ backgroundColor: '#5C5C80', borderColor: '#5C5C80'}"></quill-editor>
                   </div>
                 </div>
               </div>

@@ -9,6 +9,7 @@ import { UserInfoComponent } from './user-info/user-info.component';
 import { NavbarUserDropdownComponent } from './navbar-user-dropdown/navbar-user-dropdown.component';
 import { OrganizerInfoComponent } from './organizer-info/organizer-info.component';
 import { EventFormComponent } from './event-form/event-form.component';
+import { QuillModule } from 'ngx-quill';
 
 /* How to add a new component:
     ng g c components/[name] --export
@@ -27,8 +28,16 @@ import { EventFormComponent } from './event-form/event-form.component';
     CommonModule,
     RouterModule,
     FormsModule,
-    ReactiveFormsModule
-  ],
+    ReactiveFormsModule,
+    QuillModule.forRoot({
+      modules: {
+        syntax: false,
+        toolbar: [
+          ['bold', 'italic', 'underline'],
+          [{ 'header': 1 }, { 'header': 2 }]],
+      },
+      placeholder: 'Write description here...'
+    })],
   exports: [
     TestComponent,
     HeaderComponent,
