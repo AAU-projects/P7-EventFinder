@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore, QueryFn } from '@angular/fire/firestore';
+import { Title } from '@angular/platform-browser';
 
 @Injectable({
   providedIn: 'root'

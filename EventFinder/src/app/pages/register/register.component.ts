@@ -6,6 +6,8 @@ import { AccountTypes } from 'src/app/models/account.types.enum';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { RegExValidator } from 'src/app/directives/regEx.directive';
 import { SharedService } from 'src/app/services/shared.service';
+import { ImageToolsService } from 'src/app/services/image-tools.service';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-register',
@@ -17,18 +19,16 @@ export class RegisterComponent {
   registerForm: FormGroup;
   errorMessage = '';
   successMessage = '';
-
-  // Two State Button
-  width = '500px';
-  options = {optionOne: 'User', optionTwo: 'Organizer'};
-  actions = {actionOne: this.auth.setUserType, actionTwo: this.auth.setOrganizerType};
+  profileImage;
 
   constructor(
     public auth: AuthService,
     private router: Router,
     private fb: FormBuilder,
     private firestore: AngularFirestore,
-    private shared: SharedService
+    private shared: SharedService,
+    private imageTools: ImageToolsService,
+    public sanitizer: DomSanitizer
   )  {
     this.shared.changeLogin(false);
     this.createForm(this.auth.userType);

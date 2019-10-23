@@ -8,19 +8,20 @@ import { FormsModule } from '@angular/forms';
 import { UserInfoComponent } from './user-info/user-info.component';
 import { NavbarUserDropdownComponent } from './navbar-user-dropdown/navbar-user-dropdown.component';
 import { OrganizerInfoComponent } from './organizer-info/organizer-info.component';
+import { ImageCropperComponent } from './image-cropper/image-cropper.component';
 
 /* How to add a new component:
     ng g c components/[name] --export
 */
 
 @NgModule({
-  declarations: [TestComponent, HeaderComponent, TwoStateButtonComponent, UserInfoComponent, NavbarUserDropdownComponent, OrganizerInfoComponent],
+  declarations: [TestComponent, HeaderComponent, TwoStateButtonComponent, UserInfoComponent, NavbarUserDropdownComponent, OrganizerInfoComponent, ImageCropperComponent],
   imports: [
     CommonModule,
     RouterModule,
     FormsModule,
   ],
-  exports: [TestComponent, HeaderComponent, TwoStateButtonComponent, UserInfoComponent, NavbarUserDropdownComponent, OrganizerInfoComponent],
+  exports: [TestComponent, HeaderComponent, TwoStateButtonComponent, UserInfoComponent, NavbarUserDropdownComponent, OrganizerInfoComponent, ImageCropperComponent],
 })
 export class ComponentsModule {}
 
