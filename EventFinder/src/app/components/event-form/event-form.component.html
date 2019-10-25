@@ -1,3 +1,9 @@
+<ng-template [ngIf]="(showNotificationObs | async) == true">
+  <div  [@simpleFadeAnimation]="'in'" class="notification {{notificationClass}}" [innerHTML]="notificationMessage">
+
+  </div>
+</ng-template>
+
 <div class="tile is-ancestor ">
   <form [formGroup]="eventForm" (ngSubmit)="createEvent(eventForm.value)" validate>
     <div class="tile is-vertical is-parent">
@@ -35,7 +41,7 @@
                         <input
                           [ngClass]="(eventForm.controls['startDate'].invalid && eventForm.controls['startDate'].dirty) ? 'is-danger' : ''"
                           required class="input is-rounded has-text-centered is-medium is-size-6" type="date"
-                          formControlName="startDate" placeholder="Start date" />
+                          formControlName="startDate" placeholder="Start date" (change)="checkDate()"/>
                         <span class="icon is-small is-left">
                           <i class="fas fa-calendar"></i>
                         </span>
@@ -48,7 +54,7 @@
                         <input
                           [ngClass]="(eventForm.controls['startTime'].invalid && eventForm.controls['startTime'].dirty) ? 'is-danger' : ''"
                           required class="input is-rounded has-text-centered is-medium is-size-6" type="time"
-                          formControlName="startTime" placeholder="Start time" />
+                          formControlName="startTime" placeholder="Start time" (change)="checkDate()"/>
                       </p>
                     </div>
                   </div>
@@ -63,7 +69,7 @@
                         <input
                           [ngClass]="(eventForm.controls['endDate'].invalid && eventForm.controls['endDate'].dirty) ? 'is-danger' : ''"
                           required class="input is-rounded has-text-centered is-medium is-size-6" type="date"
-                          formControlName="endDate" placeholder="End date" />
+                          formControlName="endDate" placeholder="End date" (change)="checkDate()"/>
                         <span class="icon is-small is-left">
                           <i class="fas fa-calendar"></i>
                         </span>
@@ -76,7 +82,7 @@
                         <input
                           [ngClass]="(eventForm.controls['endTime'].invalid && eventForm.controls['endTime'].dirty) ? 'is-danger' : ''"
                           required class="input is-rounded has-text-centered is-medium is-size-6" type="time"
-                          formControlName="endTime" placeholder="End time" />
+                          formControlName="endTime" placeholder="End time" (change)="checkDate()"/>
                       </p>
                     </div>
                   </div>
@@ -170,7 +176,7 @@
                 <!-- INPUT: DESCRIPTION -->
                 <div class="field is-full-heigth test-class">
                   <div class="control is-full-heigth">
-                      <quill-editor formControlName="description" [styles]="{ backgroundColor: '#5C5C80', borderColor: '#5C5C80'}"></quill-editor>
+                    <quill-editor formControlName="description" [styles]="{ backgroundColor: '#5C5C80', borderColor: '#5C5C80', height: 'calc(100% - 44px)'}"></quill-editor>
                   </div>
                 </div>
               </div>
@@ -259,11 +265,11 @@
             <div class="columns is-gapless has-no-bottom-margin">
               <div class="column is-narrow has-padding-left is-gapless">
                 <label class="radio">
-                  <input type="radio" name="dress" (click)="onDressClick(Dresscode.Casual)">
+                  <input type="radio" value="{{Dresscode.Casual}}" formControlName="dresscode">
                   Casual dress code
                 </label>
                 <label class="radio">
-                  <input type="radio" name="dress" (click)="onDressClick(Dresscode.Smart)">
+                  <input type="radio" value="{{Dresscode.Smart}}" formControlName="dresscode">
                   Smart casual dress code
                 </label>
               </div>
@@ -271,11 +277,11 @@
             <div class="columns is-gapless">
               <div class="column is-narrow has-padding-left is-gapless">
                 <label class="radio">
-                  <input type="radio" name="dress" (click)="onDressClick(Dresscode.Elegant)">
+                  <input type="radio" value="{{Dresscode.Elegant}}" formControlName="dresscode">
                   Elegant dress code enforced
                   </label>
                 <label class="radio">
-                  <input type="radio" name="dress" (click)="onDressClick(Dresscode.Masquerade)">
+                  <input type="radio" value="{{Dresscode.Masquerade}}" formControlName="dresscode">
                   Masquarade
                 </label>
               </div>
@@ -292,7 +298,7 @@
           <div class="tile is-child box notification has-background-dark has-text-white">
             <p class="title">Live Preview</p>
             <button type="submit" class="button is-primary is-large is-rounded is-fullwidth"
-              [disabled]="!eventForm.valid || genreList.length == 0 || atmosList.length == 0 || !dressChoice || !bannerEvent">
+              [disabled]="!eventForm.valid || genreList.length == 0 || atmosList.length == 0 || !bannerEvent || !checkDate()">
               Create Event
             </button>
           </div>

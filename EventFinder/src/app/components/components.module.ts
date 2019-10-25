@@ -9,6 +9,7 @@ import { UserInfoComponent } from './user-info/user-info.component';
 import { NavbarUserDropdownComponent } from './navbar-user-dropdown/navbar-user-dropdown.component';
 import { OrganizerInfoComponent } from './organizer-info/organizer-info.component';
 import { EventFormComponent } from './event-form/event-form.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { QuillModule } from 'ngx-quill';
 
 /* How to add a new component:
@@ -29,6 +30,7 @@ import { QuillModule } from 'ngx-quill';
     RouterModule,
     FormsModule,
     ReactiveFormsModule,
+    BrowserAnimationsModule,
     QuillModule.forRoot({
       modules: {
         syntax: false,

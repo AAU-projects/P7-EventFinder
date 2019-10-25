@@ -5,11 +5,28 @@ import { EventService } from 'src/app/services/event.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { Dresscode, Genre, Atmosphere } from 'src/app/models/event.model';
 import { StorageService } from 'src/app/services/storage.service';
+import { Router } from '@angular/router';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { trigger, state, style, animate, transition } from '@angular/animations';
 
 @Component({
   selector: 'app-event-form',
   templateUrl: './event-form.component.html',
-  styleUrls: ['./event-form.component.scss']
+  styleUrls: ['./event-form.component.scss'],
+  animations: [
+    trigger('simpleFadeAnimation', [
+
+      state('in', style({opacity: 1})),
+
+      transition(':enter', [
+        style({opacity: 0}),
+        animate(600)
+      ]),
+
+      transition(':leave',
+        animate(600, style({opacity: 0})))
+    ])
+  ]
 })
 export class EventFormComponent implements OnInit {
 
@@ -20,16 +37,21 @@ export class EventFormComponent implements OnInit {
   eventForm: FormGroup;
   genreList: Genre[];
   atmosList: Atmosphere[];
-  dressChoice: Dresscode;
   bannerFilePath = '';
   bannerFileName: string;
   bannerEvent: any;
+  notificationMessage = '';
+  notificationClass = '';
+
+  showNotificationSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  showNotificationObs: Observable<boolean> = this.showNotificationSubject.asObservable();
 
   constructor(
     private fb: FormBuilder,
     private eventService: EventService,
     private authService: AuthService,
     private storageService: StorageService,
+    private router: Router
   ) {
     this.createForm();
     this.genreList = [];
@@ -52,7 +74,7 @@ export class EventFormComponent implements OnInit {
       genre: ['', []],
       atmosphere: ['', []],
       atmosphereCustom: ['', []],
-      dresscode: ['', []],
+      dresscode: ['', [Validators.required]],
       address: ['', [Validators.required]],
       zip: ['', [Validators.required, RegExValidator(/^[0-9]{4}$/i)]],
       city: ['', [Validators.required, Validators.minLength(3), RegExValidator(/[a-z, ,A-Z,ÆæØøÅå]*/i)]],
@@ -67,14 +89,53 @@ export class EventFormComponent implements OnInit {
     value.atmosphere = this.atmosList;
     value.genre = this.genreList;
     value.banner = this.bannerFilePath;
-    value.dresscode = this.dressChoice;
 
     value.startDate = this.convertDateTime(value.startDate, value.startTime);
     value.endDate = this.convertDateTime(value.endDate, value.endTime);
 
     this.UploadBanner();
     value.banner = this.bannerFilePath;
-    this.eventService.createEvent(value);
+    const id = this.eventService.createEvent(value);
+
+    if (id === null) {
+      this.notificationClass = 'is-warning';
+      this.notificationMessage = 'Something went wrong when creating the event...';
+      this.showNotificationSubject.next(true);
+    } else {
+
+      this.resetForm();
+      this.notificationClass = 'is-primary';
+
+      // TODO: Insert link to created event in the HTML string below.
+      this.notificationMessage = 'Successfully created the event:<strong> '
+        + value.title + '</strong>.<br>If you wish to navigate to your event, click <a>here</a>.';
+      this.showNotificationSubject.next(true);
+    }
+  }
+
+  resetForm() {
+    this.eventForm.reset();
+    this.atmosList.length = 0;
+    this.genreList.length = 0;
+  }
+
+  checkDate() {
+    const startDate = this.eventForm.value.startDate;
+    const startTime = this.eventForm.value.startTime;
+    const endDate = this.eventForm.value.endDate;
+    const endTime = this.eventForm.value.endTime;
+
+    if (startDate && startTime && endDate && endTime) {
+      if (new Date(this.convertDateTime(startDate, startTime)) > new Date(this.convertDateTime(endDate, endTime))) {
+        this.notificationClass = 'is-warning';
+        this.notificationMessage = 'Start date can not be after end date.';
+        this.showNotificationSubject.next(true);
+        return true;
+      } else {
+        this.showNotificationSubject.next(false);
+        return false;
+      }
+    }
   }
 
   convertDateTime(inputDate, inputTime) {
@@ -108,10 +169,6 @@ export class EventFormComponent implements OnInit {
     } else {
       this.atmosList.push(atmos);
     }
-  }
-
-  onDressClick(dresscode: Dresscode) {
-    this.dressChoice = dresscode;
   }
 
   getListIndex(text: string, list: string[]): number {
