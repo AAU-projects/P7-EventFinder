@@ -155,6 +155,21 @@ export class AuthService {
     return this.updateUserData(credentials.user, value);
   }
 
+  setCurrentUserProfileImage(location) {
+    let userRef;
+
+    if (this.userType === AccountTypes.User) {
+      userRef = this.firestore.doc(`users/${this.user.uid}`);
+    } else {
+      userRef = this.firestore.doc(`organizers/${this.user.uid}`);
+    }
+
+    userRef.set({profileImage: location}, { merge: true });
+
+    this.account = userRef.valueChanges();
+    return userRef.valueChanges();
+  }
+
   updateUserData(user: fireUser, value?) {
     let userRef;
 

@@ -5,6 +5,7 @@ export interface Account {
     country: string;
     phone: string;
     city: string;
+    profileImage: string;
 }
 
 export interface User extends Account {

@@ -43,3 +43,15 @@ hr {
 .hero.is-fullheight .hero-body {
   align-items: flex-start !important;
 }
+
+.submenu-is-active {
+  background-color: #4377CC;
+}
+
+.submenu-is-active:hover {
+  background-color: #4377CC;
+}
+
+.submenu-not-active {
+  background-color: #3B3B6F;
+}

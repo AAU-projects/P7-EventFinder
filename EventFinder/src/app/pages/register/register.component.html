@@ -1,12 +1,14 @@
 <div class="columns is-centered">
+  <div *ngIf="shared.showCropperEvent | async">
+    <app-image-cropper [imageSource]="profileImage" (imageDestination)="getImage($event)"></app-image-cropper>
+  </div>
   <div class="column is-8">
     <div class="notification">
       <h1 class="title has-text-weight-bold is-size-1 has-text-white">
         <div *ngIf="auth.isUserObs | async; else elseBlock">Create User</div>
         <ng-template #elseBlock>Create Organizer</ng-template>
       </h1>
-      <div class="columns is-centered">
-
+      <div class="columns is-centered is-multiline">
         <div *ngIf="auth.isUserObs | async; then UserBlock else organizerBlock"></div>
         <ng-template #UserBlock>
           <div class="column is-half">
@@ -24,9 +26,12 @@
             <a class="button is-primary is-small is-fullwidth is-rounded">Organizer</a>
           </div>
         </ng-template>
+        <div *ngIf="errorMessage" class="column is-12 notification is-danger">
+          <p> {{ errorMessage }} </p>
+        </div>
       </div>
       <!--<app-two-state-button [width]="width" [height]="height" [options]="options" [actions]="actions">
-      </app-two-state-button>-->
+        </app-two-state-button>-->
       <br>
 
       <form [formGroup]="registerForm" (ngSubmit)="register(registerForm.value)" validate>
@@ -38,9 +43,24 @@
             <div class="columns is-centered">
               <div class="column">
                 <figure class="image is-128x128 is-inline-block">
-                  <img src="../../../assets/images/logo.png">
+                  <img *ngIf="!profileImage" src="../../../assets/images/logo.png">
+                  <img *ngIf="profileImage" [src]="profileImage">
                 </figure>
-                <h1 class="has-text-white has-text-weight-light"><strong>EVENT</strong>FINDER</h1>
+                  <div class="file is-small is-centered is-dark">
+                    <label class="file-label">
+                      <input #fileUpload class="file-input" type="file" accept="image/*"
+                        (change)="selectProfileImage($event.target.files[0])"
+                        (click)="fileUpload.value = null">
+                      <span class="file-cta">
+                        <span class="file-icon">
+                          <i class="fas fa-upload"></i>
+                        </span>
+                        <span class="file-label">
+                          Upload Picture
+                        </span>
+                      </span>
+                    </label>
+                  </div>
               </div>
             </div>
 
@@ -48,8 +68,10 @@
 
             <div class="field">
               <div class="control has-icons-left">
-                <input [ngClass]="(registerForm.controls['email'].invalid && registerForm.controls['email'].dirty) ? 'is-danger' : ''" required class="input is-rounded has-text-centered is-medium is-size-6" type="email"
-                    formControlName="email" placeholder="Email" />
+                <input
+                  [ngClass]="(registerForm.controls['email'].invalid && registerForm.controls['email'].dirty) ? 'is-danger' : ''"
+                  required class="input is-rounded has-text-centered is-medium is-size-6" type="email"
+                  formControlName="email" placeholder="Email" />
                 <span class="icon is-small is-left">
                   <i class="fas fa-envelope"></i>
                 </span>
@@ -59,7 +81,9 @@
             <!-- INPUT: PASSWORD -->
             <div class="field">
               <p class="control has-icons-left">
-                <input [ngClass]="(registerForm.controls['password'].invalid && registerForm.controls['password'].dirty) ? 'is-danger' : ''" required class="input is-rounded has-text-centered is-medium is-size-6" type="password"
+                <input
+                  [ngClass]="(registerForm.controls['password'].invalid && registerForm.controls['password'].dirty) ? 'is-danger' : ''"
+                  required class="input is-rounded has-text-centered is-medium is-size-6" type="password"
                   formControlName="password" placeholder="Password" />
                 <span class="icon is-small is-left">
                   <i class="fas fa-lock"></i>
@@ -70,7 +94,9 @@
             <!-- INPUT: CONFIRM PASSWORD -->
             <div class="field">
               <p class="control has-icons-left">
-                <input [ngClass]="(registerForm.controls['confirmPassword'].invalid && registerForm.controls['confirmPassword'].dirty) ? 'is-danger' : ''" required class="input is-rounded has-text-centered is-medium is-size-6" type="password"
+                <input
+                  [ngClass]="(registerForm.controls['confirmPassword'].invalid && registerForm.controls['confirmPassword'].dirty) ? 'is-danger' : ''"
+                  required class="input is-rounded has-text-centered is-medium is-size-6" type="password"
                   formControlName="confirmPassword" placeholder="Confirm password" />
                 <span class="icon is-small is-left">
                   <i class="fas fa-lock"></i>
@@ -90,7 +116,9 @@
               <!-- INPUT: FIRSTNAME -->
               <div class="field">
                 <p class="control has-icons-left">
-                  <input [ngClass]="(registerForm.controls['firstname'].invalid && registerForm.controls['firstname'].dirty) ? 'is-danger' : ''" required class="input is-rounded has-text-centered is-medium is-size-6" type="text"
+                  <input
+                    [ngClass]="(registerForm.controls['firstname'].invalid && registerForm.controls['firstname'].dirty) ? 'is-danger' : ''"
+                    required class="input is-rounded has-text-centered is-medium is-size-6" type="text"
                     formControlName="firstname" placeholder="Firstname" />
                   <span class="icon is-small is-left">
                     <i class="fas fa-user"></i>
@@ -101,7 +129,9 @@
               <!-- INPUT: LASTNAME -->
               <div class="field">
                 <p class="control has-icons-left">
-                  <input [ngClass]="(registerForm.controls['lastname'].invalid && registerForm.controls['lastname'].dirty) ? 'is-danger' : ''" required class="input is-rounded has-text-centered is-medium is-size-6" type="text"
+                  <input
+                    [ngClass]="(registerForm.controls['lastname'].invalid && registerForm.controls['lastname'].dirty) ? 'is-danger' : ''"
+                    required class="input is-rounded has-text-centered is-medium is-size-6" type="text"
                     formControlName="lastname" placeholder="Lastname" />
                   <span class="icon is-small is-left">
                     <i class="fas fa-user"></i>
@@ -115,7 +145,9 @@
                   <!-- INPUT: ZIP -->
                   <div class="field">
                     <p class="control has-icons-left">
-                      <input [ngClass]="(registerForm.controls['zip'].invalid && registerForm.controls['zip'].dirty) ? 'is-danger' : ''" required class="input is-rounded has-text-centered is-medium is-size-6" type="text"
+                      <input
+                        [ngClass]="(registerForm.controls['zip'].invalid && registerForm.controls['zip'].dirty) ? 'is-danger' : ''"
+                        required class="input is-rounded has-text-centered is-medium is-size-6" type="text"
                         formControlName="zip" placeholder="Zip" />
                       <span class="icon is-small is-left">
                         <i class="fas fa-city"></i>
@@ -128,7 +160,9 @@
                   <!-- INPUT: CITY -->
                   <div class="field">
                     <div class="control">
-                      <input [ngClass]="(registerForm.controls['city'].invalid && registerForm.controls['city'].dirty) ? 'is-danger' : ''" required class="input is-rounded has-text-centered is-medium is-size-6" type="text"
+                      <input
+                        [ngClass]="(registerForm.controls['city'].invalid && registerForm.controls['city'].dirty) ? 'is-danger' : ''"
+                        required class="input is-rounded has-text-centered is-medium is-size-6" type="text"
                         formControlName="city" placeholder="City" />
                     </div>
                   </div>
@@ -138,7 +172,9 @@
               <!-- INPUT: COUNTRY -->
               <div class="field">
                 <p class="control has-icons-left">
-                  <input [ngClass]="(registerForm.controls['country'].invalid && registerForm.controls['country'].dirty) ? 'is-danger' : ''" required class="input is-rounded has-text-centered is-medium is-size-6" type="text"
+                  <input
+                    [ngClass]="(registerForm.controls['country'].invalid && registerForm.controls['country'].dirty) ? 'is-danger' : ''"
+                    required class="input is-rounded has-text-centered is-medium is-size-6" type="text"
                     formControlName="country" placeholder="Country" />
                   <span class="icon is-small is-left">
                     <i class="fas fa-globe"></i>
@@ -152,7 +188,9 @@
                   <!-- INPUT: PHONE -->
                   <div class="field">
                     <p class="control has-icons-left">
-                      <input [ngClass]="(registerForm.controls['phone'].invalid && registerForm.controls['phone'].dirty) ? 'is-danger' : ''" required class="input is-rounded has-text-centered is-medium is-size-6" type="tel"
+                      <input
+                        [ngClass]="(registerForm.controls['phone'].invalid && registerForm.controls['phone'].dirty) ? 'is-danger' : ''"
+                        required class="input is-rounded has-text-centered is-medium is-size-6" type="tel"
                         formControlName="phone" placeholder="Phone" />
                       <span class="icon is-small is-left">
                         <i class="fas fa-phone"></i>
@@ -168,7 +206,9 @@
                     <div class="control">
                       <div class="select is-rounded is-fullwidth has-text-centered is-medium is-size-5"
                         placeholder="Sex">
-                        <select [ngClass]="(registerForm.controls['sex'].invalid && registerForm.controls['sex'].dirty) ? 'is-danger' : ''" required formControlName="sex">
+                        <select
+                          [ngClass]="(registerForm.controls['sex'].invalid && registerForm.controls['sex'].dirty) ? 'is-danger' : ''"
+                          required formControlName="sex">
                           <option value="" selected disabled>Sex</option>
                           <option value="male">Male</option>
                           <option value="female">Female</option>
@@ -182,7 +222,9 @@
               <!-- INPUT: BIRTHDAY -->
               <div class="field">
                 <p class="control has-icons-left">
-                  <input [ngClass]="(registerForm.controls['birthday'].invalid && registerForm.controls['birthday'].dirty) ? 'is-danger' : ''" required class="input is-rounded has-text-centered is-medium is-size-6" type="text"
+                  <input
+                    [ngClass]="(registerForm.controls['birthday'].invalid && registerForm.controls['birthday'].dirty) ? 'is-danger' : ''"
+                    required class="input is-rounded has-text-centered is-medium is-size-6" type="text"
                     onfocus="(this.type='date')" formControlName="birthday" placeholder="Birthday" />
                   <span class="icon is-small is-left">
                     <i class="fas fa-calendar-alt"></i>
@@ -198,7 +240,9 @@
               <!-- INPUT: ORGANIZATION -->
               <div class="field">
                 <p class="control has-icons-left">
-                  <input  [ngClass]="(registerForm.controls['organization'].invalid && registerForm.controls['organization'].dirty) ? 'is-danger' : ''" required class="input is-rounded has-text-centered is-medium is-size-6" type="text"
+                  <input
+                    [ngClass]="(registerForm.controls['organization'].invalid && registerForm.controls['organization'].dirty) ? 'is-danger' : ''"
+                    required class="input is-rounded has-text-centered is-medium is-size-6" type="text"
                     formControlName="organization" placeholder="Organization" />
                   <span class="icon is-small is-left">
                     <i class="fas fa-user"></i>
@@ -209,7 +253,9 @@
               <!-- INPUT: ADDRESS -->
               <div class="field">
                 <p class="control has-icons-left">
-                  <input [ngClass]="(registerForm.controls['address'].invalid && registerForm.controls['address'].dirty) ? 'is-danger' : ''" required class="input is-rounded has-text-centered is-medium is-size-6" type="text"
+                  <input
+                    [ngClass]="(registerForm.controls['address'].invalid && registerForm.controls['address'].dirty) ? 'is-danger' : ''"
+                    required class="input is-rounded has-text-centered is-medium is-size-6" type="text"
                     formControlName="address" placeholder="Address" />
                   <span class="icon is-small is-left">
                     <i class="fas fa-user"></i>
@@ -223,7 +269,9 @@
                   <!-- INPUT: ZIP -->
                   <div class="field">
                     <p class="control has-icons-left">
-                      <input [ngClass]="(registerForm.controls['zip'].invalid && registerForm.controls['zip'].dirty) ? 'is-danger' : ''" required class="input is-rounded has-text-centered is-medium is-size-6" type="text"
+                      <input
+                        [ngClass]="(registerForm.controls['zip'].invalid && registerForm.controls['zip'].dirty) ? 'is-danger' : ''"
+                        required class="input is-rounded has-text-centered is-medium is-size-6" type="text"
                         formControlName="zip" placeholder="Zip" />
                       <span class="icon is-small is-left">
                         <i class="fas fa-city"></i>
@@ -236,7 +284,9 @@
                   <!-- INPUT: CITY -->
                   <div class="field">
                     <div class="control">
-                      <input [ngClass]="(registerForm.controls['city'].invalid && registerForm.controls['city'].dirty) ? 'is-danger' : ''" required class="input is-rounded has-text-centered is-medium is-size-6" type="text"
+                      <input
+                        [ngClass]="(registerForm.controls['city'].invalid && registerForm.controls['city'].dirty) ? 'is-danger' : ''"
+                        required class="input is-rounded has-text-centered is-medium is-size-6" type="text"
                         formControlName="city" placeholder="City" />
                     </div>
                   </div>
@@ -246,7 +296,9 @@
               <!-- INPUT: COUNTRY -->
               <div class="field">
                 <p class="control has-icons-left">
-                  <input [ngClass]="(registerForm.controls['country'].invalid && registerForm.controls['country'].dirty) ? 'is-danger' : ''" required class="input is-rounded has-text-centered is-medium is-size-6" type="text"
+                  <input
+                    [ngClass]="(registerForm.controls['country'].invalid && registerForm.controls['country'].dirty) ? 'is-danger' : ''"
+                    required class="input is-rounded has-text-centered is-medium is-size-6" type="text"
                     formControlName="country" placeholder="Country" />
                   <span class="icon is-small is-left">
                     <i class="fas fa-globe"></i>
@@ -257,7 +309,9 @@
               <!-- INPUT: PHONE -->
               <div class="field">
                 <p class="control has-icons-left">
-                  <input [ngClass]="(registerForm.controls['phone'].invalid && registerForm.controls['phone'].dirty) ? 'is-danger' : ''" required class="input is-rounded has-text-centered is-medium is-size-6" type="tel"
+                  <input
+                    [ngClass]="(registerForm.controls['phone'].invalid && registerForm.controls['phone'].dirty) ? 'is-danger' : ''"
+                    required class="input is-rounded has-text-centered is-medium is-size-6" type="tel"
                     formControlName="phone" placeholder="Phone" />
                   <span class="icon is-small is-left">
                     <i class="fas fa-phone"></i>
@@ -275,7 +329,8 @@
         <br>
         <div class="columns is-centered remove-bottom-margin">
           <div class="column is-5">
-            <button type="submit" class="button is-primary is-large is-rounded is-fullwidth" [disabled]="!registerForm.valid">
+            <button type="submit" class="button is-primary is-large is-rounded is-fullwidth"
+              [disabled]="!registerForm.valid">
               Register
             </button>
           </div>

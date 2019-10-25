@@ -12,7 +12,6 @@ export interface EventModel {
   endDate: Date;
   banner: string;
   genre: Genre[];
-  genreCustom: string[];
   atmosphere: Atmosphere[];
   atmosphereCustom: string;
   dresscode: Dresscode;

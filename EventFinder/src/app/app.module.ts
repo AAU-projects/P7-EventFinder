@@ -32,7 +32,6 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     PagesModule,
     ComponentsModule,
     FontAwesomeModule, // font awesome
-
   ],
   providers: [CookieService],
   bootstrap: [AppComponent]

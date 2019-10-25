@@ -22,12 +22,8 @@
           <form [formGroup]="loginForm">
             <div class="field">
               <p class="control has-icons-left">
-                <input
-                  class="input is-rounded is-dark is-large input-field-background"
-                  type="email"
-                  formControlName="email"
-                  placeholder="Email"
-                />
+                <input class="input is-rounded is-dark is-large input-field-background" type="email"
+                  formControlName="email" placeholder="Email" />
                 <span class="icon is-small is-left">
                   <i class="fas fa-envelope"></i>
                 </span>
@@ -35,12 +31,8 @@
             </div>
             <div class="field">
               <p class="control has-icons-left">
-                <input
-                  class="input is-rounded is-dark is-large input-field-background"
-                  type="password"
-                  formControlName="password"
-                  placeholder="Password"
-                />
+                <input class="input is-rounded is-dark is-large input-field-background" type="password"
+                  formControlName="password" placeholder="Password" />
                 <span class="icon is-small is-left">
                   <i class="fas fa-lock"></i>
                 </span>
@@ -51,10 +43,7 @@
               <div class="level-left">
                 <div class="level-item">
                   <label class="checkbox has-text-white-bis remember-me">
-                    <input
-                    type="checkbox"
-                    [checked]="rememberMe"
-                    (change)="rememberMe = !rememberMe"/>
+                    <input type="checkbox" [checked]="rememberMe" (change)="rememberMe = !rememberMe" />
                     Remember me
                   </label>
                 </div>
@@ -63,19 +52,13 @@
               <!-- Right side -->
               <div class="level-right has-text-white-bis forgot-password">
                 <div class="level-item">
-                  <a
-                  [routerLink]="['/forgotpassword']"
-                  (click)="cancel()"
-                  >Forgot password?</a>
+                  <a [routerLink]="['/forgotpassword']" (click)="cancel()">Forgot password?</a>
                 </div>
               </div>
             </nav>
 
-            <button
-              type="submit"
-              class="login-button button is-primary is-medium is-fullwidth is-rounded is-large"
-              (click)="login(loginForm.value)"
-            >
+            <button type="submit" class="login-button button is-primary is-medium is-fullwidth is-rounded is-large"
+              (click)="login(loginForm.value)">
               Login
             </button>
           </form>
@@ -83,11 +66,8 @@
           <br /><br />
 
           <p class="has-text-white-bis is-size-7 is-centered not-member">Not a member?</p>
-          <a
-            [routerLink]="['/register']" routerLinkActive="is-active"
-            class="is-dark button is-rounded has-text-white-bis bottom-margin-login"
-            >Create an account</a
-          >
+          <a [routerLink]="['/register']" routerLinkActive="is-active"
+            class="is-dark button is-rounded has-text-white-bis bottom-margin-login">Create an account</a>
         </div>
       </div>
     </div>

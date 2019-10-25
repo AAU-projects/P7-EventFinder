@@ -1,13 +1,11 @@
-import { Injectable, Input, Output, EventEmitter } from '@angular/core';
-import { Observable, BehaviorSubject } from 'rxjs';
-import { EventModel } from '../models/event.model';
-import { HttpClient } from '@angular/common/http';
+import { Injectable, Output, EventEmitter } from '@angular/core';
 import { MapStyles } from 'src/assets/mapStyles';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SharedService {
+  @Output() showCropperEvent: EventEmitter<boolean> = new EventEmitter();
   @Output() loginEvent: EventEmitter<boolean> = new EventEmitter();
   @Output() showEventEvent: EventEmitter<string> = new EventEmitter();
   @Output() isLoading: EventEmitter<boolean> = new EventEmitter();
@@ -17,6 +15,7 @@ export class SharedService {
   constructor() {
     const ms = new MapStyles();
     this.maptheme = ms.get_darkTheme();
+    this.showCropper(false);
   }
 
   setIsloading(value: boolean) {
@@ -42,5 +41,9 @@ export class SharedService {
 
   getShowEvent() {
     return this.showEventEvent;
+  }
+
+  showCropper(value: boolean) {
+  this.showCropperEvent.emit(value);
   }
 }
