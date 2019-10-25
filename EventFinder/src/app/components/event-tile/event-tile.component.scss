@@ -1,0 +1,45 @@
+.overlap-left {
+  margin-left: -100% !important;
+}
+
+.divider {
+    border-left: 2px solid #5C5C80;
+    height: 100%;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.no-padding {
+  padding: 0;
+}
+
+.no-padding-column {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+p.tag{
+  text-decoration: none !important;
+  background-color: #6294E7 !important;
+  color: white;
+}
+
+.star-active {
+  color: #FED88F;
+}
+
+.star-inactive {
+  color: #9A9AB2;
+}
+
+.has-centered-content {
+  justify-content: center !important;
+}
+
+.tile.is-vertical > .tile.is-child:not(:last-child) {
+  margin-bottom: 0.5rem !important;
+}
+
+.no-bottom-margin {
+  margin-bottom: 0.4rem !important;
+}

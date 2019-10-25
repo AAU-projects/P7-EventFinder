@@ -1,5 +1,22 @@
-<h1 class="has-text-white is-size-1 has-text-weight-light">Event finder</h1>
+<div class="columns">
+  <div class="column is-2">
+    <div class="notification has-background-darker">
+      <div class="title has-text-white">FILTER HERE</div>
+    </div>
+  </div>
+  <div class="column">
+    <div class="notification has-background-darker">
+      <div class="title has-text-white">MAP HERE</div>
+    </div>
 
-<div class="buttons is-centered">
-  <a [routerLink]="['/events']" class="button is-primary">See all hot available events in your neighbourhood ></a>
+    <div class="notification has-background-darker">
+      <div class="title has-text-white">CONTENT HERE</div>
+
+      <div class="tile is-ancestor ">
+        <div class="tile is-vertical is-parent">
+          <app-event-tile [inputEvent]=""></app-event-tile>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
