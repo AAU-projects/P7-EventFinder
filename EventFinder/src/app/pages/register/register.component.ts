@@ -1,13 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
-import { Router } from '@angular/router';
-import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
+import { Router, Event } from '@angular/router';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AccountTypes } from 'src/app/models/account.types.enum';
-import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { RegExValidator } from 'src/app/directives/regEx.directive';
 import { SharedService } from 'src/app/services/shared.service';
-import { ImageToolsService } from 'src/app/services/image-tools.service';
-import { DomSanitizer } from '@angular/platform-browser';
+import { StorageService } from 'src/app/services/storage.service';
 
 @Component({
   selector: 'app-register',
@@ -25,24 +23,29 @@ export class RegisterComponent {
     public auth: AuthService,
     private router: Router,
     private fb: FormBuilder,
-    private firestore: AngularFirestore,
     public shared: SharedService,
-    private sanitizer: DomSanitizer
+    private storage: StorageService
   )  {
     this.shared.changeLogin(false);
     this.createForm(this.auth.userType);
     this.auth.isUserObs.subscribe();
   }
 
-  uploadImage(image: File) {
-    console.log(image);
-
+  selectProfileImage(image: File) {
     const reader: FileReader = new FileReader();
     reader.readAsDataURL(image);
     reader.onload = () => {
       this.profileImage = reader.result;
       this.shared.showCropper(true);
     };
+   }
+
+   uploadProfileImage() {
+    if (this.profileImage) {
+      return this.storage.uploadProfilePicture(this.profileImage, 'profileimage');
+    } else {
+      return 'EventFinder/logo.png';
+    }
    }
 
    getImage(image: string) {
@@ -91,8 +94,17 @@ export class RegisterComponent {
   }
 
   register(value) {
+    if (this.auth.getUserType() === AccountTypes.Organizer) {
+      if (!this.profileImage) {
+        this.errorMessage = 'You must upload an organization logo';
+        this.successMessage = '';
+        return;
+      }
+    }
+
     this.auth.register(value)
     .then(res => {
+      this.auth.setCurrentUserProfileImage(this.uploadProfileImage());
       if (this.auth.userType === AccountTypes.User) {
         this.router.navigate(['/user']);
       } else {
