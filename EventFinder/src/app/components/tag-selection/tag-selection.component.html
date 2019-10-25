@@ -1,0 +1,64 @@
+<div class="modal is-active">
+  <div class="modal-background"></div>
+  <div class="modal-content">
+    <div class="notification is-dark" *ngIf="userService.currentUser | async as user">
+      <p class="is-size-3 has-text-weight-bold">Thank you for registering!</p>
+      <br>
+      <div *ngIf="userService.isUserObs | async; then UserBlock else organizerBlock"></div>
+      <br>
+      <div class="tile is-ancestor">
+        <div class="tile is-child has-centered-content is-flex is-4"></div>
+        <div class="tile is-child has-centered-content is-flex is-4">
+          <button class="button is-rounded is-primary is-fullwidth">Confirm</button>
+        </div>
+      </div>
+      <div class="tile is-ancestor">
+          <div class="tile is-child has-centered-content is-flex is-5"></div>
+          <div class="tile is-child has-centered-content is-flex is-2">
+            <button class="button is-darker is-rounded is-small is-fullwidth">Cancel</button>
+          </div>
+        </div>
+    </div>
+  </div>
+  <button class="modal-close is-large" aria-label="close"></button>
+</div>
+
+<!-- Userblock  -->
+<ng-template #UserBlock>
+  <P>Please select a few catagories so we know which types of events you like:</P>
+  <p class="is-size-7">(optional)</p>
+  <br>
+  <div class="tile is-ancestor">
+    <div class="tile is-vertical is-parent">
+      <div class="tile is-child has-centered-content is-flex">
+        <div class="tags are-medium">
+          <a class="tag" (click)="onPrefrenceClick(Tags.Bar)"
+            [ngClass]="(userPreferenceList.includes(Tags.Bar)) ? 'is-primary' : ''"> {{ Tags.Bar }} </a>
+          <a class="tag" (click)="onPrefrenceClick(Tags.Nightclub)"
+            [ngClass]="(userPreferenceList.includes(Tags.Nightclub)) ? 'is-primary' : ''">Night club</a>
+          <a class="tag" (click)="onPrefrenceClick(Tags.Resturant)"
+            [ngClass]="(userPreferenceList.includes(Tags.Resturant)) ? 'is-primary' : ''">Resturant</a>
+          <a class="tag" (click)="onPrefrenceClick(Genre.Rock)"
+            [ngClass]="(userPreferenceList.includes(Genre.Rock)) ? 'is-primary' : ''">Rock</a>
+        </div>
+      </div>
+      <div class="tile is-child has-centered-content is-flex">
+        <div class="tags are-medium">
+          <a class="tag" (click)="onPrefrenceClick(Genre.Pop)"
+            [ngClass]="(userPreferenceList.includes(Genre.Pop)) ? 'is-primary' : ''">Pop</a>
+          <a class="tag" (click)="onPrefrenceClick(Genre.HipHop)"
+            [ngClass]="(userPreferenceList.includes(Genre.HipHop)) ? 'is-primary' : ''">HipHop</a>
+          <a class="tag" (click)="onPrefrenceClick(Atmosphere.Alternative)"
+            [ngClass]="(userPreferenceList.includes(Atmosphere.Alternative)) ? 'is-primary' : ''">Alternative</a>
+          <a class="tag" (click)="onPrefrenceClick(Tags.LiveMusic)"
+            [ngClass]="(userPreferenceList.includes(Tags.LiveMusic)) ? 'is-primary' : ''">Live music</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<!-- Organizerblock  -->
+<ng-template #organizerBlock>
+
+</ng-template>

@@ -1,0 +1,30 @@
+a.tag{
+  text-decoration: none !important;
+}
+
+a.tag.is-primary:hover {
+  background-color: #6294E7 !important;
+}
+
+a.tag:hover {
+  background-color: #9A9AB2 !important;
+}
+
+.has-centered-content {
+  justify-content: center !important;
+}
+
+.no-padding {
+  padding: 0;
+}
+
+.tile.is-vertical > .tile.is-child:not(:last-child) {
+  margin-bottom: 0.5rem !important;
+}
+
+.button.is-darker{
+  margin-top: 0.7rem;
+  color: white;
+  border: 0px;
+  background-color: #1B1B38;
+}
