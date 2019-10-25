@@ -16,7 +16,7 @@ import { CookieService } from 'ngx-cookie-service';
 export class AuthService {
   account: Observable<Account> = null;
   userType: AccountTypes = this.getUserType();
-  user = null;
+  user: fireUser = null;
 
   isUserSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(this.isUser());
   public isUserObs: Observable<boolean> = this.isUserSubject.asObservable();
@@ -153,6 +153,21 @@ export class AuthService {
       value.password
     );
     return this.updateUserData(credentials.user, value);
+  }
+
+  setCurrentUserProfileImage(location) {
+    let userRef;
+
+    if (this.userType === AccountTypes.User) {
+      userRef = this.firestore.doc(`users/${this.user.uid}`);
+    } else {
+      userRef = this.firestore.doc(`organizers/${this.user.uid}`);
+    }
+
+    userRef.set({profileImage: location}, { merge: true });
+
+    this.account = userRef.valueChanges();
+    return userRef.valueChanges();
   }
 
   updateUserData(user: fireUser, value?) {
