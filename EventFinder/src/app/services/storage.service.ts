@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { AngularFireStorage } from '@angular/fire/storage';
-import { finalize, retry } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { AuthService } from './auth.service';
 
@@ -14,14 +13,34 @@ export class StorageService {
 
   }
 
-  uploadEventBanner(event, fileName) {
-    return this.uploadFile(event, `events/${this.auth.user.uid}/${fileName}`);
+  uploadProfilePicture(image, filename) {
+    return this.uploadImage(image, `images/${this.auth.user.uid}/${filename}`);
   }
 
-  uploadFile(event, location) {
+  uploadEventBanner(event, fileName) {
+    return this.uploadFileFromEvent(event, `events/${this.auth.user.uid}/${fileName}`);
+  }
+
+  uploadFileFromEvent(event, location) {
     const file = event.target.files[0];
     const filePath = location;
     this.storage.upload(filePath, file);
+    return location;
+  }
+
+  dataURItoBlob(dataURI) {
+    const imageString = atob(dataURI.split(',')[1]);
+    const array = [];
+    for (let i = 0; i < imageString.length; i++) {
+      array.push(imageString.charCodeAt(i));
+    }
+    return new Blob([new Uint8Array(array)], {
+    type: 'image/png'
+    });
+  }
+
+  uploadImage(image, location) {
+    this.storage.upload(location, this.dataURItoBlob(image));
     return location;
   }
 

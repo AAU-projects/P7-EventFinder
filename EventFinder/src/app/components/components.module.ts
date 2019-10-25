@@ -8,6 +8,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UserInfoComponent } from './user-info/user-info.component';
 import { NavbarUserDropdownComponent } from './navbar-user-dropdown/navbar-user-dropdown.component';
 import { OrganizerInfoComponent } from './organizer-info/organizer-info.component';
+import { ImageCropperComponent } from './image-cropper/image-cropper.component';
 import { EventFormComponent } from './event-form/event-form.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { QuillModule } from 'ngx-quill';
@@ -24,7 +25,8 @@ import { QuillModule } from 'ngx-quill';
     UserInfoComponent,
     NavbarUserDropdownComponent,
     OrganizerInfoComponent,
-    EventFormComponent],
+    EventFormComponent,
+    ImageCropperComponent],
   imports: [
     CommonModule,
     RouterModule,
@@ -47,7 +49,9 @@ import { QuillModule } from 'ngx-quill';
     UserInfoComponent,
     NavbarUserDropdownComponent,
     OrganizerInfoComponent,
-    EventFormComponent],
+    EventFormComponent,
+    ImageCropperComponent
+  ],
 })
 export class ComponentsModule {}
 

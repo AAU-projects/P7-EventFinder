@@ -4,9 +4,12 @@ import { Injectable, Input, Output, EventEmitter } from '@angular/core';
   providedIn: 'root'
 })
 export class SharedService {
+  @Output() showCropperEvent: EventEmitter<boolean> = new EventEmitter();
   @Output() loginEvent: EventEmitter<boolean> = new EventEmitter();
 
-  constructor() { }
+  constructor() {
+    this.showCropper(false);
+  }
 
   changeLogin(value: boolean) {
     this.loginEvent.emit(value);
@@ -14,5 +17,9 @@ export class SharedService {
 
   getLoginValue() {
     return this.loginEvent;
+  }
+
+  showCropper(value: boolean) {
+    this.showCropperEvent.emit(value);
   }
 }
