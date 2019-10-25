@@ -1,0 +1,318 @@
+<ng-template [ngIf]="(showNotificationObs | async) == true">
+  <div  [@simpleFadeAnimation]="'in'" class="notification {{notificationClass}}" [innerHTML]="notificationMessage">
+
+  </div>
+</ng-template>
+
+<div class="tile is-ancestor ">
+  <form [formGroup]="eventForm" (ngSubmit)="createEvent(eventForm.value)" validate>
+    <div class="tile is-vertical is-parent">
+
+      <div class="tile">
+        <div class="tile is-7 is-parent is-vertical">
+
+          <!-- EVENT FORM TILE -->
+          <div class="tile is-child box notification has-background-dark has-text-white">
+            <p class="title">Create a New Event</p>
+
+            <div class="columns">
+
+              <div class="column is-7">
+
+                <!-- INPUT: TITLE -->
+                <div class="field">
+                  <p class="control has-icons-left">
+                    <input
+                      [ngClass]="(eventForm.controls['title'].invalid && eventForm.controls['title'].dirty) ? 'is-danger' : ''"
+                      required class="input is-rounded has-text-centered is-medium is-size-6" type="text"
+                      formControlName="title" placeholder="Title" />
+                    <span class="icon is-small is-left">
+                      <i class="fas fa-heading"></i>
+                    </span>
+                  </p>
+                </div>
+
+                <!-- INPUT: START DATE -->
+                <p class="help has-text-left">Start date of event</p>
+                <div class="columns remove-bottom-margin">
+                  <div class="column">
+                    <div class="field">
+                      <p class="control has-icons-left">
+                        <input
+                          [ngClass]="(eventForm.controls['startDate'].invalid && eventForm.controls['startDate'].dirty) ? 'is-danger' : ''"
+                          required class="input is-rounded has-text-centered is-medium is-size-6" type="date"
+                          formControlName="startDate" placeholder="Start date" (change)="checkDate()"/>
+                        <span class="icon is-small is-left">
+                          <i class="fas fa-calendar"></i>
+                        </span>
+                      </p>
+                    </div>
+                  </div>
+                  <div class="column">
+                    <div class="field">
+                      <p class="control">
+                        <input
+                          [ngClass]="(eventForm.controls['startTime'].invalid && eventForm.controls['startTime'].dirty) ? 'is-danger' : ''"
+                          required class="input is-rounded has-text-centered is-medium is-size-6" type="time"
+                          formControlName="startTime" placeholder="Start time" (change)="checkDate()"/>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- INPUT: END DATE -->
+                <p class="help has-text-left">End date of event</p>
+                <div class="columns remove-bottom-margin">
+                  <div class="column">
+                    <div class="field">
+                      <p class="control has-icons-left">
+                        <input
+                          [ngClass]="(eventForm.controls['endDate'].invalid && eventForm.controls['endDate'].dirty) ? 'is-danger' : ''"
+                          required class="input is-rounded has-text-centered is-medium is-size-6" type="date"
+                          formControlName="endDate" placeholder="End date" (change)="checkDate()"/>
+                        <span class="icon is-small is-left">
+                          <i class="fas fa-calendar"></i>
+                        </span>
+                      </p>
+                    </div>
+                  </div>
+                  <div class="column">
+                    <div class="field">
+                      <p class="control">
+                        <input
+                          [ngClass]="(eventForm.controls['endTime'].invalid && eventForm.controls['endTime'].dirty) ? 'is-danger' : ''"
+                          required class="input is-rounded has-text-centered is-medium is-size-6" type="time"
+                          formControlName="endTime" placeholder="End time" (change)="checkDate()"/>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- INPUT: ADDRESS -->
+                <div class="field">
+                  <p class="control has-icons-left">
+                    <input
+                      [ngClass]="(eventForm.controls['address'].invalid && eventForm.controls['address'].dirty) ? 'is-danger' : ''"
+                      required class="input is-rounded has-text-centered is-medium is-size-6" type="text"
+                      formControlName="address" placeholder="Address" />
+                    <span class="icon is-small is-left">
+                      <i class="fas fa-map-marker-alt"></i>
+                    </span>
+                  </p>
+                </div>
+
+                <div class="columns remove-bottom-margin">
+                  <div class="column is-5">
+
+                    <!-- INPUT: ZIP -->
+                    <div class="field">
+                      <p class="control has-icons-left">
+                        <input
+                          [ngClass]="(eventForm.controls['zip'].invalid && eventForm.controls['zip'].dirty) ? 'is-danger' : ''"
+                          required class="input is-rounded has-text-centered is-medium is-size-6" type="text"
+                          formControlName="zip" placeholder="Zip" />
+                        <span class="icon is-small is-left">
+                          <i class="fas fa-city"></i>
+                        </span>
+                      </p>
+                    </div>
+                  </div>
+                  <div class="column">
+
+                    <!-- INPUT: CITY -->
+                    <div class="field">
+                      <div class="control">
+                        <input
+                          [ngClass]="(eventForm.controls['city'].invalid && eventForm.controls['city'].dirty) ? 'is-danger' : ''"
+                          required class="input is-rounded has-text-centered is-medium is-size-6" type="text"
+                          formControlName="city" placeholder="City" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- INPUT: COUNTRY -->
+                <div class="field">
+                  <p class="control has-icons-left">
+                    <input
+                      [ngClass]="(eventForm.controls['country'].invalid && eventForm.controls['country'].dirty) ? 'is-danger' : ''"
+                      required class="input is-rounded has-text-centered is-medium is-size-6" type="text"
+                      formControlName="country" placeholder="Country" />
+                    <span class="icon is-small is-left">
+                      <i class="fas fa-globe"></i>
+                    </span>
+                  </p>
+                </div>
+
+                <!-- INPUT: AGE REQUIREMENT -->
+                <div class="field">
+                  <p class="control has-icons-left">
+                    <input
+                      [ngClass]="(eventForm.controls['age'].invalid && eventForm.controls['age'].dirty) ? 'is-danger' : ''"
+                      required class="input is-rounded has-text-centered is-medium is-size-6" type="tel"
+                      formControlName="age" placeholder="Age Requirement" />
+                    <span class="icon is-small is-left">
+                      <i class="fas fa-american-sign-language-interpreting"></i>
+                    </span>
+                  </p>
+                </div>
+
+                <!-- INPUT: PRICE -->
+                <div class="field">
+                  <p class="control has-icons-left">
+                    <input
+                      [ngClass]="(eventForm.controls['price'].invalid && eventForm.controls['price'].dirty) ? 'is-danger' : ''"
+                      required class="input is-rounded has-text-centered is-medium is-size-6" type="number"
+                      formControlName="price" placeholder="Price" id="priceBox"/>
+                    <span class="icon is-small is-left">
+                      <i class="fas fa-money-bill-alt"></i>
+                    </span>
+                  </p>
+                </div>
+
+              </div>
+
+              <div class="column">
+                <!-- INPUT: DESCRIPTION -->
+                <div class="field is-full-heigth test-class">
+                  <div class="control is-full-heigth">
+                    <quill-editor formControlName="description" [styles]="{ backgroundColor: '#5C5C80', borderColor: '#5C5C80', height: 'calc(100% - 44px)'}"></quill-editor>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+
+          </div>
+        </div>
+        <div class="tile is-5 is-vertical is-parent">
+
+          <!-- BANNER UPLOAD TILE -->
+          <div class="tile is-child box notification has-background-dark has-text-white">
+            <p class="title">Event Banner</p>
+            <div class="file has-name is-primary is-centered">
+              <label class="file-label">
+                <input class="file-input" type="file" (change)="onFileInputChanged($event)" accept=".jpg,.jpeg,.png">
+                <span class="file-cta">
+                  <span class="file-icon">
+                    <i class="fas fa-upload"></i>
+                  </span>
+                  <span class="file-label">
+                    Upload
+                  </span>
+                </span>
+                <span class="file-name">
+                  {{(bannerEvent) ? bannerFileName : 'No Banner Selected' }}
+                </span>
+              </label>
+            </div>
+          </div>
+
+          <!-- TAGS TILE -->
+          <div class="tile is-child box notification has-background-dark has-text-white is-vertical">
+            <h3 class="has-text-left">
+              <span class="icon"><i class="fas fa-music"></i></span>
+              Genre
+            </h3>
+
+            <br>
+
+            <div class="tags">
+              <a class="tag" (click)="onGenreClick(Genre.Jazz)" [ngClass]="(genreList.includes(Genre.Jazz)) ? 'is-primary' : ''">Jazz</a>
+              <a class="tag" (click)="onGenreClick(Genre.Rock)" [ngClass]="(genreList.includes(Genre.Rock)) ? 'is-primary' : ''">Rock</a>
+              <a class="tag" (click)="onGenreClick(Genre.HipHop)" [ngClass]="(genreList.includes(Genre.HipHop)) ? 'is-primary' : ''">Hiphop</a>
+              <a class="tag" (click)="onGenreClick(Genre.Classical)" [ngClass]="(genreList.includes(Genre.Classical)) ? 'is-primary' : ''">Classical</a>
+              <a class="tag" (click)="onGenreClick(Genre.Country)" [ngClass]="(genreList.includes(Genre.Country)) ? 'is-primary' : ''">Country</a>
+              <a class="tag" (click)="onGenreClick(Genre.Pop)" [ngClass]="(genreList.includes(Genre.Pop)) ? 'is-primary' : ''">Pop</a>
+              <a class="tag" (click)="onGenreClick(Genre.EDM)" [ngClass]="(genreList.includes(Genre.EDM)) ? 'is-primary' : ''">EDM</a>
+              <a class="tag" (click)="onGenreClick(Genre.Rap)" [ngClass]="(genreList.includes(Genre.Rap)) ? 'is-primary' : ''">Rap</a>
+              <a class="tag" (click)="onGenreClick(Genre.Disco)" [ngClass]="(genreList.includes(Genre.Disco)) ? 'is-primary' : ''">Disco</a>
+              <a class="tag" (click)="onGenreClick(Genre.Techno)" [ngClass]="(genreList.includes(Genre.Techno)) ? 'is-primary' : ''">Techno</a>
+              <a class="tag" (click)="onGenreClick(Genre.Alternative)" [ngClass]="(genreList.includes(Genre.Alternative)) ? 'is-primary' : ''">Alternative</a>
+              <a class="tag" (click)="onGenreClick(Genre.Dance)" [ngClass]="(genreList.includes(Genre.Dance)) ? 'is-primary' : ''">Dance</a>
+              <a class="tag" (click)="onGenreClick(Genre.House)" [ngClass]="(genreList.includes(Genre.House)) ? 'is-primary' : ''">House</a>
+            </div>
+
+            <h3 class="has-text-left">
+                <span class="icon"><i class="fas fa-wind"></i></span>
+                Atmosphere
+            </h3>
+
+            <br>
+
+            <div class="tags">
+              <a class="tag" (click)="onAtmosClick(Atmosphere.Underground)" [ngClass]="(atmosList.includes(Atmosphere.Underground)) ? 'is-primary' : ''">Underground</a>
+              <a class="tag" (click)="onAtmosClick(Atmosphere.Alternative)" [ngClass]="(atmosList.includes(Atmosphere.Alternative)) ? 'is-primary' : ''">Alternative</a>
+              <a class="tag" (click)="onAtmosClick(Atmosphere.International)" [ngClass]="(atmosList.includes(Atmosphere.International)) ? 'is-primary' : ''">International</a>
+              <a class="tag" (click)="onAtmosClick(Atmosphere.Bar)" [ngClass]="(atmosList.includes(Atmosphere.Bar)) ? 'is-primary' : ''">Bar</a>
+              <a class="tag" (click)="onAtmosClick(Atmosphere.Student)" [ngClass]="(atmosList.includes(Atmosphere.Student)) ? 'is-primary' : ''">Student </a>
+              <a class="tag" (click)="onAtmosClick(Atmosphere.LivePerformance)" [ngClass]="(atmosList.includes(Atmosphere.LivePerformance)) ? 'is-primary' : ''">Live Performance</a>
+              <a class="tag" (click)="onAtmosClick(Atmosphere.Hipster)" [ngClass]="(atmosList.includes(Atmosphere.Hipster)) ? 'is-primary' : ''">Hipster </a>
+            </div>
+
+            <div class="field">
+              <div class="control">
+                <input class="input is-rounded has-text-centered is-small" formControlName="atmosphereCustom" placeholder="Specific atmosphere" type="text"/>
+              </div>
+            </div>
+
+            <h3 class="has-text-left">
+                <span class="icon"><i class="fas fa-mask"></i></span>
+                Dresscode
+            </h3>
+            <div class="control">
+            <div class="columns is-gapless has-no-bottom-margin">
+              <div class="column is-narrow has-padding-left is-gapless">
+                <label class="radio">
+                  <input type="radio" value="{{Dresscode.Casual}}" formControlName="dresscode">
+                  Casual dress code
+                </label>
+                <label class="radio">
+                  <input type="radio" value="{{Dresscode.Smart}}" formControlName="dresscode">
+                  Smart casual dress code
+                </label>
+              </div>
+            </div>
+            <div class="columns is-gapless">
+              <div class="column is-narrow has-padding-left is-gapless">
+                <label class="radio">
+                  <input type="radio" value="{{Dresscode.Elegant}}" formControlName="dresscode">
+                  Elegant dress code enforced
+                  </label>
+                <label class="radio">
+                  <input type="radio" value="{{Dresscode.Masquerade}}" formControlName="dresscode">
+                  Masquarade
+                </label>
+              </div>
+            </div>
+          </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tile">
+
+        <!-- CREATE EVENT TILE -->
+        <div class="tile is-3 is-parent">
+          <div class="tile is-child box notification has-background-dark has-text-white">
+            <p class="title">Live Preview</p>
+            <button type="submit" class="button is-primary is-large is-rounded is-fullwidth"
+              [disabled]="!eventForm.valid || genreList.length == 0 || atmosList.length == 0 || !bannerEvent || !checkDate()">
+              Create Event
+            </button>
+          </div>
+        </div>
+
+        <!-- PREVIEW TILE -->
+        <div class="tile is-parent">
+          <div class="tile is-child box notification has-background-dark has-text-white">
+            <p class="title">-PREVIEW TILE-</p>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </form>
+</div>
