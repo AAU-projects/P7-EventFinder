@@ -1,17 +1,10 @@
-.image-fill {
-    display:flex;
-    flex-direction:column;
-}
-
 .banner-background {
-    background-image: url('/../assets/images/testbanner.png');
     height: auto;
     width: 100%;
     background-color: #323259;
     background-size: fill;
     background-position: top;
     background-repeat: no-repeat;
-    // position: relative;
 }
 
 .second-layer {
@@ -52,7 +45,10 @@
     margin: auto;
 }
 
-// Banner
+.top-content-padding {
+  padding-bottom: 2vh;
+}
+
 .banner-size {
     height: 100em;
     width: auto;
@@ -64,50 +60,38 @@
     right: 1%;
 }
 
-// Left event content
-
-// Right event content
-
-.map-size {
-    width: 55vh;
+.genre-padding {
+  padding-top: 3vh;
 }
 
-// Bottom event content
-
-// Event
-
-.event-data{
+.event-data {
     padding-left: 3vh;
     padding-right: 3vh;
 }
 
-/* width */
+// Scrollbar custom
+
 ::-webkit-scrollbar {
   width: 3px;
 }
 
-/* Track */
 ::-webkit-scrollbar-track {
   background: #121118;
 }
 
-/* Handle */
 ::-webkit-scrollbar-thumb {
   background: #5C5C80;
 }
 
-/* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: #7272A4;
 }
 
-
-// // Invisble scrollbar
-// ::-webkit-scrollbar {
-//     display: none;
-// }
-
-
 agm-map {
     height: 300px;
   }
+
+// Ensures icons are aligned
+.icon-padding {
+  width: 24px;
+}

@@ -1,6 +1,8 @@
 import { Injectable, Input, Output, EventEmitter } from '@angular/core';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { EventModel } from '../models/event.model';
+import { HttpClient } from '@angular/common/http';
+import { MapStyles } from 'src/assets/mapStyles';
 
 @Injectable({
   providedIn: 'root'
@@ -8,17 +10,13 @@ import { EventModel } from '../models/event.model';
 export class SharedService {
   @Output() loginEvent: EventEmitter<boolean> = new EventEmitter();
   @Output() showEventEvent: EventEmitter<string> = new EventEmitter();
-  @Output() currentEvent: EventEmitter<EventModel> = new EventEmitter();
   @Output() isLoading: EventEmitter<boolean> = new EventEmitter();
+  public maptheme;
+  public selectedEvent: string;
 
-  constructor() { }
-
-  setEvent(value: EventModel) {
-    this.currentEvent.emit(value);
-  }
-
-  getCurrentEvent() {
-    return this.currentEvent;
+  constructor() {
+    const ms = new MapStyles();
+    this.maptheme = ms.get_darkTheme();
   }
 
   setIsloading(value: boolean) {
@@ -33,15 +31,16 @@ export class SharedService {
     this.loginEvent.emit(value);
   }
 
-  showEvent(value: string) {
-    this.showEventEvent.emit(value);
-  }
-
   getLoginValue() {
     return this.loginEvent;
   }
 
-  getShowEventValue() {
+  showEvent(value: string) {
+    this.showEventEvent.emit(value);
+    this.selectedEvent = value;
+  }
+
+  getShowEvent() {
     return this.showEventEvent;
   }
 }

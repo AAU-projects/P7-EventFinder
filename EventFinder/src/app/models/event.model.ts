@@ -14,7 +14,7 @@ export interface EventModel {
   genre: Genre[];
   genreCustom: string[];
   atmosphere: Atmosphere[];
-  atmosphereCustom: string[];
+  atmosphereCustom: string;
   dresscode: Dresscode;
 }
 

@@ -1,10 +1,15 @@
 import { Component, OnInit, HostListener, EventEmitter } from '@angular/core';
 import { SharedService } from 'src/app/services/shared.service';
-import { HttpClient } from '@angular/common/http';
 import { EventService } from 'src/app/services/event.service';
 import { AngularFirestoreDocument } from '@angular/fire/firestore';
 import { EventModel } from 'src/app/models/event.model';
 import { Subscription } from 'rxjs';
+import { OrganizerService } from 'src/app/services/organizer.service';
+import { Organizer } from 'src/app/models/account.model';
+import { ApiService } from 'src/app/services/api.service';
+import { StorageService } from 'src/app/services/storage.service';
+import { stringify } from '@angular/compiler/src/util';
+import { isEmpty } from 'rxjs/operators';
 
 @Component({
   selector: 'app-event-select',
@@ -12,58 +17,84 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./event-select.component.scss']
 })
 export class EventSelectComponent implements OnInit {
-  subscription: Subscription;
-  isLoading: EventEmitter<boolean> = new EventEmitter();
-  value: boolean;
-  APIKEY = 'AIzaSyAxJpRUrMbG264kgpMZNhk916zvqP1K08U';
+  eventLoaded: Promise<boolean>;
+  organizerLoaded: Promise<boolean>;
+  logoLoaded: Promise<boolean>;
+  bannerLoaded: Promise<boolean>;
+  event: EventModel;
+  organizer: Organizer;
+  logoImage;
+  bannerImage;
 
-  location = null;
-  latitude = 0;
-  longitude = 0;
-  event: EventModel = null;
+  latitude: number;
+  longitude: number;
 
   constructor(
     public shared: SharedService,
-    private httpClient: HttpClient,
-    private eventService: EventService
+    private apiService: ApiService,
+    private eventService: EventService,
+    private organizerService: OrganizerService,
+    private storageService: StorageService
   ) {
-    this.isLoading.emit(true);
-    const event: AngularFirestoreDocument<EventModel> = eventService.getEvent(
-      'P35r5dDvnLbcwzYdwsyc'
-    );
-    event.valueChanges().subscribe(document => {
-      console.log(document);
-      this.event = document;
-      this.updateMap();
-      this.isLoading.emit(false);
-      console.log(this.isLoading);
-    });
+    this.loadEvent(this.shared.selectedEvent);
+    this.loadOrganizer();
   }
 
-  getIsLoading() {
-    this.isLoading.subscribe(res => {
-      this.value = res;
-    });
+  ngOnInit() {}
+
+  loadOrganizer() {
+    this.organizerService
+      .getOrganizer('sG0L32ksrVfS7k95fTe6LWZi6Z53')
+      .valueChanges()
+      .subscribe(document => {
+        this.organizer = document;
+        this.organizerLoaded = Promise.resolve(true);
+      });
   }
 
-  ngOnInit() {
+  loadEvent(eventid) {
+    this.eventService
+      .getEvent(eventid)
+      .valueChanges()
+      .subscribe(document => {
+        this.event = document;
+        this.updateMap();
+        this.eventLoaded = Promise.resolve(true);
+        this.loadLogo();
+        this.loadBanner();
+      });
+  }
 
+  loadBanner() {
+    this.storageService
+      .getImageUrl(this.event.banner) // change this to organizer.banner when it works :)
+      .subscribe(document => {
+        this.bannerImage = document;
+        this.bannerLoaded = Promise.resolve(true);
+      });
+  }
+
+  loadLogo() {
+    this.storageService
+      .getImageUrl('images/sG0L32ksrVfS7k95fTe6LWZi6Z53/profileimage.png') // change this to organizer.profileimage when it works :)
+      .subscribe(document => {
+        this.logoImage = document;
+        this.logoLoaded = Promise.resolve(true);
+      });
   }
 
   updateMap() {
-    this.httpClient.get(this.apiAddress()).subscribe(result => {
-      this.location = result['results'][0]['geometry']['location'];
-      console.log(result['results'][0]['geometry']['location']);
-      this.latitude = this.location['lat'];
-      this.longitude = this.location['lng'];
-    });
-  }
+    this.apiService.get_location(this.formatAddress()).subscribe(result => {
+      const results = 'results';
+      const geometry = 'geometry';
+      const location = 'location';
+      const lat = 'lat';
+      const lng = 'lng';
 
-  apiAddress() {
-    return (
-      'https://maps.googleapis.com/maps/api/geocode/json?address=' +
-      this.formatAddress() + '&key=' + this.APIKEY
-    );
+      const loc = result[results][0][geometry][location];
+      this.latitude = loc[lat];
+      this.longitude = loc[lng];
+    });
   }
 
   formatAddress() {
@@ -83,11 +114,15 @@ export class EventSelectComponent implements OnInit {
   }
 
   getOrganizerDescription() {
-    return '';
+    return this.organizer.about;
   }
 
   getLocation() {
-    return this.event.address;
+    return this.event.address + ', ' + this.event.city;
+  }
+
+  getAge() {
+    return this.event.age + '+';
   }
 
   getDate() {
@@ -110,29 +145,39 @@ export class EventSelectComponent implements OnInit {
     const newDateEndString = new Date(this.event.endDate);
     const monthName = monthNames[newDateStartString.getMonth()];
 
+    const startHour = this.timeFormat(newDateStartString.getHours());
+    const startMinute = this.timeFormat(newDateStartString.getMinutes());
+    const endHour = this.timeFormat(newDateEndString.getHours());
+    const endMinute = this.timeFormat(newDateEndString.getMinutes());
+
     return (
-      `${monthName} ${this.dayFormat(newDateStartString.getDay())},` +
-      `${newDateStartString.getFullYear()} from ${newDateStartString.getHours()}:${newDateStartString.getMinutes()} to ${newDateEndString.getHours()}:${newDateEndString.getMinutes()}`
+      `${monthName} ${this.dayFormat(newDateStartString.getDay())}, ` +
+      `${newDateStartString.getFullYear()} from ` +
+      `${startHour}:${startMinute} ` +
+      `to ${endHour}:${endMinute}`
     );
+  }
+
+  timeFormat(time) {
+    if (time === 0) {
+      return '00';
+    }
+    return time;
   }
 
   dayFormat(day) {
     switch (day) {
       case 1: {
         return `${day}st`;
-        break;
       }
       case 2: {
         return `${day}nd`;
-        break;
       }
       case 3: {
         return `${day}rd`;
-        break;
       }
       default: {
         return `${day}th`;
-        break;
       }
     }
   }
@@ -142,11 +187,38 @@ export class EventSelectComponent implements OnInit {
   }
 
   getPrice() {
-    return this.event.price;
+    return this.event.price + 'DKK';
+  }
+
+  displayList(list) {
+    let result = '';
+    list.forEach(element => {
+      if (element != null) {
+        result += ` ${element} |`;
+      }
+    });
+
+    return result.slice(0, -1);
   }
 
   getGenre() {
-    return this.event.genre;
+    return this.displayList(this.event.genre);
+  }
+
+  getAtmosphere() {
+    if (!(this.event.atmosphereCustom === '')) {
+      return (
+        this.displayList(this.event.atmosphere) +
+        '|' +
+        this.event.atmosphereCustom
+      );
+    }
+
+    return this.displayList(this.event.atmosphere);
+  }
+
+  getDresscode() {
+    return this.event.dresscode;
   }
 
   @HostListener('document:keydown', ['$event']) onKeydownHandler(
@@ -156,192 +228,4 @@ export class EventSelectComponent implements OnInit {
       this.close();
     }
   }
-
-  // Move this sometwhere else :O)
-  styles: [] = [
-    {
-      "elementType": "geometry",
-      "stylers": [
-        {
-          "color": "#212121"
-        }
-      ]
-    },
-    {
-      "elementType": "labels.icon",
-      "stylers": [
-        {
-          "visibility": "off"
-        }
-      ]
-    },
-    {
-      "elementType": "labels.text.fill",
-      "stylers": [
-        {
-          "color": "#757575"
-        }
-      ]
-    },
-    {
-      "elementType": "labels.text.stroke",
-      "stylers": [
-        {
-          "color": "#212121"
-        }
-      ]
-    },
-    {
-      "featureType": "administrative",
-      "elementType": "geometry",
-      "stylers": [
-        {
-          "color": "#757575"
-        }
-      ]
-    },
-    {
-      "featureType": "administrative.country",
-      "elementType": "labels.text.fill",
-      "stylers": [
-        {
-          "color": "#9e9e9e"
-        }
-      ]
-    },
-    {
-      "featureType": "administrative.land_parcel",
-      "stylers": [
-        {
-          "visibility": "off"
-        }
-      ]
-    },
-    {
-      "featureType": "administrative.locality",
-      "elementType": "labels.text.fill",
-      "stylers": [
-        {
-          "color": "#bdbdbd"
-        }
-      ]
-    },
-    {
-      "featureType": "poi",
-      "elementType": "labels.text.fill",
-      "stylers": [
-        {
-          "color": "#757575"
-        }
-      ]
-    },
-    {
-      "featureType": "poi.park",
-      "elementType": "geometry",
-      "stylers": [
-        {
-          "color": "#181818"
-        }
-      ]
-    },
-    {
-      "featureType": "poi.park",
-      "elementType": "labels.text.fill",
-      "stylers": [
-        {
-          "color": "#616161"
-        }
-      ]
-    },
-    {
-      "featureType": "poi.park",
-      "elementType": "labels.text.stroke",
-      "stylers": [
-        {
-          "color": "#1b1b1b"
-        }
-      ]
-    },
-    {
-      "featureType": "road",
-      "elementType": "geometry.fill",
-      "stylers": [
-        {
-          "color": "#2c2c2c"
-        }
-      ]
-    },
-    {
-      "featureType": "road",
-      "elementType": "labels.text.fill",
-      "stylers": [
-        {
-          "color": "#8a8a8a"
-        }
-      ]
-    },
-    {
-      "featureType": "road.arterial",
-      "elementType": "geometry",
-      "stylers": [
-        {
-          "color": "#373737"
-        }
-      ]
-    },
-    {
-      "featureType": "road.highway",
-      "elementType": "geometry",
-      "stylers": [
-        {
-          "color": "#3c3c3c"
-        }
-      ]
-    },
-    {
-      "featureType": "road.highway.controlled_access",
-      "elementType": "geometry",
-      "stylers": [
-        {
-          "color": "#4e4e4e"
-        }
-      ]
-    },
-    {
-      "featureType": "road.local",
-      "elementType": "labels.text.fill",
-      "stylers": [
-        {
-          "color": "#616161"
-        }
-      ]
-    },
-    {
-      "featureType": "transit",
-      "elementType": "labels.text.fill",
-      "stylers": [
-        {
-          "color": "#757575"
-        }
-      ]
-    },
-    {
-      "featureType": "water",
-      "elementType": "geometry",
-      "stylers": [
-        {
-          "color": "#000000"
-        }
-      ]
-    },
-    {
-      "featureType": "water",
-      "elementType": "labels.text.fill",
-      "stylers": [
-        {
-          "color": "#3d3d3d"
-        }
-      ]
-    }
-  ]
 }
