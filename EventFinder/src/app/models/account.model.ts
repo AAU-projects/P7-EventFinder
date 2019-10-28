@@ -1,3 +1,5 @@
+import { Genre, Atmosphere } from './event.model';
+
 export interface Account {
     uid: string;
     email: string;
@@ -13,6 +15,7 @@ export interface User extends Account {
     lastname: string;
     birthday: Date;
     sex: Sex;
+    preferences: Genre|Atmosphere|Tags[];
 }
 
 export interface Organizer extends Account {
@@ -20,9 +23,24 @@ export interface Organizer extends Account {
     address: string;
     about: string;
     profileImage: string;
+    tags: Tags[];
 }
 
 export enum Sex {
     Male = 'male',
     Female = 'female'
 }
+
+export enum Tags {
+  Nightclub = 'Nightclub',
+  LoudMusic = 'Loud Music',
+  LiveMusic = 'Live Music',
+  Venue = 'Venue',
+  Culture = 'Culture',
+  Resturant = 'Resturant',
+  Bar = 'Bar',
+  Pub = 'Pub',
+  Festival = 'Festival',
+  Other = 'Other'
+}
+
