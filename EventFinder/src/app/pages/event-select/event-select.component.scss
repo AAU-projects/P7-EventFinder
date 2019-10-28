@@ -1,30 +1,24 @@
 .banner-background {
-    height: auto;
-    width: 100%;
-    background-color: #323259;
-    background-size: fill;
-    background-position: top;
-    background-repeat: no-repeat;
+  height: auto;
+  width: 100%;
+  background-color: #323259;
+  background-size: fill;
+  background-position: top;
+  background-repeat: no-repeat;
 }
 
 .second-layer {
-    position: absolute;
-    right: 1%;
-    width: 98%;
-    height: auto;
-    top: 300px;
-    background-color: #5C5C80;
-}
-
-.content {
-    margin-top: 100px;
+  position: absolute;
+  right: 1%;
+  width: 98%;
+  height: auto;
+  top: 300px;
+  background-color: #5C5C80;
 }
 
 .image-logo {
-    justify-content: center;
-    position: absolute;
-    top: 220px;
-    left: 45%;
+  position: relative;
+  margin-top: 10px;
 }
 
 .title {
@@ -32,17 +26,26 @@
 }
 
 .small-text {
-    font-size: 1.5vh;
+  font-size: 1.5vh;
 }
 
-.panel-size {
-    width: 1400px;
+@media only screen and (max-width: 1030px) {
+  .panel-size {
+    width: 95vw;
     height: auto;
+  }
+}
+
+@media only screen and (min-width: 1030px) {
+  .panel-size {
+    width: 72vw;
+    height: auto;
+  }
 }
 
 .top-content {
-    align-content: center;
-    margin: auto;
+  align-content: center;
+  margin: auto;
 }
 
 .top-content-padding {
@@ -50,14 +53,14 @@
 }
 
 .banner-size {
-    height: 100em;
-    width: auto;
+  height: 100em;
+  width: auto;
 }
 
 .delete {
-    position: absolute;
-    top: 1%;
-    right: 1%;
+  position: absolute;
+  top: 1%;
+  right: 1%;
 }
 
 .genre-padding {
@@ -65,8 +68,8 @@
 }
 
 .event-data {
-    padding-left: 3vh;
-    padding-right: 3vh;
+  padding-left: 3vh;
+  padding-right: 3vh;
 }
 
 // Scrollbar custom
@@ -88,8 +91,8 @@
 }
 
 agm-map {
-    height: 300px;
-  }
+  height: 300px;
+}
 
 // Ensures icons are aligned
 .icon-padding {

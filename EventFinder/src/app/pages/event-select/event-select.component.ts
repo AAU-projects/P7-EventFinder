@@ -37,18 +37,18 @@ export class EventSelectComponent implements OnInit {
     private storageService: StorageService
   ) {
     this.loadEvent(this.shared.selectedEvent);
-    this.loadOrganizer();
   }
 
   ngOnInit() {}
 
   loadOrganizer() {
     this.organizerService
-      .getOrganizer('sG0L32ksrVfS7k95fTe6LWZi6Z53')
+      .getOrganizer(this.event.organizerId)
       .valueChanges()
       .subscribe(document => {
         this.organizer = document;
         this.organizerLoaded = Promise.resolve(true);
+        this.loadLogo();
       });
   }
 
@@ -58,16 +58,16 @@ export class EventSelectComponent implements OnInit {
       .valueChanges()
       .subscribe(document => {
         this.event = document;
-        this.updateMap();
         this.eventLoaded = Promise.resolve(true);
-        this.loadLogo();
+        this.updateMap();
         this.loadBanner();
+        this.loadOrganizer();
       });
   }
 
   loadBanner() {
     this.storageService
-      .getImageUrl(this.event.banner) // change this to organizer.banner when it works :)
+      .getImageUrl(this.event.banner)
       .subscribe(document => {
         this.bannerImage = document;
         this.bannerLoaded = Promise.resolve(true);
@@ -76,7 +76,7 @@ export class EventSelectComponent implements OnInit {
 
   loadLogo() {
     this.storageService
-      .getImageUrl('images/sG0L32ksrVfS7k95fTe6LWZi6Z53/profileimage.png') // change this to organizer.profileimage when it works :)
+      .getImageUrl(this.organizer.profileImage)
       .subscribe(document => {
         this.logoImage = document;
         this.logoLoaded = Promise.resolve(true);

@@ -7,12 +7,13 @@
           <button class="delete" (click)="close()"></button>
         </div>
         <div class="second-layer">
+          <img class="image-logo" [src]="logoImage" alt="loading..">
           <div class="content">
             <h1 class="title has-text-white">{{ getTitle() }}</h1>
-            <h2 class="small-text has-text-white has-text-weight-normal">
+            <h2 class="small-text has-text-white has-text-weight-light">
               <i class="far fa-calendar"></i> &nbsp; {{ getDate() }}
             </h2>
-            <h2 class="small-text has-text-white has-text-weight-normal">
+            <h2 class="small-text has-text-white has-text-weight-light">
               <i class="fas fa-map-marker-alt top-content-padding"></i> &nbsp; {{ getLocation() }}
             </h2>
             <div class="top-content">
@@ -23,7 +24,8 @@
                   </div>
                   <div class="is-divider-vertical"></div>
                   <div class="column">
-                    <agm-map [zoom]="15" [latitude]="latitude" [longitude]="longitude" *ngIf="latitude != 0" [styles]="shared.maptheme">
+                    <agm-map [zoom]="15" [latitude]="latitude" [longitude]="longitude" *ngIf="latitude != 0"
+                      [styles]="shared.maptheme">
                       <agm-marker [latitude]="latitude" [longitude]="longitude"></agm-marker>
                     </agm-map>
                     <div class="columns event-data genre-padding">
@@ -55,14 +57,13 @@
                   <div>
                     <div class="has-text-white" [innerHTML]="getOrganizerDescription()"></div>
                   </div>
+                  <!-- TODO: Redirect this button when functionality is implemented -->
                   <button class="is-dark button is-rounded has-text-white-bis is-pulled-right">Læs mere</button>
                 </div>
               </div>
-
             </div>
           </div>
         </div>
-        <img class="image-logo" [src]="logoImage" alt="Place image title">
       </div>
     </div>
   </div>
