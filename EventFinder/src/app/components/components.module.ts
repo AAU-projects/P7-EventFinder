@@ -12,6 +12,7 @@ import { ImageCropperComponent } from './image-cropper/image-cropper.component';
 import { EventFormComponent } from './event-form/event-form.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { QuillModule } from 'ngx-quill';
+import { TagSelectionComponent } from './tag-selection/tag-selection.component';
 
 /* How to add a new component:
     ng g c components/[name] --export
@@ -26,7 +27,8 @@ import { QuillModule } from 'ngx-quill';
     NavbarUserDropdownComponent,
     OrganizerInfoComponent,
     EventFormComponent,
-    ImageCropperComponent],
+    ImageCropperComponent,
+    TagSelectionComponent],
   imports: [
     CommonModule,
     RouterModule,
@@ -50,7 +52,8 @@ import { QuillModule } from 'ngx-quill';
     NavbarUserDropdownComponent,
     OrganizerInfoComponent,
     EventFormComponent,
-    ImageCropperComponent
+    ImageCropperComponent,
+    TagSelectionComponent
   ],
 })
 export class ComponentsModule {}
