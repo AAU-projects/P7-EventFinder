@@ -15,7 +15,7 @@ export class NavbarUserDropdownComponent{
   }
 
   openLogin() {
-    this.shared.changeLogin(true);
+    this.shared.showLogin(true);
   }
 
 }

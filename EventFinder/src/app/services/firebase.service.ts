@@ -8,11 +8,11 @@ export class FirebaseService {
 
   constructor(public db: AngularFirestore) {}
 
-  getUser(userKey){
+  getUser(userKey) {
     return this.db.collection('users').doc(userKey).snapshotChanges();
   }
 
-  getUsers(){
+  getUsers() {
     return this.db.collection('users').snapshotChanges();
   }
 }

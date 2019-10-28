@@ -1,4 +1,4 @@
-export interface Event {
+export interface EventModel {
   organizerId: string;
   title: string;
   address: string;
@@ -13,7 +13,7 @@ export interface Event {
   banner: string;
   genre: Genre[];
   atmosphere: Atmosphere[];
-  atmosphereCustom: string[];
+  atmosphereCustom: string;
   dresscode: Dresscode;
 }
 

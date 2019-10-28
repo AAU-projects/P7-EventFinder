@@ -12,6 +12,9 @@ import { RegisterComponent } from './register/register.component';
 import { EventsComponent } from './events/events.component';
 import { ForgotpasswordComponent } from './forgotpassword/forgotpassword.component';
 import { OrganizerComponent } from './organizer/organizer.component';
+import { EventSelectComponent } from './event-select/event-select.component';
+import { AgmCoreModule } from '@agm/core';
+import { HttpClientModule } from '@angular/common/http';
 
 
 /* How to add a new page:
@@ -30,12 +33,17 @@ import { OrganizerComponent } from './organizer/organizer.component';
     RegisterComponent,
     EventsComponent,
     ForgotpasswordComponent,
-    OrganizerComponent],
+    OrganizerComponent,
+    EventSelectComponent],
   imports: [
     CommonModule,
     PagesRoutingModule,
     ComponentsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HttpClientModule,
+    AgmCoreModule.forRoot({ // Google maps
+      apiKey: 'AIzaSyAxJpRUrMbG264kgpMZNhk916zvqP1K08U'
+    }),
   ],
   exports: [LoginComponent]
 })

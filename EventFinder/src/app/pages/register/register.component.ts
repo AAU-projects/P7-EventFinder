@@ -27,7 +27,7 @@ export class RegisterComponent {
     public shared: SharedService,
     private storage: StorageService
   )  {
-    this.shared.changeLogin(false);
+    this.shared.showLogin(false);
     this.createForm(this.auth.userType);
     this.auth.isUserObs.subscribe();
   }

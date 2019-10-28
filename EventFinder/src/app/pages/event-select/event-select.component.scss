@@ -1,0 +1,100 @@
+.banner-background {
+  height: auto;
+  width: 100%;
+  background-color: #323259;
+  background-size: fill;
+  background-position: top;
+  background-repeat: no-repeat;
+}
+
+.second-layer {
+  position: absolute;
+  right: 1%;
+  width: 98%;
+  height: auto;
+  top: 300px;
+  background-color: #5C5C80;
+}
+
+.image-logo {
+  position: relative;
+  margin-top: 10px;
+}
+
+.title {
+  font-size: 4vh;
+}
+
+.small-text {
+  font-size: 1.5vh;
+}
+
+@media only screen and (max-width: 1030px) {
+  .panel-size {
+    width: 95vw;
+    height: auto;
+  }
+}
+
+@media only screen and (min-width: 1030px) {
+  .panel-size {
+    width: 72vw;
+    height: auto;
+  }
+}
+
+.top-content {
+  align-content: center;
+  margin: auto;
+}
+
+.top-content-padding {
+  padding-bottom: 2vh;
+}
+
+.banner-size {
+  height: 100em;
+  width: auto;
+}
+
+.delete {
+  position: absolute;
+  top: 1%;
+  right: 1%;
+}
+
+.genre-padding {
+  padding-top: 3vh;
+}
+
+.event-data {
+  padding-left: 3vh;
+  padding-right: 3vh;
+}
+
+// Scrollbar custom
+
+::-webkit-scrollbar {
+  width: 3px;
+}
+
+::-webkit-scrollbar-track {
+  background: #121118;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #5C5C80;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #7272A4;
+}
+
+agm-map {
+  height: 300px;
+}
+
+// Ensures icons are aligned
+.icon-padding {
+  width: 24px;
+}
