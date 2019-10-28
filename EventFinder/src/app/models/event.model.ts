@@ -13,7 +13,7 @@ export interface Event {
   banner: string;
   genre: Genre[];
   atmosphere: Atmosphere[];
-  atmosphereCustom: string[];
+  atmosphereCustom: string;
   dresscode: Dresscode;
 }
 

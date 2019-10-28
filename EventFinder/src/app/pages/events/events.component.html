@@ -10,11 +10,13 @@
     </div>
 
     <div class="notification has-background-darker">
-      <div class="title has-text-white">CONTENT HERE</div>
-
       <div class="tile is-ancestor ">
         <div class="tile is-vertical is-parent">
-          <app-event-tile [inputEvent]=""></app-event-tile>
+          <div *ngFor="let event of eventList">
+            <div class="tile is-child notification has-background-darker no-side-padding">
+              <app-event-tile [inputEvent]=event></app-event-tile>
+            </div>
+          </div>
         </div>
       </div>
     </div>
