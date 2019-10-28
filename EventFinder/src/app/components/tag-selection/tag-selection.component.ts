@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { UserService } from 'src/app/services/user.service';
+import { AccountService } from 'src/app/services/account.service';
 import { Tags } from 'src/app/models/account.model';
 import { Genre, Atmosphere } from 'src/app/models/event.model';
 
@@ -17,7 +17,9 @@ export class TagSelectionComponent implements OnInit {
   tagList: Tags[] = [];
   userPreferenceList: any[] = [];
 
-  constructor(private router: Router, public userService: UserService) { }
+  errorMsg: string;
+
+  constructor(private router: Router, public accountService: AccountService) { }
 
   ngOnInit() {
   }
@@ -27,18 +29,37 @@ export class TagSelectionComponent implements OnInit {
   }
 
   confirmSelection() {
-    this.router.navigate(['/']);
+    if (this.accountService.isUser) {
+      this.accountService.editTagsOrPrefrences(this.userPreferenceList);
+      this.router.navigate(['/']);
+    } else {
+      if (this.tagList.length >= 1 && this.tagList.length <= 3) {
+        this.accountService.editTagsOrPrefrences(this.tagList);
+        this.router.navigate(['/']);
+      }
+    }
+  }
+
+  organizerSubmitCheck() {
+    if (this.accountService.isUser) {
+      return false;
+    } else {
+      return !(this.tagList.length >= 1);
+    }
   }
 
   onTagClick(tag: Tags) {
     if (this.tagList.includes(tag)) {
+      this.errorMsg = null;
       this.tagList.splice(this.tagList.indexOf(tag), 1);
+    } else if (this.tagList.length >= 3) {
+      this.errorMsg = 'You can only select 3 tags';
     } else {
       this.tagList.push(tag);
     }
   }
 
-  onPrefrenceClick(tag: Tags|Genre|Atmosphere) {
+  onPrefrenceClick(tag: Tags | Genre | Atmosphere) {
     if (this.userPreferenceList.includes(tag)) {
       this.userPreferenceList.splice(this.userPreferenceList.indexOf(tag), 1);
     } else {

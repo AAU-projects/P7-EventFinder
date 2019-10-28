@@ -18,7 +18,7 @@ export class RegisterComponent {
   errorMessage = '';
   successMessage = '';
   profileImage;
-  showTagPopUp = true;
+  showTagPopUp = false;
 
   constructor(
     public auth: AuthService,
