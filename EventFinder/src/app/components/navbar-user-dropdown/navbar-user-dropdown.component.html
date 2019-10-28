@@ -10,7 +10,7 @@
   >
     <span class="icon"><i class="fa fa-user"></i></span>
   </a>
-  <div *ngIf="auth.userType == 'user' | async; then user; else organizer"></div>
+  <div *ngIf="auth.isUserObs | async; then user; else organizer"></div>
 </div>
 
 <!-- Logged out dropdown -->
