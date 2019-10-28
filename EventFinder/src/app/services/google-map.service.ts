@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 @Injectable({
   providedIn: 'root'
 })
-export class ApiService {
+export class GoogleMapsService {
 
   private APIKEY = 'AIzaSyAxJpRUrMbG264kgpMZNhk916zvqP1K08U';
 

@@ -6,7 +6,7 @@ import { EventModel } from 'src/app/models/event.model';
 import { Subscription } from 'rxjs';
 import { OrganizerService } from 'src/app/services/organizer.service';
 import { Organizer } from 'src/app/models/account.model';
-import { ApiService } from 'src/app/services/api.service';
+import { GoogleMapsService } from 'src/app/services/google-map.service';
 import { StorageService } from 'src/app/services/storage.service';
 import { stringify } from '@angular/compiler/src/util';
 import { isEmpty } from 'rxjs/operators';
@@ -31,7 +31,7 @@ export class EventSelectComponent implements OnInit {
 
   constructor(
     public shared: SharedService,
-    private apiService: ApiService,
+    private apiService: GoogleMapsService,
     private eventService: EventService,
     private organizerService: OrganizerService,
     private storageService: StorageService
