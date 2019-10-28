@@ -5,26 +5,28 @@
 >
   <a
     class="navbar-link is-arrowless"
-    [routerLink]="auth.isUserObs?['/organizer']:['/user']"
+    [routerLink]="auth.userType == 'user'?['/user']:['/organizer']"
     routerLinkActive="is-active"
   >
     <span class="icon"><i class="fa fa-user"></i></span>
   </a>
-  <div *ngIf="auth.isUserObs | async; then user; else organizer"></div>
+  <div *ngIf="auth.userType == 'user' | async; then user; else organizer"></div>
 </div>
 
-<!-- Logout dropdown -->
+<!-- Logged out dropdown -->
 <div
   class="navbar-item has-dropdown is-hoverable"
   *ngIf="!auth.isLoggedIn()"
-  (click)="openLogin()"
 >
   <a class="navbar-link is-arrowless"
-    ><span class="icon"><i class="fa fa-user"></i></span
+    ><span (click)="openLogin()" class="icon"><i class="fa fa-user"></i></span
   ></a>
   <div class="navbar-dropdown is-right has-text-white">
     <a class="navbar-item has-text-white" (click)="openLogin()">
       <span class="icon has-text-white"><i class="fa fa-user"></i></span>Login
+    </a>
+    <a class="navbar-item has-text-white" (click)="openRegister()" >
+      <span class="icon has-text-white"><i class="fas fa-edit"></i></span>Register
     </a>
   </div>
 </div>
