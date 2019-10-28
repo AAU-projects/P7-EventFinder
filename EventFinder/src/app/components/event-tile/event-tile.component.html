@@ -1,4 +1,9 @@
-<div *ngIf="organizerImageUrl" class="tile is-child box notification has-background-dark has-text-white no-padding">
+<div *ngIf="selectedEventID">
+  <app-event-select [inputEventID]="selectedEventID"></app-event-select>
+</div>
+
+
+<div *ngIf="organizerImageUrl" class="tile is-child box notification has-background-dark has-text-white no-padding" (click)="openSelectedEvent()">
   <div class="columns is-vcentered">
     <div class="column no-padding-column is-4">
       <figure class="image is-square is-fullwidth">

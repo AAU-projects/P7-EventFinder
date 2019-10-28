@@ -18,6 +18,7 @@ export class RegisterComponent {
   errorMessage = '';
   successMessage = '';
   profileImage;
+  showTagPopUp = false;
 
   constructor(
     public auth: AuthService,
@@ -26,7 +27,7 @@ export class RegisterComponent {
     public shared: SharedService,
     private storage: StorageService
   )  {
-    this.shared.changeLogin(false);
+    this.shared.showLogin(false);
     this.createForm(this.auth.userType);
     this.auth.isUserObs.subscribe();
   }
@@ -105,11 +106,7 @@ export class RegisterComponent {
     this.auth.register(value)
     .then(res => {
       this.auth.setCurrentUserProfileImage(this.uploadProfileImage());
-      if (this.auth.userType === AccountTypes.User) {
-        this.router.navigate(['/user']);
-      } else {
-      this.router.navigate(['/organizer']);
-      }
+      this.showTagPopUp = true;
     }, err => {
       this.errorMessage = err.message;
       this.successMessage = '';

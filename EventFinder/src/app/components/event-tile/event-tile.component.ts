@@ -19,6 +19,7 @@ export class EventTileComponent implements OnInit {
   public organizerImageUrl;
   public description: string;
   private descriptionMaxLength = 300;
+  public selectedEventID;
 
   public formattedDate: string;
 
@@ -55,5 +56,9 @@ export class EventTileComponent implements OnInit {
     } else {
       this.description = this.event.description;
     }
+  }
+
+  openSelectedEvent() {
+    this.selectedEventID = 'P35r5dDvnLbcwzYdwsyc';
   }
 }

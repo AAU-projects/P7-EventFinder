@@ -13,6 +13,9 @@ import { EventFormComponent } from './event-form/event-form.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { QuillModule } from 'ngx-quill';
 import { EventTileComponent } from './event-tile/event-tile.component';
+import { TagSelectionComponent } from './tag-selection/tag-selection.component';
+import { EventSelectComponent } from '../pages/event-select/event-select.component';
+import { AgmCoreModule } from '@agm/core';
 
 /* How to add a new component:
     ng g c components/[name] --export
@@ -28,7 +31,9 @@ import { EventTileComponent } from './event-tile/event-tile.component';
     OrganizerInfoComponent,
     EventFormComponent,
     ImageCropperComponent,
-    EventTileComponent],
+    EventTileComponent,
+    TagSelectionComponent,
+    EventSelectComponent],
   imports: [
     CommonModule,
     RouterModule,
@@ -40,10 +45,14 @@ import { EventTileComponent } from './event-tile/event-tile.component';
         syntax: false,
         toolbar: [
           ['bold', 'italic', 'underline'],
-          [{ 'header': 1 }, { 'header': 2 }]],
+          [{ header: 1 }, { header: 2 }]],
       },
       placeholder: 'Write description here...'
-    })],
+    }),
+    AgmCoreModule.forRoot({ // Google maps
+      apiKey: 'AIzaSyAxJpRUrMbG264kgpMZNhk916zvqP1K08U'
+    })
+  ],
   exports: [
     TestComponent,
     HeaderComponent,
@@ -53,7 +62,9 @@ import { EventTileComponent } from './event-tile/event-tile.component';
     OrganizerInfoComponent,
     EventFormComponent,
     ImageCropperComponent,
-    EventTileComponent
+    EventTileComponent,
+    TagSelectionComponent,
+    EventSelectComponent
   ],
 })
 export class ComponentsModule {}

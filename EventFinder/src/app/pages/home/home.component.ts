@@ -19,7 +19,7 @@ export class HomeComponent implements OnInit {
   }
 
   openLogin() {
-    this.shared.changeLogin(true);
+    this.shared.showLogin(true);
   }
 
 /*   create() {

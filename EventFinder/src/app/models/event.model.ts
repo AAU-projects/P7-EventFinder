@@ -1,4 +1,5 @@
 export interface Event {
+  uid: string;
   organizerId: string;
   title: string;
   address: string;
