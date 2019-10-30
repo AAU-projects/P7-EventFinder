@@ -15,7 +15,7 @@ import { CookieService } from 'ngx-cookie-service';
 })
 export class AuthService {
   account: Observable<Account> = null;
-  userType: AccountTypes = this.getUserType();
+  public userType: AccountTypes = this.getUserType();
   user: fireUser = null;
 
   isUserSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(this.isUser());
