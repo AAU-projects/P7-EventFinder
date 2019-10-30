@@ -22,6 +22,7 @@ p.tag{
   text-decoration: none !important;
   background-color: #6294E7 !important;
   color: white;
+  margin-left: 5px;
 }
 
 .star-active {
@@ -42,4 +43,12 @@ p.tag{
 
 .no-bottom-margin {
   margin-bottom: 0.4rem !important;
+}
+
+.tile.is-child.is-hoverable:hover {
+  background-color: #3E3E6E !important;
+}
+
+.pointer {
+  cursor: pointer;
 }

@@ -9,7 +9,7 @@ export class EventService {
 
   constructor(private firestore: AngularFirestore) { }
 
-  async createEvent(values) {
+  createEvent(values) {
     const id = this.firestore.createId();
     const eventRef = this.firestore.collection('events').doc<Event>(id);
 
@@ -18,7 +18,7 @@ export class EventService {
     return id;
   }
 
-  async updateEvnt(id, values) {
+  async updateEvent(id, values) {
     const eventRef = this.firestore.collection('events').doc<Event>(id);
 
     eventRef.set(values, {merge: true});

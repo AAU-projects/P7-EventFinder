@@ -1,10 +1,10 @@
 <div *ngIf="selectedEventID">
-  <app-event-select [inputEventID]="selectedEventID"></app-event-select>
+  <app-event-select [inputEventID]="selectedEventID" (closeEvent)="selectInfoscreenEventHandler($event)"></app-event-select>
 </div>
 
 
-<div *ngIf="organizerImageUrl" class="tile is-child box notification has-background-dark has-text-white no-padding" (click)="openSelectedEvent()">
-  <div class="columns is-vcentered">
+<div *ngIf="organizerImageUrl" class="tile is-child is-hoverable box notification has-background-dark has-text-white pointer no-padding" (click)="setSelectedEvent(event.uid)">
+  <div class="columns is-vcentered is-hoverable">
     <div class="column no-padding-column is-4">
       <figure class="image is-square is-fullwidth">
         <img src={{bannerUrl}}>
@@ -31,9 +31,9 @@
           </div>
           <div class="tile is-child no-padding has-centered-content is-flex">
             <div class="tags">
-              <p class="tag">nightclub</p>
-              <p class="tag">diskotek</p>
-              <p class="tag">loud music</p>
+                <span *ngFor="let tag of organizer.tags">
+                    <p class="tag">{{tag}}</p>
+                  </span>
             </div>
           </div>
           <div class="tile is-child no-padding has-centered-content is-flex">
@@ -55,7 +55,12 @@
         <div class="subtitle is-4 has-text-white has-text-left no-bottom-margin">{{event.title}}</div>
         <h3 class="has-text-left">
           <span class="icon"><i class="fa fa-calendar"></i></span>
+          <ng-template [ngIf]="rawStartDate === rawEndDate" [ngIfElse]="alternativeTime">
             {{ event.startDate | date : "MMMM d, y 'from ' HH:mm ' to '" }} {{ event.endDate | date : "HH:mm" }}
+          </ng-template>
+          <ng-template #alternativeTime>
+              {{ event.startDate | date : "MMMM d, y 'from ' HH:mm ' to '" }} {{ event.endDate | date : "MMMM d, y 'from ' HH:mm " }}
+          </ng-template>
         </h3>
         <br>
         <h3 class="has-text-left" [innerHTML]="description"></h3>

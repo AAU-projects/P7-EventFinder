@@ -19,7 +19,9 @@ export class EventTileComponent implements OnInit {
   public organizerImageUrl;
   public description: string;
   private descriptionMaxLength = 300;
-  public selectedEventID;
+  public selectedEventID = null;
+  rawEndDate: string;
+  rawStartDate: string;
 
   public formattedDate: string;
 
@@ -56,9 +58,17 @@ export class EventTileComponent implements OnInit {
     } else {
       this.description = this.event.description;
     }
+    this.rawStartDate = this.event.startDate.toString().slice(0, 10);
+    this.rawEndDate = this.event.endDate.toString().slice(0, 10);
   }
 
-  openSelectedEvent() {
-    this.selectedEventID = 'P35r5dDvnLbcwzYdwsyc';
+  selectInfoscreenEventHandler(event) {
+    if (event === 'closeEvent') {
+      this.setSelectedEvent(null);
+    }
+  }
+
+  setSelectedEvent(eventID) {
+    this.selectedEventID = eventID;
   }
 }

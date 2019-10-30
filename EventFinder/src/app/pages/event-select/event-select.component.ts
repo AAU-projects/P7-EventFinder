@@ -1,4 +1,4 @@
-import { Component, OnInit, HostListener, EventEmitter, Input } from '@angular/core';
+import { Component, OnInit, HostListener, EventEmitter, Input, Output } from '@angular/core';
 import { SharedService } from 'src/app/services/shared.service';
 import { EventService } from 'src/app/services/event.service';
 import { Event } from 'src/app/models/event.model';
@@ -22,6 +22,7 @@ export class EventSelectComponent implements OnInit {
   logoImage;
   bannerImage;
   @Input() inputEventID;
+  @Output() closeEvent = new EventEmitter<string>();
 
   latitude: number;
   longitude: number;
@@ -100,7 +101,8 @@ export class EventSelectComponent implements OnInit {
   }
 
   close() {
-    this.shared.showEvent(null);
+    this.closeEvent.emit('closeEvent');
+    //this.shared.showEvent(null);
   }
 
   getEventTitleDescription() {
