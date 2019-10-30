@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 import { MenuTabs } from '../organizer/organizer-menu.enum';
 import { Observable, BehaviorSubject } from 'rxjs';
+import { StorageService } from 'src/app/services/storage.service';
 
 @Component({
   selector: 'app-organizer',
@@ -9,6 +10,7 @@ import { Observable, BehaviorSubject } from 'rxjs';
   styleUrls: ['./organizer.component.scss']
 })
 export class OrganizerComponent implements OnInit {
+  imgUrl: string;
 
   get menuTabs() { return MenuTabs; }
   StartTab = MenuTabs.Profile;
@@ -22,7 +24,13 @@ export class OrganizerComponent implements OnInit {
   currentMenuTabSubject: BehaviorSubject<MenuTabs> = new BehaviorSubject<MenuTabs>(null);
   public currentMenuTabObs: Observable<MenuTabs> = this.currentMenuTabSubject.asObservable();
 
-  constructor(public auth: AuthService) { }
+  constructor(public auth: AuthService, private storage: StorageService) {
+    this.auth.account.subscribe(account => {
+      this.storage.getImageUrl(account.profileImage).subscribe(
+        url => this.imgUrl = url
+      );
+    });
+  }
 
   ngOnInit() {
     this.currentMenuTabSubject.next(this.StartTab);

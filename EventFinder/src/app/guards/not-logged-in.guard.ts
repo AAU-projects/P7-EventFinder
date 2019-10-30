@@ -14,7 +14,16 @@ export class NotLoggedInGuard implements CanActivate {
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-      return true;
+      return this.auth.account.pipe(
+        take(1), map(user => !!user), tap(loggedIn => {
+          if (loggedIn) {
+            this.router.navigate(['']);
+            return false;
+          } else  {
+            console.log('granted');
+            return true;
+          }
+        }));
   }
 
 }
