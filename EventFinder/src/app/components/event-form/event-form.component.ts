@@ -8,6 +8,7 @@ import { StorageService } from 'src/app/services/storage.service';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { trigger, state, style, animate, transition } from '@angular/animations';
+import { GoogleMapsService } from 'src/app/services/google-map.service';
 
 @Component({
   selector: 'app-event-form',
@@ -51,7 +52,8 @@ export class EventFormComponent implements OnInit {
     private eventService: EventService,
     private authService: AuthService,
     private storageService: StorageService,
-    private router: Router
+    private router: Router,
+    private mapsService: GoogleMapsService,
   ) {
     this.createForm();
     this.genreList = [];
@@ -179,5 +181,17 @@ export class EventFormComponent implements OnInit {
       }
     }
     return 0;
+  }
+
+  findInformationfromZip(value) {
+    this.mapsService.get_city_from_zip(value).subscribe(result => {
+      if (result['status'] !== 'ZERO_RESULTS') {
+        const city = result['results'][0]['address_components'][1]['long_name'];
+        const country = result['results'][0]['address_components'][2]['long_name'];
+
+        this.eventForm.controls['city'].setValue(city);
+        this.eventForm.controls['country'].setValue(country);
+      }
+    });
   }
 }
