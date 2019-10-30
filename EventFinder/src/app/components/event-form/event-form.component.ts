@@ -65,6 +65,7 @@ export class EventFormComponent implements OnInit {
 
   createForm() {
     this.eventForm = this.fb.group({
+      uid: ['', []],
       organizerId: this.authService.user.uid,
       startDate: ['', [Validators.required]],
       endDate: ['', [Validators.required]],
@@ -104,7 +105,7 @@ export class EventFormComponent implements OnInit {
       this.notificationMessage = 'Something went wrong when creating the event...';
       this.showNotificationSubject.next(true);
     } else {
-
+      this.eventService.updateEvent(id, {uid: id});
       this.resetForm();
       this.notificationClass = 'is-primary';
 

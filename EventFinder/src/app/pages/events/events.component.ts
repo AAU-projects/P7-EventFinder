@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { SharedService } from 'src/app/services/shared.service';
-import { Subscription } from 'rxjs';
+import { EventService } from 'src/app/services/event.service';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { Event } from '../../models/event.model';
 
 @Component({
   selector: 'app-events',
@@ -8,20 +9,15 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./events.component.scss']
 })
 export class EventsComponent implements OnInit {
-  subscription: Subscription;
-  showSelectEvent: boolean;
+  eventList: Event[];
 
-  constructor(public shared: SharedService) { }
+  eventListSubject: BehaviorSubject<Event[]> = new BehaviorSubject<Event[]>(null);
+  public eventListObs: Observable<Event[]> = this.eventListSubject.asObservable();
 
-  ngOnInit() {
-    this.subscription = this.shared.getShowEvent()
-      .subscribe((item: boolean) => this.showSelectEvent = item);
+  constructor(public eventService: EventService) {
+    this.eventList = [];
+    this.eventService.getEventsTwo().subscribe(elist => elist.forEach(e => this.eventList.push(e.payload.doc.data() as Event)));
   }
 
-  showEventSelect() {
-    this.shared.showEvent('P35r5dDvnLbcwzYdwsyc');
-  }
-  showEventSelect2() {
-    this.shared.showEvent('0acK2Bw9HtPEwJcyjVa4');
-  }
+  ngOnInit() {}
 }

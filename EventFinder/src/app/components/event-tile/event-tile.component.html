@@ -1,0 +1,98 @@
+<div *ngIf="selectedEventID">
+  <app-event-select [inputEventID]="selectedEventID" (closeEvent)="selectInfoscreenEventHandler($event)"></app-event-select>
+</div>
+
+
+<div *ngIf="organizerImageUrl" class="tile is-child is-hoverable box notification has-background-dark has-text-white pointer no-padding" (click)="setSelectedEvent(event.uid)">
+  <div class="columns is-vcentered is-hoverable">
+    <div class="column no-padding-column is-4">
+      <figure class="image is-square is-fullwidth">
+        <img src={{bannerUrl}}>
+      </figure>
+    </div>
+
+    <div class="column is-narrow">
+
+      <div class="tile is-ancestor">
+        <div class="tile is-vertical is-parent">
+          <div class="tile is-child no-padding has-centered-content is-flex">
+            <figure class="image is-128x128">
+              <img src={{organizerImageUrl}}>
+            </figure>
+          </div>
+          <div class="tile is-child no-padding has-centered-content is-flex">
+            <div class="subtitle is-4 has-text-white">{{organizer.organization}}</div>
+          </div>
+          <div class="tile is-child no-padding has-centered-content is-flex">
+            <h3 class="has-text">
+              <span class="icon"><i class="fa fa-map-marker-alt"></i></span>
+              {{event.address}}
+            </h3>
+          </div>
+          <div class="tile is-child no-padding has-centered-content is-flex">
+            <div class="tags">
+                <span *ngFor="let tag of organizer.tags">
+                    <p class="tag">{{tag}}</p>
+                  </span>
+            </div>
+          </div>
+          <div class="tile is-child no-padding has-centered-content is-flex">
+            <h3 class="has-text">
+              4.0
+              <span class="icon"><i class="fa fa-star star-active"></i></span>
+              <span class="icon"><i class="fa fa-star star-active"></i></span>
+              <span class="icon"><i class="fa fa-star star-active"></i></span>
+              <span class="icon"><i class="fa fa-star star-active"></i></span>
+              <span class="icon"><i class="fa fa-star star-inactive"></i></span>
+            </h3>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="column">
+      <div class="divider">
+        <div class="subtitle is-4 has-text-white has-text-left no-bottom-margin">{{event.title}}</div>
+        <h3 class="has-text-left">
+          <span class="icon"><i class="fa fa-calendar"></i></span>
+          <ng-template [ngIf]="rawStartDate === rawEndDate" [ngIfElse]="alternativeTime">
+            {{ event.startDate | date : "MMMM d, y 'from ' HH:mm ' to '" }} {{ event.endDate | date : "HH:mm" }}
+          </ng-template>
+          <ng-template #alternativeTime>
+              {{ event.startDate | date : "MMMM d, y 'from ' HH:mm ' to '" }} {{ event.endDate | date : "MMMM d, y 'from ' HH:mm " }}
+          </ng-template>
+        </h3>
+        <br>
+        <h3 class="has-text-left" [innerHTML]="description"></h3>
+        <br>
+        <h3 class="has-text-left">
+          <span class="icon"><i class="fas fa-music"></i></span>
+          <span *ngFor="let genre of event.genre; last as isLast">
+              {{genre}}<span *ngIf="!isLast"> |</span>
+            </span>
+        </h3>
+        <h3 class="has-text-left">
+          <span class="icon"><i class="fas fa-wind"></i></span>
+          <span *ngFor="let atmosphere of allAtmosphere; last as isLast">
+            {{atmosphere}}<span *ngIf="!isLast"> |</span>
+          </span>
+        </h3>
+        <h3 class="has-text-left">
+          <span class="icon"><i class="fas fa-mask"></i></span>
+          {{event.dresscode}}
+        </h3>
+        <br>
+        <nav class="level">
+          <div class="level-left">
+
+          </div>
+          <div class="level-right">
+              <div class="level-item">
+                <button class="button is-primary">DKK {{event.price}},-</button>
+              </div>
+          </div>
+        </nav>
+      </div>
+    </div>
+  </div>
+</div>

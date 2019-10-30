@@ -12,8 +12,6 @@ import { RegisterComponent } from './register/register.component';
 import { EventsComponent } from './events/events.component';
 import { ForgotpasswordComponent } from './forgotpassword/forgotpassword.component';
 import { OrganizerComponent } from './organizer/organizer.component';
-import { EventSelectComponent } from './event-select/event-select.component';
-import { AgmCoreModule } from '@agm/core';
 import { HttpClientModule } from '@angular/common/http';
 
 
@@ -33,17 +31,14 @@ import { HttpClientModule } from '@angular/common/http';
     RegisterComponent,
     EventsComponent,
     ForgotpasswordComponent,
-    OrganizerComponent,
-    EventSelectComponent],
+    OrganizerComponent
+  ],
   imports: [
     CommonModule,
     PagesRoutingModule,
     ComponentsModule,
     ReactiveFormsModule,
-    HttpClientModule,
-    AgmCoreModule.forRoot({ // Google maps
-      apiKey: 'AIzaSyAxJpRUrMbG264kgpMZNhk916zvqP1K08U'
-    }),
+    HttpClientModule
   ],
   exports: [LoginComponent]
 })

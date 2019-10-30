@@ -1,15 +1,11 @@
-import { Component, OnInit, HostListener, EventEmitter } from '@angular/core';
+import { Component, OnInit, HostListener, EventEmitter, Input, Output } from '@angular/core';
 import { SharedService } from 'src/app/services/shared.service';
 import { EventService } from 'src/app/services/event.service';
-import { AngularFirestoreDocument } from '@angular/fire/firestore';
-import { EventModel } from 'src/app/models/event.model';
-import { Subscription } from 'rxjs';
+import { Event } from 'src/app/models/event.model';
 import { OrganizerService } from 'src/app/services/organizer.service';
 import { Organizer } from 'src/app/models/account.model';
 import { GoogleMapsService } from 'src/app/services/google-map.service';
 import { StorageService } from 'src/app/services/storage.service';
-import { stringify } from '@angular/compiler/src/util';
-import { isEmpty } from 'rxjs/operators';
 
 @Component({
   selector: 'app-event-select',
@@ -21,10 +17,12 @@ export class EventSelectComponent implements OnInit {
   organizerLoaded: Promise<boolean>;
   logoLoaded: Promise<boolean>;
   bannerLoaded: Promise<boolean>;
-  event: EventModel;
+  event: Event;
   organizer: Organizer;
   logoImage;
   bannerImage;
+  @Input() inputEventID;
+  @Output() closeEvent = new EventEmitter<string>();
 
   latitude: number;
   longitude: number;
@@ -36,10 +34,11 @@ export class EventSelectComponent implements OnInit {
     private organizerService: OrganizerService,
     private storageService: StorageService
   ) {
-    this.loadEvent(this.shared.selectedEvent);
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.loadEvent(this.inputEventID);
+  }
 
   loadOrganizer() {
     this.organizerService
@@ -102,7 +101,8 @@ export class EventSelectComponent implements OnInit {
   }
 
   close() {
-    this.shared.showEvent(null);
+    this.closeEvent.emit('closeEvent');
+    //this.shared.showEvent(null);
   }
 
   getEventTitleDescription() {
