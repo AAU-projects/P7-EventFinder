@@ -20,7 +20,6 @@ export class NotLoggedInGuard implements CanActivate {
             this.router.navigate(['']);
             return false;
           } else  {
-            console.log('granted');
             return true;
           }
         }));
