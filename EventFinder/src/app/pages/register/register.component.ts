@@ -6,6 +6,7 @@ import { AccountTypes } from 'src/app/models/account.types.enum';
 import { RegExValidator } from 'src/app/directives/regEx.directive';
 import { SharedService } from 'src/app/services/shared.service';
 import { StorageService } from 'src/app/services/storage.service';
+import { GoogleMapsService } from 'src/app/services/google-map.service';
 
 @Component({
   selector: 'app-register',
@@ -18,15 +19,17 @@ export class RegisterComponent {
   errorMessage = '';
   successMessage = '';
   profileImage;
+  showTagPopUp = false;
 
   constructor(
     public auth: AuthService,
     private router: Router,
     private fb: FormBuilder,
     public shared: SharedService,
-    private storage: StorageService
+    private storage: StorageService,
+    private mapsService: GoogleMapsService,
   )  {
-    this.shared.changeLogin(false);
+    this.shared.showLogin(false);
     this.createForm(this.auth.userType);
     this.auth.isUserObs.subscribe();
   }
@@ -105,14 +108,22 @@ export class RegisterComponent {
     this.auth.register(value)
     .then(res => {
       this.auth.setCurrentUserProfileImage(this.uploadProfileImage());
-      if (this.auth.userType === AccountTypes.User) {
-        this.router.navigate(['/user']);
-      } else {
-      this.router.navigate(['/organizer']);
-      }
+      this.showTagPopUp = true;
     }, err => {
       this.errorMessage = err.message;
       this.successMessage = '';
+    });
+  }
+
+  findInformationfromZip(value) {
+    this.mapsService.get_city_from_zip(value).subscribe(result => {
+      if (result['status'] !== 'ZERO_RESULTS') {
+        const city = result['results'][0]['address_components'][1]['long_name'];
+        const country = result['results'][0]['address_components'].pop()['long_name'];
+
+        this.registerForm.controls['city'].setValue(city);
+        this.registerForm.controls['country'].setValue(country);
+      }
     });
   }
 }

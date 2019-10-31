@@ -40,7 +40,7 @@ export class LoginComponent {
     this.authService.login(value.email, value.password, this.rememberMe, true)
     .then(res => {
       this.errorMessage = null;
-      this.shared.changeLogin(false);
+      this.shared.showLogin(false);
       console.log(this.authService.userType);
     }, err => {
       console.log(err);
@@ -49,7 +49,7 @@ export class LoginComponent {
   }
 
   cancel() {
-    this.shared.changeLogin(false);
+    this.shared.showLogin(false);
   }
 
   closeErrorMessage() {

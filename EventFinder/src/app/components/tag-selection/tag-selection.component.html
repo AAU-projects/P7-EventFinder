@@ -1,0 +1,103 @@
+<div class="modal is-active">
+  <div class="modal-background"></div>
+  <div class="modal-content">
+    <div class="notification is-dark" *ngIf="accountService.currentUser as user">
+      <p class="is-size-3 has-text-weight-bold">Thank you for registering!</p>
+      <br>
+      <div *ngIf="accountService.isUser; then UserBlock else organizerBlock"></div>
+      <br>
+      <div class="tile is-ancestor">
+        <div class="tile is-child has-centered-content is-flex is-4"></div>
+        <div class="tile is-child has-centered-content is-flex is-4">
+          <button class="button is-rounded is-primary is-fullwidth" [disabled]="organizerSubmitCheck()" (click)="confirmSelection()">Confirm</button>
+        </div>
+      </div>
+      <div class="tile is-ancestor" *ngIf="accountService.isUser">
+        <div class="tile is-child has-centered-content is-flex is-5"></div>
+        <div class="tile is-child has-centered-content is-flex is-2">
+          <button class="button is-darker is-rounded is-small is-fullwidth" (click)="cancel()">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Userblock  -->
+<ng-template #UserBlock>
+  <P>Please select a few catagories so we know which types of events you like:</P>
+  <p class="is-size-7">(optional)</p>
+  <br>
+  <div class="tile is-ancestor">
+    <div class="tile is-vertical is-parent">
+      <div class="tile is-child has-centered-content is-flex">
+        <div class="tags are-medium">
+          <a class="tag" (click)="onPrefrenceClick(Tags.Bar)"
+            [ngClass]="(userPreferenceList.includes(Tags.Bar)) ? 'is-primary' : ''"> {{ Tags.Bar }} </a>
+          <a class="tag" (click)="onPrefrenceClick(Tags.Nightclub)"
+            [ngClass]="(userPreferenceList.includes(Tags.Nightclub)) ? 'is-primary' : ''">Night club</a>
+          <a class="tag" (click)="onPrefrenceClick(Tags.Resturant)"
+            [ngClass]="(userPreferenceList.includes(Tags.Resturant)) ? 'is-primary' : ''">Resturant</a>
+          <a class="tag" (click)="onPrefrenceClick(Genre.Rock)"
+            [ngClass]="(userPreferenceList.includes(Genre.Rock)) ? 'is-primary' : ''">Rock</a>
+        </div>
+      </div>
+      <div class="tile is-child has-centered-content is-flex">
+        <div class="tags are-medium">
+          <a class="tag" (click)="onPrefrenceClick(Genre.Pop)"
+            [ngClass]="(userPreferenceList.includes(Genre.Pop)) ? 'is-primary' : ''">Pop</a>
+          <a class="tag" (click)="onPrefrenceClick(Genre.HipHop)"
+            [ngClass]="(userPreferenceList.includes(Genre.HipHop)) ? 'is-primary' : ''">HipHop</a>
+          <a class="tag" (click)="onPrefrenceClick(Atmosphere.Alternative)"
+            [ngClass]="(userPreferenceList.includes(Atmosphere.Alternative)) ? 'is-primary' : ''">Alternative</a>
+          <a class="tag" (click)="onPrefrenceClick(Tags.LiveMusic)"
+            [ngClass]="(userPreferenceList.includes(Tags.LiveMusic)) ? 'is-primary' : ''">Live music</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<!-- Organizerblock  -->
+<ng-template #organizerBlock>
+  <P>Please select 1-3 tags that discribe your organization</P>
+  <div *ngIf="errorMsg" class="notification is-danger is-marginless is-paddingless errorMsg">
+    <p> {{ errorMsg }} </p>
+  </div>
+  <br>
+  <div class="tile is-ancestor">
+    <div class="tile is-vertical is-parent">
+      <div class="tile is-child has-centered-content is-flex">
+        <div class="tags are-medium">
+          <a class="tag" (click)="onTagClick(Tags.Bar)"
+            [ngClass]="(tagList.includes(Tags.Bar)) ? 'is-primary' : ''"> {{ Tags.Bar }} </a>
+          <a class="tag" (click)="onTagClick(Tags.Festival)"
+            [ngClass]="(tagList.includes(Tags.Festival)) ? 'is-primary' : ''">Festival</a>
+          <a class="tag" (click)="onTagClick(Tags.Venue)"
+            [ngClass]="(tagList.includes(Tags.Venue)) ? 'is-primary' : ''">Venue</a>
+          <a class="tag" (click)="onTagClick(Tags.Pub)"
+            [ngClass]="(tagList.includes(Tags.Pub)) ? 'is-primary' : ''">Pub</a>
+        </div>
+      </div>
+      <div class="tile is-child has-centered-content is-flex">
+        <div class="tags are-medium">
+          <a class="tag" (click)="onTagClick(Tags.LiveMusic)"
+            [ngClass]="(tagList.includes(Tags.LiveMusic)) ? 'is-primary' : ''">Live Music</a>
+          <a class="tag" (click)="onTagClick(Tags.Other)"
+            [ngClass]="(tagList.includes(Tags.Other)) ? 'is-primary' : ''">Other</a>
+          <a class="tag" (click)="onTagClick(Tags.Nightclub)"
+            [ngClass]="(tagList.includes(Tags.Nightclub)) ? 'is-primary' : ''">Night club</a>
+        </div>
+      </div>
+      <div class="tile is-child has-centered-content is-flex">
+        <div class="tags are-medium">
+          <a class="tag" (click)="onTagClick(Tags.Culture)"
+            [ngClass]="(tagList.includes(Tags.Culture)) ? 'is-primary' : ''">Cultur</a>
+          <a class="tag" (click)="onTagClick(Tags.LoudMusic)"
+            [ngClass]="(tagList.includes(Tags.LoudMusic)) ? 'is-primary' : ''">Loud Music</a>
+          <a class="tag" (click)="onTagClick(Tags.Resturant)"
+            [ngClass]="(tagList.includes(Tags.Resturant)) ? 'is-primary' : ''">Resturant</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>

@@ -1,51 +1,54 @@
 <div *ngIf="auth.account | async as user">
   <div class="notification has-background-dark has-text-white top">
-    <div class="columns is-gapless is-multiline">
-      <div class="column is-5">
-        <h1 class="title has-text-left">
-          {{ user.firstname }} {{ user.lastname}}
-          <a class="button is-small is-black is-rounded">
-            <span>Edit</span>
-          </a>
-        </h1>
-        <div class="columns is-gapless is-multiline">
-          <div class="column">
-            <h3 class="has-text-left">
-              <span class="icon"><i class="fa fa-envelope"></i></span>
-              {{ user.email }}
-            </h3>
-          </div>
-          <div class="column">
-            <h3 class="has-text-left">
-              <span class="icon"><i class="fa fa-mobile-alt"></i></span>
-              {{ user.phone }}
-            </h3>
-          </div>
-        </div>
+    <div class="columns is-multiline">
+      <div class="column is-narrow" *ngIf="imgUrl">
+        <figure class="image is-128x128">
+          <img class="is-rounded" [src]="imgUrl">
+        </figure>
       </div>
-      <div class="column has-text-right">
-        <div class="dropdown is-right is-hoverable">
-          <div class="dropdown-trigger">
-            <button
-              class="button is-rounded is-primary"
-              aria-haspopup="true"
-              aria-controls="profile-settings"
-            >
-              <span class="icon is-small">
-                <i class="fa fa-cog" aria-hidden="true"></i>
-              </span>
-            </button>
+      <div class="column">
+        <div class="columns is-gapless is-multiline">
+          <div class="column is-5">
+            <h1 class="title has-text-left">
+              {{ user.firstname }} {{ user.lastname}}
+              <a class="button is-small is-primary is-rounded">
+                <span>Edit</span>
+              </a>
+            </h1>
+            <div class="columns is-gapless is-multiline">
+              <div class="column">
+                <h3 class="has-text-left">
+                  <span class="icon"><i class="fa fa-envelope"></i></span>
+                  {{ user.email }}
+                </h3>
+              </div>
+              <div class="column">
+                <h3 class="has-text-left">
+                  <span class="icon"><i class="fa fa-mobile-alt"></i></span>
+                  {{ user.phone }}
+                </h3>
+              </div>
+            </div>
           </div>
-          <div class="dropdown-menu" id="profile-settings" role="menu">
-            <div class="dropdown-content">
-              <a class="dropdown-item">
-                <span class="icon"> <i class="fa fa-cog"></i></span>
-                Notification Settings</a
-              >
-              <a class="dropdown-item">
-                <span class="icon"> <i class="fa fa-cog"></i></span>
-                Notification Settings</a
-              >
+          <div class="column has-text-right">
+            <div class="dropdown is-right is-hoverable">
+              <div class="dropdown-trigger">
+                <button class="button is-rounded is-primary" aria-haspopup="true" aria-controls="profile-settings">
+                  <span class="icon is-small">
+                    <i class="fa fa-cog" aria-hidden="true"></i>
+                  </span>
+                </button>
+              </div>
+              <div class="dropdown-menu" id="profile-settings" role="menu">
+                <div class="dropdown-content">
+                  <a class="dropdown-item">
+                    <span class="icon"> <i class="fa fa-cog"></i></span>
+                    Notification Settings</a>
+                  <a class="dropdown-item">
+                    <span class="icon"> <i class="fa fa-cog"></i></span>
+                    Notification Settings</a>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -57,21 +60,21 @@
     <div class="column is-2">
       <div class="notification bottom-left has-background-dark">
         <hr>
-          <aside class="menu has-text-white">
-              <ul class="menu-list">
-                <li><a class="selected no-decoration">Profile</a></li>
-                <li><a class="no-decoration">Activity</a></li>
-                <li><a class="no-decoration">Feedback</a></li>
-                <li><a class="no-decoration">Tickets</a></li>
-                <li><a class="no-decoration">Preferences</a></li>
-              </ul>
-            </aside>
+        <aside class="menu has-text-white">
+          <ul class="menu-list">
+            <li><a class="selected no-decoration">Profile</a></li>
+            <li><a class="no-decoration">Activity</a></li>
+            <li><a class="no-decoration">Feedback</a></li>
+            <li><a class="no-decoration">Tickets</a></li>
+            <li><a class="no-decoration">Preferences</a></li>
+          </ul>
+        </aside>
       </div>
     </div>
     <div class="column">
-        <div class="notification bottom-right has-background-darker">
-          <app-user-info [user]="user"></app-user-info>
-        </div>
+      <div class="notification bottom-right has-background-darker">
+        <app-user-info [user]="user"></app-user-info>
       </div>
+    </div>
   </div>
 </div>

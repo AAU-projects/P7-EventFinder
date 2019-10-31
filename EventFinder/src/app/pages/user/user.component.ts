@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 import { User } from 'src/app/models/account.model';
+import { StorageService } from 'src/app/services/storage.service';
+import { take, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-user',
@@ -8,11 +10,17 @@ import { User } from 'src/app/models/account.model';
   styleUrls: ['./user.component.scss']
 })
 export class UserComponent implements OnInit {
+  imgUrl: string;
+  user: User;
 
-  constructor(public auth: AuthService) {
+  constructor(public auth: AuthService, private storage: StorageService) {
+    this.auth.account.subscribe(account => {
+      this.user = account as User;
+      this.storage.getImageUrl(this.user.profileImage).subscribe(url => this.imgUrl = url);
+    });
    }
 
   ngOnInit() {
-  }
 
+  }
 }

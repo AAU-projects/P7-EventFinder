@@ -12,6 +12,7 @@ import { RegisterComponent } from './register/register.component';
 import { EventsComponent } from './events/events.component';
 import { ForgotpasswordComponent } from './forgotpassword/forgotpassword.component';
 import { OrganizerComponent } from './organizer/organizer.component';
+import { HttpClientModule } from '@angular/common/http';
 
 
 /* How to add a new page:
@@ -30,12 +31,14 @@ import { OrganizerComponent } from './organizer/organizer.component';
     RegisterComponent,
     EventsComponent,
     ForgotpasswordComponent,
-    OrganizerComponent],
+    OrganizerComponent
+  ],
   imports: [
     CommonModule,
     PagesRoutingModule,
     ComponentsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HttpClientModule
   ],
   exports: [LoginComponent]
 })

@@ -1,6 +1,9 @@
-<div class="columns is-centered">
+<div class="columns is-centered is-dark">
   <div *ngIf="shared.showCropperEvent | async">
     <app-image-cropper [imageSource]="profileImage" (imageDestination)="getImage($event)"></app-image-cropper>
+  </div>
+  <div *ngIf="showTagPopUp">
+    <app-tag-selection></app-tag-selection>
   </div>
   <div class="column is-8">
     <div class="notification">
@@ -148,7 +151,8 @@
                       <input
                         [ngClass]="(registerForm.controls['zip'].invalid && registerForm.controls['zip'].dirty) ? 'is-danger' : ''"
                         required class="input is-rounded has-text-centered is-medium is-size-6" type="text"
-                        formControlName="zip" placeholder="Zip" />
+                        formControlName="zip" placeholder="Zip"
+                        (blur)="findInformationfromZip($event.target.value)" />
                       <span class="icon is-small is-left">
                         <i class="fas fa-city"></i>
                       </span>
@@ -272,7 +276,8 @@
                       <input
                         [ngClass]="(registerForm.controls['zip'].invalid && registerForm.controls['zip'].dirty) ? 'is-danger' : ''"
                         required class="input is-rounded has-text-centered is-medium is-size-6" type="text"
-                        formControlName="zip" placeholder="Zip" />
+                        formControlName="zip" placeholder="Zip"
+                        (blur)="findInformationfromZip($event.target.value)" />
                       <span class="icon is-small is-left">
                         <i class="fas fa-city"></i>
                       </span>

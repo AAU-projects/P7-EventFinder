@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore, QueryFn } from '@angular/fire/firestore';
-import { Title } from '@angular/platform-browser';
+import { Event } from '../models/event.model';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +9,7 @@ export class EventService {
 
   constructor(private firestore: AngularFirestore) { }
 
-  async createEvent(values) {
+  createEvent(values) {
     const id = this.firestore.createId();
     const eventRef = this.firestore.collection('events').doc<Event>(id);
 
@@ -18,7 +18,7 @@ export class EventService {
     return id;
   }
 
-  async updateEvnt(id, values) {
+  async updateEvent(id, values) {
     const eventRef = this.firestore.collection('events').doc<Event>(id);
 
     eventRef.set(values, {merge: true});
@@ -34,11 +34,15 @@ export class EventService {
     .get();
   }
 
+  getEventsTwo(limit: number = 5) {
+    return this.firestore.collection('events', ref => ref.orderBy('startDate', 'asc').limit(limit)).snapshotChanges();
+  }
+
   async getEventsByQuery(query: QueryFn) {
     return this.firestore.collection('events', query).get();
   }
 
-  async getEvent(id) {
+  getEvent(id) {
     const eventRef = this.firestore.collection('events').doc<Event>(id);
 
     return eventRef;

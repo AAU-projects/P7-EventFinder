@@ -1,0 +1,71 @@
+<div *ngIf="eventLoaded && organizerLoaded && logoImage && bannerLoaded | async; else loading">
+  <div class="modal is-active">
+    <div class="modal-background" (click)="close()"></div>
+    <div class="modal-content panel-size">
+      <div id="container">
+        <div class="row banner-background banner-size" [ngStyle]="{ 'background-image': 'url(' + bannerImage + ')'}">
+          <button class="delete" (click)="close()"></button>
+        </div>
+        <div class="second-layer">
+          <img class="image-logo" [src]="logoImage" alt="loading..">
+          <div class="content">
+            <h1 class="title has-text-white">{{ getTitle() }}</h1>
+            <h2 class="small-text has-text-white has-text-weight-light">
+              <i class="far fa-calendar"></i> &nbsp; {{ getDate() }}
+            </h2>
+            <h2 class="small-text has-text-white has-text-weight-light">
+              <i class="fas fa-map-marker-alt top-content-padding"></i> &nbsp; {{ getLocation() }}
+            </h2>
+            <div class="top-content">
+              <div class="column" style="white-space: pre-line;">
+                <div class="columns">
+                  <div class="column has-text-white has-text-left event-data">
+                    <div class="has-text-white" [innerHTML]="getEventDescription()"></div>
+                  </div>
+                  <div class="is-divider-vertical"></div>
+                  <div class="column">
+                    <agm-map [zoom]="15" [latitude]="latitude" [longitude]="longitude" *ngIf="latitude != 0"
+                      [styles]="shared.maptheme">
+                      <agm-marker [latitude]="latitude" [longitude]="longitude"></agm-marker>
+                    </agm-map>
+                    <div class="columns event-data genre-padding">
+                      <div class="column has-text-left">
+                        <h2 class="small-text has-text-white has-text-weight-normal">
+                          <i class="fab fa-itunes-note icon-padding"></i> {{getGenre()}}
+                        </h2>
+                        <h2 class="small-text has-text-white has-text-weight-normal">
+                          <i class="fas fa-wind icon-padding"></i> {{getAtmosphere()}}
+                        </h2>
+                        <h2 class="small-text has-text-white has-text-weight-normal">
+                          <i class="fas fa-mask icon-padding"></i> {{getDresscode()}}
+                        </h2>
+                        <h2 class="small-text has-text-white has-text-weight-normal">
+                          <i class="small-text fas fa-birthday-cake icon-padding"></i> {{getAge()}}
+                        </h2>
+                      </div>
+                      <div class="column">
+                        <img class="" width="200" src="assets/images/testrating.png" />
+                      </div>
+                    </div>
+                    <button class="button is-primary  is-rounded is-large">
+                      {{ getPrice() }}
+                    </button>
+                  </div>
+                </div>
+                <div class="is-divider"></div>
+                <div class="column has-text-white has-text-left" style="white-space: pre-line;">
+                  <div>
+                    <div class="has-text-white" [innerHTML]="getOrganizerDescription()"></div>
+                  </div>
+                  <!-- TODO: Redirect this button when functionality is implemented -->
+                  <button class="is-dark button is-rounded has-text-white-bis is-pulled-right">Læs mere</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<ng-template #loading>loading animation...</ng-template>
