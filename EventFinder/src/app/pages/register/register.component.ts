@@ -119,7 +119,7 @@ export class RegisterComponent {
     this.mapsService.get_city_from_zip(value).subscribe(result => {
       if (result['status'] !== 'ZERO_RESULTS') {
         const city = result['results'][0]['address_components'][1]['long_name'];
-        const country = result['results'][0]['address_components'][2]['long_name'];
+        const country = result['results'][0]['address_components'].pop()['long_name'];
 
         this.registerForm.controls['city'].setValue(city);
         this.registerForm.controls['country'].setValue(country);
