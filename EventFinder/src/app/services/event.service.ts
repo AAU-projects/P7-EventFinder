@@ -26,15 +26,7 @@ export class EventService {
     return eventRef;
   }
 
-  /* To get the data from the documents, use subscribe.
-    .subscribe(snap => snap.forEach(docSnap => console.log(docSnap.id)))
-   */
-  async getEvents(limit: number = 5) {
-    this.firestore.collection('events', ref => ref.orderBy('startDate', 'asc').limit(limit))
-    .get();
-  }
-
-  getEventsTwo(limit: number = 5) {
+  getEvents(limit: number = 5) {
     return this.firestore.collection('events', ref => ref.orderBy('startDate', 'asc').limit(limit)).snapshotChanges();
   }
 

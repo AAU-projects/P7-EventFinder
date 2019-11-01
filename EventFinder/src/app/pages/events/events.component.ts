@@ -16,7 +16,7 @@ export class EventsComponent implements OnInit {
 
   constructor(public eventService: EventService) {
     this.eventList = [];
-    this.eventService.getEventsTwo().subscribe(elist => elist.forEach(e => this.eventList.push(e.payload.doc.data() as Event)));
+    this.eventService.getEvents().subscribe(elist => elist.forEach(e => this.eventList.push(e.payload.doc.data() as Event)));
   }
 
   ngOnInit() {}
