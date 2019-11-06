@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore, QueryFn } from '@angular/fire/firestore';
 import { Event } from '../models/event.model';
+import { Observable } from 'rxjs';
+import { combineLatest, of } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -28,6 +31,10 @@ export class EventService {
 
   getEvents(limit: number = 5) {
     return this.firestore.collection('events', ref => ref.orderBy('startDate', 'asc').limit(limit)).snapshotChanges();
+  }
+
+  getEventsBySearch(search, limit: number = 15) {
+    return this.firestore.collection('events', ref => ref.where('searchTerms', 'array-contains', search)).snapshotChanges();
   }
 
   async getEventsByQuery(query: QueryFn) {

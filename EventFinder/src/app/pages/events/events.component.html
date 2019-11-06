@@ -6,15 +6,26 @@
   </div>
   <div class="column">
     <div class="notification has-background-darker">
-      <div class="title has-text-white">MAP HERE</div>
+      <div class="title has-text-white">
+        <div class="control has-icons-left has-icons-right">
+          <input
+          (keydown.enter)="search($event.target.value)"
+          class="input is-rounded" type="text" placeholder="Search">
+          <span class="icon is-small is-left">
+            <i class="fas fa-search"></i>
+          </span>
+        </div>
+      </div>
     </div>
 
     <div class="notification has-background-darker">
       <div class="tile is-ancestor ">
         <div class="tile is-vertical is-parent">
           <div *ngFor="let event of eventList">
-            <div class="tile is-child notification has-background-darker no-side-padding">
-              <app-event-tile [inputEvent]=event></app-event-tile>
+            <div
+              class="tile is-child notification has-background-darker no-side-padding"
+            >
+              <app-event-tile [inputEvent]="event"></app-event-tile>
             </div>
           </div>
         </div>
@@ -22,5 +33,3 @@
     </div>
   </div>
 </div>
-
-
