@@ -3,7 +3,7 @@ import { SharedService } from 'src/app/services/shared.service';
 import { EventService } from 'src/app/services/event.service';
 import { Event } from 'src/app/models/event.model';
 import { OrganizerService } from 'src/app/services/organizer.service';
-import { Organizer } from 'src/app/models/account.model';
+import { Organization } from 'src/app/models/account.model';
 import { GoogleMapsService } from 'src/app/services/google-map.service';
 import { StorageService } from 'src/app/services/storage.service';
 
@@ -18,7 +18,7 @@ export class EventSelectComponent implements OnInit {
   logoLoaded: Promise<boolean>;
   bannerLoaded: Promise<boolean>;
   event: Event;
-  organizer: Organizer;
+  organizer: Organization;
   logoImage;
   bannerImage;
   @Input() inputEventID;

@@ -6969,8 +6969,8 @@ label.panel-block {
       padding: 18rem 1.5rem; } }
 
 .footer {
-  background-color: #fafafa;
-  padding: 3rem 1.5rem 6rem; }
+  background-color: #5C5C80;
+  padding: 1rem 1.5rem 1rem; }
 
 @keyframes spinAround {
   from {
@@ -12742,8 +12742,8 @@ label.panel-block {
       padding: 18rem 1.5rem; } }
 
 .footer {
-  background-color: #fafafa;
-  padding: 3rem 1.5rem 6rem; }
+  background-color: #5C5C80;
+  padding: 1rem 1.5rem 1rem; }
 
 .is-divider, .is-divider-vertical {
   display: block;

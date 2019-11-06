@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Event } from '../../models/event.model';
 import { StorageService } from 'src/app/services/storage.service';
 import { OrganizerService } from 'src/app/services/organizer.service';
-import { Organizer } from 'src/app/models/account.model';
+import { Organization } from 'src/app/models/account.model';
 
 @Component({
   selector: 'app-event-tile',
@@ -13,7 +13,7 @@ export class EventTileComponent implements OnInit {
 
   public event: Event;
   @Input() inputEvent: Event;
-  public organizer: Organizer;
+  public organizer: Organization;
   public allAtmosphere: string[];
   public bannerUrl;
   public organizerImageUrl;

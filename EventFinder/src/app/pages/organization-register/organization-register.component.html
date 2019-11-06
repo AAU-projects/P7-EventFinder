@@ -1,0 +1,13 @@
+<div class="columns is-centered is-multiline">
+  <div class="notification is-dark">
+    <h1 class="title has-text-weight-bold is-size-1"> Create Organization </h1>
+    <div *ngIf="errorMsg" class="column is-12 notification is-danger is-paddingless">
+      <p> {{ errorMsg }} </p>
+    </div>
+
+    <!-- Register form -->
+    <form [formGroup]="registerForm" (ngSubmit)="regiser(registerForm.value)" validate>
+
+    </form>
+  </div>
+</div>

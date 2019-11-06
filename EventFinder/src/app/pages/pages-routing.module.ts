@@ -9,14 +9,16 @@ import { EventsComponent } from './events/events.component';
 import { ForgotpasswordComponent } from './forgotpassword/forgotpassword.component';
 import { OrganizerComponent } from './organizer/organizer.component';
 import { LoggedInGuard } from '../guards/logged-in.guard';
+import { OrganizationRegisterComponent } from './organization-register/organization-register.component';
 
 // All paths starts from root (/)
 const routes: Routes = [
   {path: '', component: HomeComponent},
   {path: 'register', component: RegisterComponent},
   {path: 'firebase', component: FirebaseTestComponent},
-  {path: 'user', component: UserComponent, canActivate: [LoggedInGuard]},
-  {path: 'organizer', component: OrganizerComponent, canActivate: [LoggedInGuard]},
+  {path: 'org-register', component: OrganizationRegisterComponent},
+  {path: 'user', component: UserComponent},
+  {path: 'organizer', component: OrganizerComponent},
   {path: 'events', component: EventsComponent},
   {path: 'forgotpassword', component: ForgotpasswordComponent},
 

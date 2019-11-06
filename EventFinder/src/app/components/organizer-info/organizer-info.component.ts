@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Organizer } from 'src/app/models/account.model';
+import { Organization } from 'src/app/models/account.model';
 
 @Component({
   selector: 'app-organizer-info',
@@ -7,7 +7,7 @@ import { Organizer } from 'src/app/models/account.model';
   styleUrls: ['./organizer-info.component.scss']
 })
 export class OrganizerInfoComponent implements OnInit {
-  @Input() user: Organizer;
+  @Input() user: Organization;
 
   constructor() { }
 
