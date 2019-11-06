@@ -15,6 +15,9 @@ import { PagesModule } from './pages/pages.module';
 import { ComponentsModule } from './components/components.module';
 import { AgmCoreModule } from '@agm/core';
 
+// Spripe
+import { Module as StripeModule } from "stripe-angular"
+
 
 // Font Awesome
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -35,7 +38,9 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     FontAwesomeModule, // font awesome
     AgmCoreModule.forRoot({ // Google maps
       apiKey: 'AIzaSyAxJpRUrMbG264kgpMZNhk916zvqP1K08U'
-    })],
+    }),
+    StripeModule.forRoot()
+  ],
   providers: [CookieService],
   bootstrap: [AppComponent],
   exports: [AgmCoreModule]

@@ -34,6 +34,7 @@ export class EventSelectComponent implements OnInit {
     private organizerService: OrganizerService,
     private storageService: StorageService
   ) {
+
   }
 
   ngOnInit() {
@@ -228,4 +229,8 @@ export class EventSelectComponent implements OnInit {
       this.close();
     }
   }
+
+  //stripe.redirectToCheckout({
+  //  sessionId: ''
+  //}).then( function (result))
 }
