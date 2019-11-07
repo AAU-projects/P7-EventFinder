@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Event } from '../../models/event.model';
 import { StorageService } from 'src/app/services/storage.service';
-import { OrganizerService } from 'src/app/services/organizer.service';
+import { OrganizationService } from 'src/app/services/organizer.service';
 import { Organization } from 'src/app/models/account.model';
 
 @Component({
@@ -26,14 +26,14 @@ export class EventTileComponent implements OnInit {
   public formattedDate: string;
 
   constructor(private storageService: StorageService,
-              private organizerService: OrganizerService) {
+              private organizerService: OrganizationService) {
     this.allAtmosphere = [];
   }
 
   ngOnInit() {
     // Get event from input.
     this.event = this.inputEvent;
-    this.organizerService.getOrganizer(this.event.organizerId).valueChanges().subscribe((org) => {
+    this.organizerService.getOrganization(this.event.organizerId).valueChanges().subscribe((org) => {
       this.organizer = org;
       this.storageService.getImageUrl(this.organizer.profileImage).subscribe((url) => {
         this.organizerImageUrl = url;

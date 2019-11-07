@@ -1,4 +1,4 @@
-<div class="columns is-centered is-dark">
+<div class="columns is-centered">
   <div *ngIf="shared.showCropperEvent | async">
     <app-image-cropper [imageSource]="profileImage" (imageDestination)="getImage($event)"></app-image-cropper>
   </div>
@@ -6,7 +6,7 @@
     <app-tag-selection></app-tag-selection>
   </div>
   <div class="column is-8">
-    <div class="notification">
+    <div class="notification is-dark">
       <h1 class="title has-text-weight-bold is-size-1 has-text-white">
         <div>Create User</div>
       </h1>
@@ -29,7 +29,7 @@
                   <img *ngIf="!profileImage" src="../../../assets/images/logo.png">
                   <img *ngIf="profileImage" [src]="profileImage">
                 </figure>
-                  <div class="file is-small is-centered is-dark">
+                  <div class="file is-small is-centered is-darker">
                     <label class="file-label">
                       <input #fileUpload class="file-input" type="file" accept="image/*"
                         (change)="selectProfileImage($event.target.files[0])"
@@ -319,7 +319,7 @@
         </div>
         <div class="columns is-centered">
           <div class="column is-2">
-            <a class="button is-dark is-small is-rounded is-fullwidth" [routerLink]="['/']">
+            <a class="button is-darker is-small is-rounded is-fullwidth" [routerLink]="['/']">
               Cancel
             </a>
           </div>

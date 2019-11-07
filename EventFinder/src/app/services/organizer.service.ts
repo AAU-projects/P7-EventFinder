@@ -5,13 +5,21 @@ import { Organization } from '../models/account.model';
 @Injectable({
   providedIn: 'root'
 })
-export class OrganizerService {
+export class OrganizationService {
 
   constructor(private firestore: AngularFirestore) { }
 
-  getOrganizer(id) {
+  getOrganization(id) {
     const eventRef = this.firestore.collection('organizers').doc<Organization>(id);
 
     return eventRef;
+  }
+
+  createOrgnization(value): string {
+    return '';
+  }
+
+  setLogo(imgPath) {
+
   }
 }

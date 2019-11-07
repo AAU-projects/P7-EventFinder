@@ -2,7 +2,7 @@ import { Component, OnInit, HostListener, EventEmitter, Input, Output } from '@a
 import { SharedService } from 'src/app/services/shared.service';
 import { EventService } from 'src/app/services/event.service';
 import { Event } from 'src/app/models/event.model';
-import { OrganizerService } from 'src/app/services/organizer.service';
+import { OrganizationService } from 'src/app/services/organizer.service';
 import { Organization } from 'src/app/models/account.model';
 import { GoogleMapsService } from 'src/app/services/google-map.service';
 import { StorageService } from 'src/app/services/storage.service';
@@ -31,7 +31,7 @@ export class EventSelectComponent implements OnInit {
     public shared: SharedService,
     private apiService: GoogleMapsService,
     private eventService: EventService,
-    private organizerService: OrganizerService,
+    private organizerService: OrganizationService,
     private storageService: StorageService
   ) {
   }
@@ -42,7 +42,7 @@ export class EventSelectComponent implements OnInit {
 
   loadOrganizer() {
     this.organizerService
-      .getOrganizer(this.event.organizerId)
+      .getOrganization(this.event.organizerId)
       .valueChanges()
       .subscribe(document => {
         this.organizer = document;
