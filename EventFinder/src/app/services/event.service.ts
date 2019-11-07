@@ -1,9 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore, QueryFn } from '@angular/fire/firestore';
 import { Event } from '../models/event.model';
-import { Observable } from 'rxjs';
-import { combineLatest, of } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
