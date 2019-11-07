@@ -3,7 +3,7 @@
     <app-image-cropper [imageSource]="profileImage" (imageDestination)="getImage($event)"></app-image-cropper>
   </div>
   <div *ngIf="showTagPopUp">
-    <app-tag-selection></app-tag-selection>
+    <app-tag-selection [userType]="AccountTypes.User"></app-tag-selection>
   </div>
   <div class="column is-8">
     <div class="notification is-dark">

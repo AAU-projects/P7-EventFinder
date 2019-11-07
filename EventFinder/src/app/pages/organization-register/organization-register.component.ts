@@ -8,6 +8,7 @@ import { Organization } from 'src/app/models/account.model';
 import { AuthService } from 'src/app/services/auth.service';
 import { OrganizationService } from 'src/app/services/organizer.service';
 import { AccountService } from 'src/app/services/account.service';
+import { AccountTypes } from 'src/app/models/account.types.enum';
 
 @Component({
   selector: 'app-organization-register',
@@ -15,9 +16,12 @@ import { AccountService } from 'src/app/services/account.service';
   styleUrls: ['./organization-register.component.scss']
 })
 export class OrganizationRegisterComponent implements OnInit {
+  get AccountTypes() { return AccountTypes; }
+
   errorMsg: string;
   registerForm: FormGroup;
   profileImage;
+  showTagPopUp = false;
 
   constructor(
     private fb: FormBuilder,
@@ -55,6 +59,7 @@ export class OrganizationRegisterComponent implements OnInit {
 
     const orgUid = this.org.createOrgnization(value);
     this.account.addOrganization(orgUid);
+    this.showTagPopUp = true;
   }
 
   selectProfileImage(image: File) {
@@ -95,5 +100,9 @@ export class OrganizationRegisterComponent implements OnInit {
         this.registerForm.controls[countryInput].setValue(country);
       }
     });
+  }
+
+  aboutEnterFix($event: KeyboardEvent) {
+    $event.stopPropagation();
   }
 }

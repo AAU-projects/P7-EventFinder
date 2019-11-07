@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { AccountService } from 'src/app/services/account.service';
 import { Tags } from 'src/app/models/account.model';
 import { Genre, Atmosphere } from 'src/app/models/event.model';
+import { AccountTypes } from 'src/app/models/account.types.enum';
 
 @Component({
   selector: 'app-tag-selection',
@@ -10,9 +11,12 @@ import { Genre, Atmosphere } from 'src/app/models/event.model';
   styleUrls: ['./tag-selection.component.scss']
 })
 export class TagSelectionComponent implements OnInit {
+  @Input() userType: AccountTypes;
+
   get Tags() { return Tags; }
   get Genre() { return Genre; }
   get Atmosphere() { return Atmosphere; }
+  get AccountTypes() { return AccountTypes; }
 
   tagList: Tags[] = [];
   userPreferenceList: any[] = [];
@@ -29,7 +33,7 @@ export class TagSelectionComponent implements OnInit {
   }
 
   confirmSelection() {
-    if (this.accountService.isUser) {
+    if (this.userType === AccountTypes.User) {
       this.accountService.editTagsOrPrefrences(this.userPreferenceList);
       this.router.navigate(['/']);
     } else {
@@ -41,7 +45,7 @@ export class TagSelectionComponent implements OnInit {
   }
 
   organizerSubmitCheck() {
-    if (this.accountService.isUser) {
+    if (this.userType === AccountTypes.User) {
       return false;
     } else {
       return !(this.tagList.length >= 1);

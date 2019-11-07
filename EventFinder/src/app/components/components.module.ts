@@ -11,7 +11,7 @@ import { OrganizerInfoComponent } from './organizer-info/organizer-info.componen
 import { ImageCropperComponent } from './image-cropper/image-cropper.component';
 import { EventFormComponent } from './event-form/event-form.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { QuillModule } from 'ngx-quill';
+import { QuillModule, QuillEditorComponent } from 'ngx-quill';
 import { EventTileComponent } from './event-tile/event-tile.component';
 import { TagSelectionComponent } from './tag-selection/tag-selection.component';
 import { EventSelectComponent } from '../pages/event-select/event-select.component';
@@ -67,7 +67,8 @@ import { FooterComponent } from './footer/footer.component';
     EventTileComponent,
     TagSelectionComponent,
     EventSelectComponent,
-    FooterComponent
+    FooterComponent,
+    QuillEditorComponent,
   ],
 })
 export class ComponentsModule {}

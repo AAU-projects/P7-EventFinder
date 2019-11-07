@@ -2,6 +2,9 @@
   <div *ngIf="shared.showCropperEvent | async">
     <app-image-cropper [imageSource]="profileImage" (imageDestination)="getImage($event)"></app-image-cropper>
   </div>
+  <div *ngIf="showTagPopUp">
+    <app-tag-selection [userType]="AccountTypes.Organizer"></app-tag-selection>
+  </div>
   <div class="notification is-dark">
     <h1 class="title has-text-weight-bold is-size-1"> Create Organization </h1>
     <div *ngIf="errorMsg" class="column is-12 notification is-danger is-paddingless">
@@ -137,6 +140,22 @@
             </p>
           </div>
 
+        </div>
+
+        <!-- Input: About -->
+        <div class="column is-12">
+          <div class="columns is-centered">
+            <div class="column is-8">
+              <div class="field">
+                <div class="control about">
+                  <quill-editor formControlName="about"
+                  [styles]="{ backgroundColor: '#5C5C80', borderColor: '#5C5C80'}"
+                  (keydown.enter)="aboutEnterFix($event)">
+                  </quill-editor>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
 
         <!-- Buttons -->

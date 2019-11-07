@@ -4,7 +4,7 @@
     <div class="notification is-dark" *ngIf="accountService.currentUser as user">
       <p class="is-size-3 has-text-weight-bold">Thank you for registering!</p>
       <br>
-      <div *ngIf="accountService.isUser; then UserBlock else organizerBlock"></div>
+      <div *ngIf="userType == AccountTypes.User; then UserBlock else organizerBlock"></div>
       <br>
       <div class="tile is-ancestor">
         <div class="tile is-child has-centered-content is-flex is-4"></div>
