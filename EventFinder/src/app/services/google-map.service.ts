@@ -11,8 +11,12 @@ export class GoogleMapsService {
 
   constructor(private httpClient: HttpClient) {}
 
+  formatAddress(address) {
+    return address.replace(' ', '+');
+  }
+
   get_location(address) {
-    return this.httpClient.get(this.get_api_address(address));
+    return this.httpClient.get(this.get_api_address(this.formatAddress(address)));
   }
 
   private get_api_address(address) {

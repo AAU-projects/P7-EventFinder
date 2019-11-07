@@ -13,6 +13,7 @@ export class EventTileComponent implements OnInit {
 
   public event: Event;
   @Input() inputEvent: Event;
+  @Input() markerIndex: number;
   public organizer: Organizer;
   public allAtmosphere: string[];
   public bannerUrl;

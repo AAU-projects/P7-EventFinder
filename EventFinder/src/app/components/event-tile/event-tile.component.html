@@ -25,7 +25,14 @@
           </div>
           <div class="tile is-child no-padding has-centered-content is-flex">
             <h3 class="has-text">
-              <span class="icon"><i class="fa fa-map-marker-alt"></i></span>
+                <span *ngIf="markerIndex" class="fa-stack">
+                    <!-- The icon that will wrap the number -->
+                    <span class="fas fa-map-marker fa-stack-2x" style="color: #ea4335;"></span>
+                    <!-- a strong element with the custom content, in this case a number -->
+                    <strong class="fa-stack-1x icon-map">
+                        {{markerIndex}}
+                    </strong>
+                </span>
               {{event.address}}
             </h3>
           </div>

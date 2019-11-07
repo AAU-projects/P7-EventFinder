@@ -83,7 +83,7 @@ export class EventSelectComponent implements OnInit {
   }
 
   updateMap() {
-    this.apiService.get_location(this.formatAddress()).subscribe(result => {
+    this.apiService.get_location(this.event.address).subscribe(result => {
       const results = 'results';
       const geometry = 'geometry';
       const location = 'location';
@@ -96,13 +96,8 @@ export class EventSelectComponent implements OnInit {
     });
   }
 
-  formatAddress() {
-    return this.event.address.replace(' ', '+');
-  }
-
   close() {
     this.closeEvent.emit('closeEvent');
-    //this.shared.showEvent(null);
   }
 
   getEventTitleDescription() {

@@ -4,6 +4,7 @@ import { AngularFirestore, QueryFn } from '@angular/fire/firestore';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Event } from '../../models/event.model';
 import { match } from 'minimatch';
+import { SharedService } from 'src/app/services/shared.service';
 
 @Component({
   selector: 'app-events',
@@ -21,7 +22,8 @@ export class EventsComponent implements OnInit {
   > = this.eventListSubject.asObservable();
 
   constructor(public eventService: EventService,
-              public afs: AngularFirestore) {
+              public afs: AngularFirestore,
+              public shared: SharedService) {
     this.eventList = [];
     this.eventService
       .getEvents()
@@ -40,5 +42,9 @@ export class EventsComponent implements OnInit {
         elist.forEach(e => this.eventList.push(e.payload.doc.data() as Event))
       );
     this.eventList = eventList;
+  }
+
+  getEventIndexInList(event: Event) {
+    return this.eventList.indexOf(event) + 1;
   }
 }
