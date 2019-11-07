@@ -33,7 +33,6 @@ export class EventsComponent implements OnInit {
   ngOnInit() {}
 
   async search(input) {
-    console.log(input);
     const eventList = [];
     this.eventService
       .getEventsBySearch(input.toLowerCase())
@@ -41,6 +40,5 @@ export class EventsComponent implements OnInit {
         elist.forEach(e => this.eventList.push(e.payload.doc.data() as Event))
       );
     this.eventList = eventList;
-    console.log(this.eventList);
   }
 }

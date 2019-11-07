@@ -109,7 +109,6 @@ export class EventFormComponent implements OnInit {
         searchArray.push(subString.toLowerCase());
       }
     }
-    console.log(searchArray);
     value.searchTerms = searchArray;
     const id = this.eventService.createEvent(value);
 
