@@ -16,6 +16,8 @@ import { EventTileComponent } from './event-tile/event-tile.component';
 import { TagSelectionComponent } from './tag-selection/tag-selection.component';
 import { EventSelectComponent } from '../pages/event-select/event-select.component';
 import { AgmCoreModule } from '@agm/core';
+import { CheckoutComponent } from './checkout/checkout.component';
+import {StripeCheckoutModule} from 'ng-stripe-checkout';
 
 /* How to add a new component:
     ng g c components/[name] --export
@@ -33,7 +35,8 @@ import { AgmCoreModule } from '@agm/core';
     ImageCropperComponent,
     EventTileComponent,
     TagSelectionComponent,
-    EventSelectComponent],
+    EventSelectComponent,
+    CheckoutComponent],
   imports: [
     CommonModule,
     RouterModule,
@@ -51,7 +54,8 @@ import { AgmCoreModule } from '@agm/core';
     }),
     AgmCoreModule.forRoot({ // Google maps
       apiKey: 'AIzaSyAxJpRUrMbG264kgpMZNhk916zvqP1K08U'
-    })
+    }),
+    StripeCheckoutModule
   ],
   exports: [
     TestComponent,
@@ -64,7 +68,8 @@ import { AgmCoreModule } from '@agm/core';
     ImageCropperComponent,
     EventTileComponent,
     TagSelectionComponent,
-    EventSelectComponent
+    EventSelectComponent,
+    CheckoutComponent
   ],
 })
 export class ComponentsModule {}

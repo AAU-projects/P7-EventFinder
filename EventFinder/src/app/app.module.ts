@@ -15,12 +15,11 @@ import { PagesModule } from './pages/pages.module';
 import { ComponentsModule } from './components/components.module';
 import { AgmCoreModule } from '@agm/core';
 
-// Spripe
-import { Module as StripeModule } from "stripe-angular"
-
-
 // Font Awesome
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+
+// Stripe
+import { StripeCheckoutModule } from 'ng-stripe-checkout';
 
 @NgModule({
   declarations: [   // Components that the app uses
@@ -39,7 +38,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     AgmCoreModule.forRoot({ // Google maps
       apiKey: 'AIzaSyAxJpRUrMbG264kgpMZNhk916zvqP1K08U'
     }),
-    StripeModule.forRoot()
+    StripeCheckoutModule
   ],
   providers: [CookieService],
   bootstrap: [AppComponent],

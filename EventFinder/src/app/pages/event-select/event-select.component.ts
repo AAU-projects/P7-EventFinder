@@ -229,8 +229,4 @@ export class EventSelectComponent implements OnInit {
       this.close();
     }
   }
-
-  //stripe.redirectToCheckout({
-  //  sessionId: ''
-  //}).then( function (result))
 }
