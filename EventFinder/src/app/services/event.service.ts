@@ -30,6 +30,10 @@ export class EventService {
     return this.firestore.collection('events', ref => ref.orderBy('startDate', 'asc').limit(limit)).snapshotChanges();
   }
 
+  getEventsBySearch(search, limit: number = 15) {
+    return this.firestore.collection('events', ref => ref.where('searchTerms', 'array-contains', search)).snapshotChanges();
+  }
+
   async getEventsByQuery(query: QueryFn) {
     return this.firestore.collection('events', query).get();
   }

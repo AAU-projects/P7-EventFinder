@@ -66,6 +66,7 @@ export class EventFormComponent implements OnInit {
   createForm() {
     this.eventForm = this.fb.group({
       uid: ['', []],
+      searchTerms: ['', []],
       organizerId: this.authService.user.uid,
       startDate: ['', [Validators.required]],
       endDate: ['', [Validators.required]],
@@ -98,6 +99,17 @@ export class EventFormComponent implements OnInit {
 
     this.UploadBanner();
     value.banner = this.bannerFilePath;
+
+    const searchArray: string[] = [];
+
+    searchArray.push(value.city.toLowerCase());
+    const titleSplit = value.title.split(' ');
+    for (const subString of titleSplit) {
+      if (!(subString in searchArray)) {
+        searchArray.push(subString.toLowerCase());
+      }
+    }
+    value.searchTerms = searchArray;
     const id = this.eventService.createEvent(value);
 
     if (id === null) {
