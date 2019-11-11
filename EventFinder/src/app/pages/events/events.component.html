@@ -4,7 +4,7 @@
       <div class="title has-text-white">FILTER HERE</div>
     </div>
   </div>
-  <div class="column">
+  <div *ngIf="eventList" class="column">
       <agm-map [zoom]="13" [latitude]="eventList[0].latitude" [longitude]="eventList[0].longitude"
       [styles]="shared.maptheme">
         <div *ngFor="let event of eventList; let i = index">

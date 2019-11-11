@@ -12,24 +12,22 @@ import { SharedService } from 'src/app/services/shared.service';
   styleUrls: ['./events.component.scss']
 })
 export class EventsComponent implements OnInit {
-  eventList: Event[];
+  eventList = null;
 
-  eventListSubject: BehaviorSubject<Event[]> = new BehaviorSubject<Event[]>(
-    null
-  );
-  public eventListObs: Observable<
-    Event[]
-  > = this.eventListSubject.asObservable();
+  eventListSubject: BehaviorSubject<Event[]> = new BehaviorSubject<Event[]>(null);
+  public eventListObs: Observable<Event[]> = this.eventListSubject.asObservable();
 
-  constructor(public eventService: EventService,
-              public afs: AngularFirestore,
-              public shared: SharedService) {
-    this.eventList = [];
-    this.eventService
-      .getEvents()
-      .subscribe(elist =>
-        elist.forEach(e => this.eventList.push(e.payload.doc.data() as Event))
-      );
+  constructor(
+    public eventService: EventService,
+    public afs: AngularFirestore,
+    public shared: SharedService
+  ) {
+    const eventList = [];
+
+    this.eventService.getEvents().subscribe(elist => {
+      elist.forEach(e => eventList.push(e.payload.doc.data() as Event));
+      this.eventList = eventList;
+    });
   }
 
   ngOnInit() {}
@@ -38,10 +36,10 @@ export class EventsComponent implements OnInit {
     const eventList = [];
     this.eventService
       .getEventsBySearch(input.toLowerCase())
-      .subscribe(elist =>
-        elist.forEach(e => this.eventList.push(e.payload.doc.data() as Event))
-      );
-    this.eventList = eventList;
+      .subscribe(elist => {
+        elist.forEach(e => eventList.push(e.payload.doc.data() as Event));
+        this.eventList = eventList;
+      });
   }
 
   getEventIndexInList(event: Event) {

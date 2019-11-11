@@ -57,8 +57,9 @@ export class EventSelectComponent implements OnInit {
       .valueChanges()
       .subscribe(document => {
         this.event = document;
+        this.latitude = this.event.latitude;
+        this.longitude = this.event.longitude;
         this.eventLoaded = Promise.resolve(true);
-        this.updateMap();
         this.loadBanner();
         this.loadOrganizer();
       });
@@ -80,20 +81,6 @@ export class EventSelectComponent implements OnInit {
         this.logoImage = document;
         this.logoLoaded = Promise.resolve(true);
       });
-  }
-
-  updateMap() {
-    this.apiService.get_location(this.event.address).subscribe(result => {
-      const results = 'results';
-      const geometry = 'geometry';
-      const location = 'location';
-      const lat = 'lat';
-      const lng = 'lng';
-
-      const loc = result[results][0][geometry][location];
-      this.latitude = loc[lat];
-      this.longitude = loc[lng];
-    });
   }
 
   close() {

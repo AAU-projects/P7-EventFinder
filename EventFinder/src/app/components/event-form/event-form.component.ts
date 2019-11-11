@@ -156,21 +156,20 @@ export class EventFormComponent implements OnInit {
     }
   }
 
+  // tslint:disable: no-string-literal
   checkAdresss() {
     const address = this.eventForm.value.address + ' ' + this.eventForm.value.city;
     this.mapsService.get_location(address).subscribe(result => {
       if (result['status'] !== 'ZERO_RESULTS') {
-        console.log('nope :/');
         this.locationIsValid = false;
       }
-      console.log('yay!');
+
       const loc = result['results'][0]['geometry']['location'];
       const latitude = loc['lat'];
       const longitude = loc['lng'];
 
       this.eventForm.controls['latitude'].setValue(latitude);
       this.eventForm.controls['longitude'].setValue(longitude);
-      console.log(latitude + longitude);
       this.locationIsValid = true;
     });
 

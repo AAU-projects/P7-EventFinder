@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { zip } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class GoogleMapsService {
 
-  private APIKEY = 'AIzaSyAxJpRUrMbG264kgpMZNhk916zvqP1K08U';
+  private APIKEY = environment.firebase.googleApiKey;
 
   constructor(private httpClient: HttpClient) {}
 

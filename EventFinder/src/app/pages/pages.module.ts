@@ -14,6 +14,7 @@ import { ForgotpasswordComponent } from './forgotpassword/forgotpassword.compone
 import { OrganizerComponent } from './organizer/organizer.component';
 import { HttpClientModule } from '@angular/common/http';
 import { AgmCoreModule } from '@agm/core';
+import { environment } from 'src/environments/environment';
 
 
 /* How to add a new page:
@@ -41,7 +42,7 @@ import { AgmCoreModule } from '@agm/core';
     ReactiveFormsModule,
     HttpClientModule,
     AgmCoreModule.forRoot({ // Google maps
-      apiKey: 'AIzaSyAxJpRUrMbG264kgpMZNhk916zvqP1K08U'
+      apiKey: environment.firebase.googleApiKey
     })
   ],
   exports: [LoginComponent]
