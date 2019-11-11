@@ -2,6 +2,11 @@ import { Component, OnInit, Input, HostListener } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { AngularFireFunctions } from '@angular/fire/functions';
 import { StripeCheckoutLoader, StripeCheckoutHandler } from 'ng-stripe-checkout';
+import { CheckoutService } from 'src/app/services/checkout.service';
+import { SharedService } from 'src/app/services/shared.service';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { Event } from 'src/app/models/event.model';
+import { Organizer } from 'src/app/models/account.model';
 
 @Component({
   selector: 'app-checkout',
@@ -10,11 +15,26 @@ import { StripeCheckoutLoader, StripeCheckoutHandler } from 'ng-stripe-checkout'
 })
 export class CheckoutComponent implements OnInit {
   private stripeCheckoutHandler: StripeCheckoutHandler;
-  @Input() eventPrice: number;
-  @Input() organizerImage: string;
-  @Input() eventTitle: string;
 
-  constructor(private stripeCheckoutLoader: StripeCheckoutLoader) { }
+  @Input() organizerImage: string;
+  @Input() sizeClass: string;
+  @Input() event: Event;
+  @Input() organizer: Organizer;
+
+  paymentDate = new Date(Date.now());
+  paymentEmail: string;
+  transactionId: string;
+
+  showConfirmModalSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  public showConfirmModalObs: Observable<boolean> = this.showConfirmModalSubject.asObservable();
+
+  constructor(
+    private stripeCheckoutLoader: StripeCheckoutLoader,
+    public authService: AuthService,
+    private shared: SharedService,
+    private checkoutService: CheckoutService) {
+      this.paymentEmail = this.authService.user.email;
+    }
 
   ngOnInit() {
     this.stripeCheckoutLoader.createHandler({
@@ -25,26 +45,40 @@ export class CheckoutComponent implements OnInit {
   }
 
   public onClickBuy() {
-    this.stripeCheckoutHandler.open({
-        image: this.organizerImage,
-        name: this.eventTitle,
-        description: 'Giv os alle dine penge',
-        amount: this.eventPrice * 100,
-        currency: 'DDK',
-    }).then((token) => {
-        // Do something with the token...
-        console.log('Payment successful!', token);
-    }).catch((err) => {
-        // Payment failed or was canceled by user...
-        if (err !== 'stripe_closed') {
+    if (this.authService.user) {
+      this.stripeCheckoutHandler.open({
+          image: this.organizerImage,
+          name: this.event.title,
+          description: this.organizer.organization,
+          amount: this.event.price * 100,
+          currency: 'DDK',
+      }).then((token) => {
+          const paymentData = {
+            eventId: this.event.uid,
+            stripeToken: token,
+            userId: this.authService.user.uid,
+            paymentDate: this.paymentDate.toISOString()
+          };
+          this.checkoutService.createPayment(paymentData);
+          this.transactionId = token.id;
+          this.showConfirmModalSubject.next(true);
+      }).catch((err) => {
+          // Payment failed or was canceled by user...
+          if (err !== 'stripe_closed') {
             throw err;
-            console.log('Error!');
-        }
-    });
+          }
+      });
+    } else {
+        this.shared.showLogin(true);
+    }
   }
 
   public onClickCancel() {
     // If the window has been opened, this is how you can close it:
     this.stripeCheckoutHandler.close();
+  }
+
+  exitConfirmModal() {
+    this.showConfirmModalSubject.next(false);
   }
 }

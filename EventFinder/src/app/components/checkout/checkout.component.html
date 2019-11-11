@@ -1,1 +1,64 @@
-<button class="button is-primary is-rounded is-large" (click)="onClickBuy()">DKK {{eventPrice}},-</button>
+<button class="button is-primary is-rounded {{sizeClass}}" (click)="onClickBuy()">DKK {{event.price}},-</button>
+
+<ng-template [ngIf]="showConfirmModalObs | async">
+  <div class="modal is-active">
+    <div class="modal-background" (click)="exitConfirmModal()"></div>
+    <div class="modal-content">
+      <div class="notification round-corners">
+        <button class="delete" (click)="exitConfirmModal()"></button>
+        <div class="columns is-centered">
+          <div class="column">
+
+            <i class="fas fa-check-square fa-7x has-text-white"></i>
+
+            <h1 class="title has-text-white has-text-weight-bold is-size-2">
+              Payment Successful!
+            </h1>
+            <br>
+            <div class="content has-text-white is-size-6">
+              An email with your ticket and invoice for the purchase has been send to:
+              {{paymentEmail}}
+              <br>
+              <br>
+            </div>
+            <div class="columns">
+              <div class="column is-1"></div>
+              <div class="column is-5 has-text-left">
+                <div class="content has-text-white is-size-6 no-bottom-margin">
+                  <strong>Event:</strong>
+                  <br>
+                  <strong>Date:</strong>
+                  <br>
+                  <strong>Time:</strong>
+                  <br>
+                  <strong>Adress:</strong>
+                  <br>
+                  <strong>Order Number:</strong>
+                  <br>
+                  <strong>Price:</strong>
+                </div>
+              </div>
+              <div class="column is-5 has-text-right">
+                <div class="content has-text-white is-size-6 no-bottom-margin">
+                  {{event.title}}
+                  <br>
+                  {{event.startDate | date : "MMMM d, y"}}
+                  <br>
+                  {{event.startDate | date : "HH:mm" }}
+                  <br>
+                  {{event.address}}, {{event.zip}} {{event.city}}
+                  <br>
+                  {{transactionId}}
+                  <br>
+                  DDK {{event.price}},-
+                </div>
+                <div class="column is-1"></div>
+              </div>
+            </div>
+            <button class="button is-primary is-rounded is-medium" (click)="exitConfirmModal()">Confirm</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>

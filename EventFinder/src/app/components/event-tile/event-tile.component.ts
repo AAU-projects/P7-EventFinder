@@ -71,4 +71,8 @@ export class EventTileComponent implements OnInit {
   setSelectedEvent(eventID) {
     this.selectedEventID = eventID;
   }
+
+  testButton() {
+    alert('Hej');
+  }
 }
