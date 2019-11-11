@@ -51,7 +51,7 @@ import { environment } from 'src/environments/environment';
       placeholder: 'Write description here...'
     }),
     AgmCoreModule.forRoot({ // Google maps
-      apiKey: environment.firebase.googleApiKey
+      apiKey: environment.google.googleApiKey
     })
   ],
   exports: [

@@ -8,7 +8,7 @@ import { environment } from 'src/environments/environment';
 })
 export class GoogleMapsService {
 
-  private APIKEY = environment.firebase.googleApiKey;
+  private APIKEY = environment.google.googleApiKey;
 
   constructor(private httpClient: HttpClient) {}
 

@@ -34,7 +34,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     ComponentsModule,
     FontAwesomeModule, // font awesome
     AgmCoreModule.forRoot({ // Google maps
-      apiKey: environment.firebase.googleApiKey
+      apiKey: environment.google.googleApiKey
     })],
   providers: [CookieService],
   bootstrap: [AppComponent],
