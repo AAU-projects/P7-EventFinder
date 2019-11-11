@@ -1,7 +1,33 @@
 <div class="columns">
-  <div class="column is-2">
-    <div class="notification has-background-darker">
-      <div class="title has-text-white">FILTER HERE</div>
+  <div class="column is-one-fifth filter-column">
+    <div class="notification has-background-darker filterbox">
+      <h1 class="subtitle is-5 has-text-white is-pulled-left subtitle-margin">
+        Filter
+      </h1>
+      <div class="control has-icons-left">
+        <input
+          (keyup)="setTagSearchDropdownItems($event.target.value)"
+          class="input is-rounded"
+          type="text"
+          placeholder="Search tags"
+        />
+        <span class="icon is-small is-left">
+          <i class="fas fa-search has-text-white"></i>
+        </span>
+        <br>
+        <div *ngIf=currentTagSearchResult.length class="dropdown is-active">
+          <div class="dropdown-menu" id="dropdown-menu" role="menu">
+            <div class="dropdown-content">
+              <div *ngFor="let tag of currentTagSearchResult">
+                <a class="dropdown-item">
+                  {{ tag }}
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div style="height: 400px;"></div>
     </div>
   </div>
   <div *ngIf="eventList" class="column">
@@ -22,7 +48,7 @@
     <div class="control has-icons-left has-icons-right input-search">
       <input
         (keydown.enter)="search($event.target.value)"
-        class="input is-rounded"
+        class="input is-rounded search-input-width"
         type="text"
         placeholder="Search"
       />
