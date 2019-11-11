@@ -5,22 +5,31 @@
     </div>
   </div>
   <div *ngIf="eventList" class="column">
-      <agm-map [zoom]="13" [latitude]="eventList[0].latitude" [longitude]="eventList[0].longitude"
-      [styles]="shared.maptheme">
-        <div *ngFor="let event of eventList; let i = index">
-          <agm-marker
-          [label]="{color: 'white', text: (i + 1).toString()}"
-          [latitude]="event.latitude" [longitude]="event.longitude"></agm-marker>
-        </div>
-      </agm-map>
-        <div class="control has-icons-left has-icons-right input-search">
-          <input
-          (keydown.enter)="search($event.target.value)"
-          class="input is-rounded" type="text" placeholder="Search">
-          <span class="icon is-small is-left">
-            <i class="fas fa-search"></i>
-          </span>
-        </div>
+    <agm-map
+      [zoom]="13"
+      [latitude]="eventList[0].latitude"
+      [longitude]="eventList[0].longitude"
+      [styles]="shared.maptheme"
+    >
+      <div *ngFor="let event of eventList; let i = index">
+        <agm-marker
+          [label]="{ color: 'white', text: (i + 1).toString() }"
+          [latitude]="event.latitude"
+          [longitude]="event.longitude"
+        ></agm-marker>
+      </div>
+    </agm-map>
+    <div class="control has-icons-left has-icons-right input-search">
+      <input
+        (keydown.enter)="search($event.target.value)"
+        class="input is-rounded"
+        type="text"
+        placeholder="Search"
+      />
+      <span class="icon is-small is-left">
+        <i class="fas fa-search"></i>
+      </span>
+    </div>
     <div class="notification has-background-darker">
       <div class="tile is-ancestor ">
         <div class="tile is-vertical is-parent">
@@ -28,7 +37,10 @@
             <div
               class="tile is-child notification has-background-darker no-side-padding"
             >
-              <app-event-tile [inputEvent]="event" [markerIndex]="getEventIndexInList(event)"></app-event-tile>
+              <app-event-tile
+                [inputEvent]="event"
+                [markerIndex]="getEventIndexInList(event)"
+              ></app-event-tile>
             </div>
           </div>
         </div>
