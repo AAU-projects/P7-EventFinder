@@ -16,6 +16,7 @@ import { EventTileComponent } from './event-tile/event-tile.component';
 import { TagSelectionComponent } from './tag-selection/tag-selection.component';
 import { EventSelectComponent } from '../pages/event-select/event-select.component';
 import { AgmCoreModule } from '@agm/core';
+import { environment } from 'src/environments/environment';
 
 /* How to add a new component:
     ng g c components/[name] --export
@@ -50,7 +51,7 @@ import { AgmCoreModule } from '@agm/core';
       placeholder: 'Write description here...'
     }),
     AgmCoreModule.forRoot({ // Google maps
-      apiKey: 'AIzaSyAxJpRUrMbG264kgpMZNhk916zvqP1K08U'
+      apiKey: environment.google.googleApiKey
     })
   ],
   exports: [

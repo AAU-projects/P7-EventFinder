@@ -43,6 +43,7 @@ export class EventFormComponent implements OnInit {
   bannerEvent: any;
   notificationMessage = '';
   notificationClass = '';
+  locationIsValid = false;
 
   showNotificationSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   showNotificationObs: Observable<boolean> = this.showNotificationSubject.asObservable();
@@ -84,7 +85,9 @@ export class EventFormComponent implements OnInit {
       city: ['', [Validators.required, Validators.minLength(3), RegExValidator(/[a-z, ,A-Z,ÆæØøÅå]*/i)]],
       country: ['', [Validators.required, Validators.minLength(3), RegExValidator(/[a-z, ,A-Z,ÆæØøÅå]*/i)]],
       age: ['', [Validators.required, RegExValidator(/^[0-9]*$/i)]],
-      price: ['', [Validators.required, RegExValidator(/^[0-9]*$/i)]]
+      price: ['', [Validators.required, RegExValidator(/^[0-9]*$/i)]],
+      latitude: ['', []],
+      longitude: ['', []],
     });
   }
 
@@ -153,6 +156,25 @@ export class EventFormComponent implements OnInit {
     }
   }
 
+  // tslint:disable: no-string-literal
+  checkAdresss() {
+    const address = this.eventForm.value.address + ' ' + this.eventForm.value.city;
+    this.mapsService.get_location(address).subscribe(result => {
+      if (result['status'] !== 'ZERO_RESULTS') {
+        this.locationIsValid = false;
+      }
+
+      const loc = result['results'][0]['geometry']['location'];
+      const latitude = loc['lat'];
+      const longitude = loc['lng'];
+
+      this.eventForm.controls['latitude'].setValue(latitude);
+      this.eventForm.controls['longitude'].setValue(longitude);
+      this.locationIsValid = true;
+    });
+
+  }
+
   convertDateTime(inputDate, inputTime) {
     const date = new Date(inputDate);
     const timeString = inputTime.toString();
@@ -203,7 +225,14 @@ export class EventFormComponent implements OnInit {
 
         this.eventForm.controls['city'].setValue(city);
         this.eventForm.controls['country'].setValue(country);
+        this.checkAdresss();
       }
     });
+  }
+
+  checkValidEventForm() {
+    return (!this.eventForm.valid || this.genreList.length === 0 ||
+      this.atmosList.length === 0 || !this.bannerEvent ||
+      this.checkDate() || !this.locationIsValid);
   }
 }

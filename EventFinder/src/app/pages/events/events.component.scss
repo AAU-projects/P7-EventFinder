@@ -7,3 +7,16 @@
     max-width: 30%;
     background-color: #323259 !important;
 }
+
+agm-map{
+  margin: 0px;
+  height: 300px;
+  width: auto;
+}
+
+.input-search {
+    position: absolute;
+    width: 100%;
+    margin-left: 0.5%;
+    transform: translateY(-110%);
+}
