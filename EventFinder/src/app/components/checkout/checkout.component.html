@@ -16,41 +16,43 @@
             </h1>
             <br>
             <div class="content has-text-white is-size-6">
-              An email with your ticket and invoice for the purchase has been send to:
+              An email with your ticket and invoice for the purchase has been sent to:
               {{paymentEmail}}
               <br>
               <br>
             </div>
             <div class="columns">
               <div class="column is-1"></div>
-              <div class="column is-5 has-text-left">
+              <div class="column is-10">
                 <div class="content has-text-white is-size-6 no-bottom-margin">
-                  <strong>Event:</strong>
-                  <br>
-                  <strong>Date:</strong>
-                  <br>
-                  <strong>Time:</strong>
-                  <br>
-                  <strong>Adress:</strong>
-                  <br>
-                  <strong>Order Number:</strong>
-                  <br>
-                  <strong>Price:</strong>
-                </div>
-              </div>
-              <div class="column is-5 has-text-right">
-                <div class="content has-text-white is-size-6 no-bottom-margin">
-                  {{event.title}}
-                  <br>
-                  {{event.startDate | date : "MMMM d, y"}}
-                  <br>
-                  {{event.startDate | date : "HH:mm" }}
-                  <br>
-                  {{event.address}}, {{event.zip}} {{event.city}}
-                  <br>
-                  {{transactionId}}
-                  <br>
-                  DDK {{event.price}},-
+                  <div class="tile is-ancestor">
+                    <div class="tile is-vertical">
+                      <div class="tile is-parent less-tile-padding">
+                        <div class="tile is-child has-text-left"><strong>Event:</strong></div>
+                        <div class="tile is-child has-text-right">{{event.title}}</div>
+                      </div>
+                      <div class="tile is-parent less-tile-padding">
+                        <div class="tile is-child has-text-left"><strong>Date:</strong></div>
+                        <div class="tile is-child has-text-right">{{event.startDate | date : "MMMM d, y"}}</div>
+                      </div>
+                      <div class="tile is-parent less-tile-padding">
+                        <div class="tile is-child has-text-left"><strong>Time:</strong></div>
+                        <div class="tile is-child has-text-right">{{event.startDate | date : "HH:mm" }} - {{event.endDate | date : "HH:mm" }} </div>
+                      </div>
+                      <div class="tile is-parent less-tile-padding">
+                        <div class="tile is-child has-text-left"><strong>Adress:</strong></div>
+                        <div class="tile is-child has-text-right">{{event.address}}, {{event.zip}} {{event.city}}</div>
+                      </div>
+                      <div class="tile is-parent less-tile-padding">
+                        <div class="tile is-child has-text-left"><strong>Order Number:</strong></div>
+                        <div class="tile is-child has-text-right">{{transactionId}}</div>
+                      </div>
+                      <div class="tile is-parent less-tile-padding">
+                        <div class="tile is-child has-text-left"><strong>Price:</strong></div>
+                        <div class="tile is-child has-text-right">DDK {{event.price}},-</div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
                 <div class="column is-1"></div>
               </div>

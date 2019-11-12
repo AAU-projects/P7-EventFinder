@@ -53,13 +53,7 @@ export class CheckoutComponent implements OnInit {
           amount: this.event.price * 100,
           currency: 'DDK',
       }).then((token) => {
-          const paymentData = {
-            eventId: this.event.uid,
-            stripeToken: token,
-            userId: this.authService.user.uid,
-            paymentDate: this.paymentDate.toISOString()
-          };
-          this.checkoutService.createPayment(paymentData);
+          this.checkoutService.createPayment(token, this.event.price, this.event.uid);
           this.transactionId = token.id;
           this.showConfirmModalSubject.next(true);
       }).catch((err) => {

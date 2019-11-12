@@ -1,20 +1,23 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { Payment } from '../models/payment.model';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CheckoutService {
 
-  constructor(private firestore: AngularFirestore) { }
+  constructor(private firestore: AngularFirestore, private authService: AuthService) { }
 
-  createPayment(values) {
-    const id = this.firestore.createId();
-    const paymentRef = this.firestore.collection('payments').doc<Payment>(id);
+  createPayment(token: any, amount, eventId) {
+    const paymentId = this.firestore.createId();
+    const payment = { token, amount, eventId};
 
-    paymentRef.set(values);
+    const paymentRef = this.firestore.collection(`/payments/${this.authService.user.uid}/userPayments/`).doc(paymentId);
+    //const paymentRef2 = this.firestore.collection('payments').doc(this.authService.user.uid);
 
-    return id;
+    paymentRef.set(payment, {merge: true});
+
+    return paymentId;
   }
 }
