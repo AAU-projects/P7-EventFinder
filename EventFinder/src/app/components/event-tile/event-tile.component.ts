@@ -33,7 +33,7 @@ export class EventTileComponent implements OnInit {
   ngOnInit() {
     // Get event from input.
     this.event = this.inputEvent;
-    this.organizerService.getOrganization(this.event.organizerId).valueChanges().subscribe((org) => {
+    this.organizerService.getOrganization(this.event.organizerId).subscribe((org) => {
       this.organizer = org;
       this.storageService.getImageUrl(this.organizer.profileImage).subscribe((url) => {
         this.organizerImageUrl = url;

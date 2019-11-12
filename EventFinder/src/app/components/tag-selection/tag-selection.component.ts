@@ -4,6 +4,7 @@ import { AccountService } from 'src/app/services/account.service';
 import { Tags } from 'src/app/models/account.model';
 import { Genre, Atmosphere } from 'src/app/models/event.model';
 import { AccountTypes } from 'src/app/models/account.types.enum';
+import { NotificationService } from 'src/app/services/notification.service';
 
 @Component({
   selector: 'app-tag-selection',
@@ -23,7 +24,7 @@ export class TagSelectionComponent implements OnInit {
 
   errorMsg: string;
 
-  constructor(private router: Router, public accountService: AccountService) { }
+  constructor(private router: Router, public accountService: AccountService, private notification: NotificationService) { }
 
   ngOnInit() {
   }
@@ -35,11 +36,13 @@ export class TagSelectionComponent implements OnInit {
   confirmSelection() {
     if (this.userType === AccountTypes.User) {
       this.accountService.editTagsOrPrefrences(this.userPreferenceList);
-      this.router.navigate(['/']);
+      this.router.navigate(['/user']);
+      this.notification.notifySuccess('You have successfully created your user');
     } else {
       if (this.tagList.length >= 1 && this.tagList.length <= 3) {
         this.accountService.editTagsOrPrefrences(this.tagList);
-        this.router.navigate(['/']);
+        this.router.navigate(['/organizer']);
+        this.notification.notifySuccess('You have successfully created your organization');
       }
     }
   }

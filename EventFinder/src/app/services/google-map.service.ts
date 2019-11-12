@@ -7,7 +7,7 @@ import { zip } from 'rxjs/operators';
 })
 export class GoogleMapsService {
 
-  private APIKEY = 'AIzaSyAxJpRUrMbG264kgpMZNhk916zvqP1K08U';
+  private APIKEY = 'AIzaSyCj6DAd2_FVNu73UmA41f4mjnbfP2Y2NhU';
 
   constructor(private httpClient: HttpClient) {}
 

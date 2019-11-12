@@ -43,7 +43,6 @@ export class EventSelectComponent implements OnInit {
   loadOrganizer() {
     this.organizerService
       .getOrganization(this.event.organizerId)
-      .valueChanges()
       .subscribe(document => {
         this.organizer = document;
         this.organizerLoaded = Promise.resolve(true);

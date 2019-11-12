@@ -1,31 +1,20 @@
 <!-- Loggedin dropdown -->
-<div
-  class="navbar-item has-dropdown is-hoverable is-dark"
-  *ngIf="auth.isLoggedIn()"
->
-  <a
-    class="navbar-link is-arrowless"
-    [routerLink]="auth.userType == 'user'?['/user']:['/organizer']"
-    routerLinkActive="is-active"
-  >
+<div class="navbar-item has-dropdown is-hoverable is-dark" *ngIf="auth.isLoggedIn()">
+  <a class="navbar-link is-arrowless" [routerLink]="auth.userType == 'user'?['/user']:['/organizer']"
+    routerLinkActive="is-active">
     <span class="icon"><i class="fa fa-user"></i></span>
   </a>
   <div *ngIf="auth.isUserObs | async; then user; else organizer"></div>
 </div>
 
 <!-- Logged out dropdown -->
-<div
-  class="navbar-item has-dropdown is-hoverable"
-  *ngIf="!auth.isLoggedIn()"
->
-  <a class="navbar-link is-arrowless"
-    ><span (click)="openLogin()" class="icon"><i class="fa fa-user"></i></span
-  ></a>
+<div class="navbar-item has-dropdown is-hoverable" *ngIf="!auth.isLoggedIn()">
+  <a class="navbar-link is-arrowless"><span (click)="openLogin()" class="icon"><i class="fa fa-user"></i></span></a>
   <div class="navbar-dropdown is-right has-text-white">
     <a class="navbar-item has-text-white" (click)="openLogin()">
       <span class="icon has-text-white"><i class="fa fa-user"></i></span>Login
     </a>
-    <a class="navbar-item has-text-white" (click)="openRegister()" >
+    <a class="navbar-item has-text-white" (click)="openRegister()">
       <span class="icon has-text-white"><i class="fas fa-edit"></i></span>Register
     </a>
   </div>
@@ -47,6 +36,8 @@
       <span class="icon has-text-white"><i class="fa fa-cog"></i></span>Settings
     </a>
     <hr class="navbar-divider" />
+    <ng-container *ngTemplateOutlet="Orgs"></ng-container>
+    <hr class="navbar-divider" />
     <ng-container *ngTemplateOutlet="logout"></ng-container>
   </div>
 </ng-template>
@@ -54,6 +45,10 @@
 <!-- Organizer Dropdown -->
 <ng-template #organizer>
   <div class="navbar-dropdown is-right">
+    <a *ngIf="auth.userAccount | async as user" class="navbar-item has-text-white" (click)="switchToUser()">
+      <span class="icon has-text-white"><i class="fa fa-sign-out-alt"></i></span>{{user.firstname}} {{user.lastname}}
+    </a>
+    <hr class="navbar-divider" />
     <ng-container *ngTemplateOutlet="logout"></ng-container>
   </div>
 </ng-template>
@@ -63,4 +58,13 @@
   <a class="navbar-item has-text-white" (click)="notifyLogout()">
     <span class="icon has-text-white"><i class="fa fa-sign-out-alt"></i></span>Logout
   </a>
+</ng-template>
+
+<!-- Organizations list -->
+<ng-template #Orgs>
+  <div *ngFor="let org of account.organizations">
+    <a class="navbar-item has-text-white" (click)="switchToOrganization(org.uid)">
+      <span class="icon has-text-white"><i class="fa fa-sign-out-alt"></i></span>{{org.organization}}
+    </a>
+  </div>
 </ng-template>

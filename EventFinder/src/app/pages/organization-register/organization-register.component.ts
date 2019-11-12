@@ -54,10 +54,11 @@ export class OrganizationRegisterComponent implements OnInit {
       return;
     }
 
-    this.registerForm.controls.profileImage.setValue(this.uploadLogo());
+    this.registerForm.controls.profileImage.setValue('EventFinder/logo.png');
     this.registerForm.controls.connectedUsers.setValue(this.auth.user.uid);
 
     const orgUid = this.org.createOrgnization(value);
+    this.org.setLogo(this.uploadLogo(orgUid));
     this.account.addOrganization(orgUid);
     this.showTagPopUp = true;
   }
@@ -71,9 +72,9 @@ export class OrganizationRegisterComponent implements OnInit {
     };
   }
 
-  uploadLogo() {
+  uploadLogo(uid) {
     if (this.profileImage) {
-      return this.storage.uploadProfilePicture(this.profileImage, 'profileimage');
+      return this.storage.uploadOrgLogo(this.profileImage, 'profileimage', uid);
     } else {
       return 'EventFinder/logo.png';
     }

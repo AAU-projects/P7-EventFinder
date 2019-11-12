@@ -1,4 +1,4 @@
 export enum AccountTypes {
     User = 'user',
-    Organizer = 'organizer'
+    Organization = 'organization'
 }
