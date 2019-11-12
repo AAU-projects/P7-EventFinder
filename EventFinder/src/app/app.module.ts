@@ -18,6 +18,7 @@ import { AgmCoreModule } from '@agm/core';
 
 // Font Awesome
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [   // Components that the app uses
@@ -35,7 +36,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     FontAwesomeModule, // font awesome
     AgmCoreModule.forRoot({ // Google maps
       apiKey: environment.google.googleApiKey
-    })],
+    }), BrowserAnimationsModule],
   providers: [CookieService],
   bootstrap: [AppComponent],
   exports: [AgmCoreModule]

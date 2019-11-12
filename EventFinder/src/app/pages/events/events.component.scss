@@ -44,3 +44,23 @@ agm-map{
     margin-left: 0.5%;
     transform: translateY(-110%);
 }
+
+p.tag{
+  text-decoration: none !important;
+  background-color: #6294E7 !important;
+  color: white;
+  margin-left: 5px;
+  cursor: pointer;
+}
+
+p.tag:hover {
+  background-color: #3273dc !important;
+}
+
+.tags-margin {
+  margin-top: 4px;
+}
+
+mat-slider {
+  width: 100% !important;
+}

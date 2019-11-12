@@ -6,38 +6,67 @@
       </h1>
       <div class="control has-icons-left">
         <input
+          #tagSearchBar
           (keyup)="setTagSearchDropdownItems($event.target.value)"
           class="input is-rounded"
           type="text"
           placeholder="Search tags"
+          id="tagSearchBar"
         />
         <span class="icon is-small is-left">
           <i class="fas fa-search has-text-white"></i>
         </span>
-        <br>
-        <div *ngIf=currentTagSearchResult.length class="dropdown is-active">
+        <br />
+        <div *ngIf="currentTagSearchResult.length" class="dropdown is-active">
           <div class="dropdown-menu" id="dropdown-menu" role="menu">
             <div class="dropdown-content">
               <div *ngFor="let tag of currentTagSearchResult">
-                <a class="dropdown-item">
+                <a
+                  (click)="onTagSelected($event.target.text)"
+                  class="dropdown-item"
+                >
                   {{ tag }}
                 </a>
               </div>
             </div>
           </div>
         </div>
+        <div class="tile is-child no-padding has-centered-content is-flex">
+          <div class="tags tags-margin">
+              <span *ngFor="let tag of selectedTagsSearch">
+                <p
+                (click)="unselectTag(tag)"
+                class="tag is-hoverable">{{tag}}</p>
+              </span>
+          </div>
+        </div>
       </div>
+      <div class="slidecontainer">
+        <div class="is-pulled-left has-text-white is-size-7"><b><1km</b></div>
+        <div class="is-pulled-right has-text-white is-size-7"><b>no limit</b></div>
+          <mat-slider #distanceSlider (input)="distanceUpdate(distanceSlider.value)" thumbLabel tickInterval="1" min="0" max="50" step="1" value="50"></mat-slider>
+        </div>
+        <div class="slidecontainer">
+            <div class="is-pulled-left has-text-white is-size-7"><b>>free</b></div>
+            <div class="is-pulled-right has-text-white is-size-7"><b>no limit</b></div>
+            <mat-slider #distanceSlider (input)="distanceUpdate(distanceSlider.value)" thumbLabel tickInterval="25" min="0" max="10000" step="25" value="10000"></mat-slider>
+            </div>
       <div style="height: 400px;"></div>
     </div>
   </div>
-  <div *ngIf="eventList" class="column">
+  <div *ngIf="eventListShow && eventListShow.length != 0" class="column">
     <agm-map
       [zoom]="13"
-      [latitude]="eventList[0].latitude"
-      [longitude]="eventList[0].longitude"
+      [latitude]="eventListShow[0].latitude"
+      [longitude]="eventListShow[0].longitude"
       [styles]="shared.maptheme"
     >
-      <div *ngFor="let event of eventList; let i = index">
+    <agm-marker
+    [latitude]="userLocation[0]"
+    [longitude]="userLocation[1]"
+    [iconUrl]="{ url: './assets/images/your-location.png' }"
+    ></agm-marker>
+      <div *ngFor="let event of eventListShow; let i = index">
         <agm-marker
           [label]="{ color: 'white', text: (i + 1).toString() }"
           [latitude]="event.latitude"
@@ -59,7 +88,7 @@
     <div class="notification has-background-darker">
       <div class="tile is-ancestor ">
         <div class="tile is-vertical is-parent">
-          <div *ngFor="let event of eventList">
+          <div *ngFor="let event of eventListShow">
             <div
               class="tile is-child notification has-background-darker no-side-padding"
             >
