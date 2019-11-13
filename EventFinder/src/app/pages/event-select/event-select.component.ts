@@ -34,6 +34,7 @@ export class EventSelectComponent implements OnInit {
     private organizerService: OrganizerService,
     private storageService: StorageService
   ) {
+
   }
 
   ngOnInit() {

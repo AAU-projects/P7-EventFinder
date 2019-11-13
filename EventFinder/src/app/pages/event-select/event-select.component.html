@@ -47,9 +47,7 @@
                         <img class="" width="200" src="assets/images/testrating.png" />
                       </div>
                     </div>
-                    <button class="button is-primary  is-rounded is-large">
-                      {{ getPrice() }}
-                    </button>
+                    <app-checkout [organizer]=organizer [event]=event [sizeClass]="'is-large'"[organizerImage]=logoImage></app-checkout>
                   </div>
                 </div>
                 <div class="is-divider"></div>

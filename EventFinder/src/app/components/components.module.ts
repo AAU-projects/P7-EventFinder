@@ -16,6 +16,8 @@ import { EventTileComponent } from './event-tile/event-tile.component';
 import { TagSelectionComponent } from './tag-selection/tag-selection.component';
 import { EventSelectComponent } from '../pages/event-select/event-select.component';
 import { AgmCoreModule } from '@agm/core';
+import { CheckoutComponent } from './checkout/checkout.component';
+import {StripeCheckoutModule} from 'ng-stripe-checkout';
 import { environment } from 'src/environments/environment';
 
 /* How to add a new component:
@@ -34,13 +36,15 @@ import { environment } from 'src/environments/environment';
     ImageCropperComponent,
     EventTileComponent,
     TagSelectionComponent,
-    EventSelectComponent],
+    EventSelectComponent,
+    CheckoutComponent],
   imports: [
     CommonModule,
     RouterModule,
     FormsModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
+    StripeCheckoutModule,
     QuillModule.forRoot({
       modules: {
         syntax: false,
@@ -65,7 +69,8 @@ import { environment } from 'src/environments/environment';
     ImageCropperComponent,
     EventTileComponent,
     TagSelectionComponent,
-    EventSelectComponent
+    EventSelectComponent,
+    CheckoutComponent
   ],
 })
 export class ComponentsModule {}

@@ -53,6 +53,10 @@ p.tag{
   cursor: pointer;
 }
 
+.is-front {
+ z-index: 10 !important;
+}
+
 .icon-map {
   transform: translateY(-10%);
 }
