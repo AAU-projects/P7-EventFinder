@@ -2,18 +2,27 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Organization } from '../models/account.model';
 import { AuthService } from './auth.service';
+import { AccountService } from './account.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class OrganizationService {
 
-  constructor(private firestore: AngularFirestore, private auth: AuthService) { }
+  constructor(private firestore: AngularFirestore, private auth: AuthService, private account: AccountService) { }
 
   getOrganization(id) {
     const eventRef = this.firestore.collection('organizations').doc<Organization>(id).valueChanges();
 
     return eventRef;
+  }
+
+  removeUser(uid, org: Organization) {
+    org.connectedUsers = org.connectedUsers.filter(id => id !== uid);
+    const eventRef = this.firestore.collection('organizations').doc<Organization>(org.uid);
+    eventRef.set(org);
+
+    this.account.removeOrganization(org.uid, uid);
   }
 
   createOrgnization(value): string {

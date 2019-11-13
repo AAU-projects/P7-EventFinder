@@ -6,6 +6,8 @@ import { Router } from '@angular/router';
 import { AccountService } from 'src/app/services/account.service';
 import { OrganizationService } from 'src/app/services/organizer.service';
 import { tap, take} from 'rxjs/operators';
+import { StorageService } from 'src/app/services/storage.service';
+import { Organization } from 'src/app/models/account.model';
 
 @Component({
   selector: 'app-navbar-user-dropdown',
@@ -14,6 +16,7 @@ import { tap, take} from 'rxjs/operators';
 })
 
 export class NavbarUserDropdownComponent {
+  organizations = [];
 
   constructor(
     public auth: AuthService,
@@ -21,8 +24,27 @@ export class NavbarUserDropdownComponent {
     public notification: NotificationService,
     private router: Router,
     public account: AccountService,
-    private orgs: OrganizationService) {
-    auth.isUserObs.subscribe();
+    private orgs: OrganizationService,
+    public storage: StorageService) {
+    this.auth.account.subscribe(_ => {
+      this.auth.userAccount.subscribe(user => {
+        if (user) {
+          this.organizations.length = 0;
+          user.organizations.forEach(id => {
+            this.orgs.getOrganization(id).subscribe(organization => {
+              const org = organization;
+              this.storage.getImageUrl(org.profileImage).subscribe(path => {
+                this.organizations.push([org, path]);
+              });
+            });
+          });
+        }
+      });
+    });
+  }
+
+  getProfileImage(org: Organization){
+    this.storage.getImageUrl(org.profileImage);
   }
 
   openLogin() {
@@ -47,5 +69,15 @@ export class NavbarUserDropdownComponent {
   switchToUser() {
     this.auth.setUserType();
     this.router.navigate(['/user']);
+  }
+}
+
+class Pair {
+  organization: Organization;
+  logo: string;
+
+  constructor(org: Organization, url: string) {
+    this.organization = org;
+    this.logo = url;
   }
 }

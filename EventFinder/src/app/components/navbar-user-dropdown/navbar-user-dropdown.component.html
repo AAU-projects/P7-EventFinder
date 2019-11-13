@@ -45,9 +45,15 @@
 <!-- Organizer Dropdown -->
 <ng-template #organizer>
   <div class="navbar-dropdown is-right">
-    <a *ngIf="auth.userAccount | async as user" class="navbar-item has-text-white" (click)="switchToUser()">
-      <span class="icon has-text-white"><i class="fa fa-sign-out-alt"></i></span>{{user.firstname}} {{user.lastname}}
-    </a>
+      <a class="navbar-item has-text-white" [routerLink]="['/organizer']" routerLinkActive="is-active">
+        <span class="icon has-text-white"><i class="fa fa-user"></i></span>Profile
+      </a>
+      <hr class="navbar-divider" />
+      <a class="navbar-item has-text-white" (click)="switchToUser()">
+        <figure class="image is-24x24" style="left: -8px;">
+          <img [src]="account.baseUserImg" class="is-rounded">
+        </figure>{{account.getBaseUserName()}}
+      </a>
     <hr class="navbar-divider" />
     <ng-container *ngTemplateOutlet="logout"></ng-container>
   </div>
@@ -62,9 +68,11 @@
 
 <!-- Organizations list -->
 <ng-template #Orgs>
-  <div *ngFor="let org of account.organizations">
-    <a class="navbar-item has-text-white" (click)="switchToOrganization(org.uid)">
-      <span class="icon has-text-white"><i class="fa fa-sign-out-alt"></i></span>{{org.organization}}
+  <div *ngFor="let org of organizations">
+    <a class="navbar-item has-text-white" (click)="switchToOrganization(org[0].uid)">
+      <figure class="image is-24x24" style="left: -8px;">
+        <img [src]="org[1]">
+      </figure>{{org[0].organization}}
     </a>
   </div>
 </ng-template>

@@ -14,6 +14,7 @@ import { ForgotpasswordComponent } from './forgotpassword/forgotpassword.compone
 import { OrganizerComponent } from './organizer/organizer.component';
 import { HttpClientModule } from '@angular/common/http';
 import { OrganizationRegisterComponent } from './organization-register/organization-register.component';
+import { AboutComponent } from './about/about.component';
 
 
 /* How to add a new page:
@@ -33,7 +34,8 @@ import { OrganizationRegisterComponent } from './organization-register/organizat
     EventsComponent,
     ForgotpasswordComponent,
     OrganizerComponent,
-    OrganizationRegisterComponent
+    OrganizationRegisterComponent,
+    AboutComponent
   ],
   imports: [
     CommonModule,

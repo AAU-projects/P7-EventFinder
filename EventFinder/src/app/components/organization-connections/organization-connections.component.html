@@ -1,0 +1,45 @@
+<div class="notification is-dark">
+  <!-- Add user feild -->
+  <div class="field has-addons">
+      <div class="control has-icons-left is-expanded">
+          <input class="input" type="email" placeholder="Email">
+          <span class="icon is-small is-left">
+            <i class="fas fa-envelope fa-xs"></i>
+          </span>
+        </div>
+    <div class="control">
+      <a class="button is-primary">
+            Add User
+      </a>
+    </div>
+  </div>
+  <!-- Connected user -->
+  <div class="table-container">
+    <ul>
+      <li *ngFor="let user of users">
+        <ng-container *ngTemplateOutlet="item;context:user"></ng-container>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<ng-template #item let-name="name" let-email="email" let-uid="uid">
+  <div class="box has-text-white">
+    <div class="columns is-vcentered">
+      <div class="column has-text-left is-10">
+        <p class="is-size-6 has-text-weight-bold"> {{name}} </p>
+        <p class="is-size-7"> {{email}} </p>
+      </div>
+
+      <div class="column is-2">
+        <div class="field is-grouped is-pulled-right">
+          <p class="control">
+            <a class="button is-dark is-small is-rounded is-fullwidth has-text-white" (click)="removeUser(uid)">
+              Remove
+            </a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>

@@ -17,6 +17,7 @@ import { TagSelectionComponent } from './tag-selection/tag-selection.component';
 import { EventSelectComponent } from '../pages/event-select/event-select.component';
 import { AgmCoreModule } from '@agm/core';
 import { FooterComponent } from './footer/footer.component';
+import { OrganizationConnectionsComponent } from './organization-connections/organization-connections.component';
 
 /* How to add a new component:
     ng g c components/[name] --export
@@ -35,7 +36,8 @@ import { FooterComponent } from './footer/footer.component';
     EventTileComponent,
     TagSelectionComponent,
     EventSelectComponent,
-    FooterComponent],
+    FooterComponent,
+    OrganizationConnectionsComponent],
   imports: [
     CommonModule,
     RouterModule,
@@ -69,6 +71,7 @@ import { FooterComponent } from './footer/footer.component';
     EventSelectComponent,
     FooterComponent,
     QuillEditorComponent,
+    OrganizationConnectionsComponent,
   ],
 })
 export class ComponentsModule {}
