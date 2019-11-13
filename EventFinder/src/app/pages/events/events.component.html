@@ -1,17 +1,104 @@
 <div class="columns">
-  <div class="column is-2">
-    <div class="notification has-background-darker">
-      <div class="title has-text-white">FILTER HERE</div>
+  <div class="column is-one-fifth filter-column">
+    <div class="notification has-background-darker filterbox">
+      <h1 class="subtitle is-5 has-text-white is-pulled-left subtitle-margin">
+        Filter
+      </h1>
+      <div class="control has-icons-left">
+        <input
+          #tagSearchBar
+          (keyup)="setTagSearchDropdownItems($event.target.value)"
+          class="input is-rounded"
+          type="text"
+          placeholder="Search tags"
+          id="tagSearchBar"
+        />
+        <span class="icon is-small is-left">
+          <i class="fas fa-search has-text-white"></i>
+        </span>
+        <br />
+        <div *ngIf="currentTagSearchResult.length" class="dropdown is-active">
+          <div class="dropdown-menu" id="dropdown-menu" role="menu">
+            <div class="dropdown-content">
+              <div *ngFor="let tag of currentTagSearchResult">
+                <a
+                  (click)="onTagSelected($event.target.text)"
+                  class="dropdown-item"
+                >
+                  {{ tag }}
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="tile is-child no-padding has-centered-content is-flex">
+          <div class="tags tags-margin">
+              <span *ngFor="let tag of selectedTagsSearch">
+                <p
+                (click)="unselectTag(tag)"
+                class="tag is-hoverable">{{tag}}</p>
+              </span>
+          </div>
+        </div>
+      </div>
+      <div class="slidecontainer">
+        <div class="columns remove-spacing">
+          <div class="column is-4 remove-spacing">
+              <div class="is-pulled-left has-text-white is-size-7"><b><1km</b></div>
+          </div>
+          <div class="column is-4 remove-spacing">
+              <div class="has-text-centered has-text-white is-size-7"><b>Distance</b></div>
+          </div>
+          <div class="column is-4 remove-spacing">
+            <div class="is-pulled-right has-text-white is-size-7"><b>No limit</b></div>
+          </div>
+        </div>
+          <mat-slider class="remove-spacing" #distanceSlider (input)="distanceUpdate(distanceSlider.value)" thumbLabel tickInterval="0.5" min="0" max="50" step="0.5" value="50"></mat-slider>
+        </div>
+        <div class="slidecontainer">
+            <div class="columns remove-spacing">
+                <div class="column is-4 remove-spacing">
+                    <div class="is-pulled-left has-text-white is-size-7"><b>Free</b></div>
+                </div>
+                <div class="column is-4 remove-spacing">
+                    <div class="has-text-centered has-text-white is-size-7"><b>Price</b></div>
+                </div>
+                <div class="column is-4 remove-spacing">
+                    <div class="is-pulled-right has-text-white is-size-7"><b>No limit</b></div>
+                </div>
+              </div>
+              <mat-slider class="remove-spacing" #priceSlider (input)="priceUpdate(priceSlider.value)" thumbLabel tickInterval="25" min="0" max="10000" step="25" value="10000"></mat-slider>
+        </div>
+        <h1 class="has-text-white is-pulled-left is-size-7">From Date:</h1>
+        <p class="control has-icons-left">
+          <input class="input is-rounded has-text-centered" #dateTo type="date"  (input)="fromDateUpdate(dateTo.value)"  placeholder="Choose Date">
+          <span class="icon is-small is-left">
+              <i class="fas fa-calendar-alt"></i>
+          </span>
+        </p>
+        <h1 class="has-text-white is-pulled-left is-size-7">To Date:</h1>
+        <p class="control has-icons-left">
+            <input class="input is-rounded has-text-centered" #dateFrom type="date"  (input)="toDateUpdate(dateFrom.value)"  placeholder="Choose Date">
+            <span class="icon is-small is-left">
+                <i class="fas fa-calendar-alt"></i>
+            </span>
+          </p>
+      <div style="height: 10px;"></div>
     </div>
   </div>
-  <div *ngIf="eventList" class="column">
+  <div *ngIf="eventListShow" class="column">
     <agm-map
       [zoom]="13"
-      [latitude]="eventList[0].latitude"
-      [longitude]="eventList[0].longitude"
+      [latitude]="eventListShow.length != 0 ? eventListShow[0].latitude : userLocation[0]"
+      [longitude]="eventListShow.length != 0 ? eventListShow[0].longitude : userLocation[1]"
       [styles]="shared.maptheme"
     >
-      <div *ngFor="let event of eventList; let i = index">
+    <agm-marker
+    [latitude]="userLocation[0]"
+    [longitude]="userLocation[1]"
+    [iconUrl]="{ url: './assets/images/your-location.png' }"
+    ></agm-marker>
+      <div *ngFor="let event of eventListShow; let i = index">
         <agm-marker
           [label]="{ color: 'white', text: (i + 1).toString() }"
           [latitude]="event.latitude"
@@ -22,7 +109,7 @@
     <div class="control has-icons-left has-icons-right input-search">
       <input
         (keydown.enter)="search($event.target.value)"
-        class="input is-rounded"
+        class="input is-rounded search-input-width"
         type="text"
         placeholder="Search"
       />
@@ -33,7 +120,7 @@
     <div class="notification has-background-darker">
       <div class="tile is-ancestor ">
         <div class="tile is-vertical is-parent">
-          <div *ngFor="let event of eventList">
+          <div *ngFor="let event of eventListShow">
             <div
               class="tile is-child notification has-background-darker no-side-padding"
             >
@@ -42,6 +129,9 @@
                 [markerIndex]="getEventIndexInList(event)"
               ></app-event-tile>
             </div>
+          </div>
+          <div *ngIf="eventListShow.length == 0">
+            <h1 class="has-text-white subtitle is-3">No Event Result for Current Filter</h1>
           </div>
         </div>
       </div>
