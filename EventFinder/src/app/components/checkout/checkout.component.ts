@@ -1,6 +1,5 @@
 import { Component, OnInit, Input, HostListener } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
-import { AngularFireFunctions } from '@angular/fire/functions';
 import { StripeCheckoutLoader, StripeCheckoutHandler } from 'ng-stripe-checkout';
 import { CheckoutService } from 'src/app/services/checkout.service';
 import { SharedService } from 'src/app/services/shared.service';
@@ -51,9 +50,10 @@ export class CheckoutComponent implements OnInit {
           name: this.event.title,
           description: this.organizer.organization,
           amount: this.event.price * 100,
-          currency: 'DDK',
+          currency: 'DKK',
       }).then((token) => {
-          this.checkoutService.createPayment(token, this.event.price, this.event.uid);
+          // When stripe token is recieved a payment is created in the database
+          this.checkoutService.createPayment(token, this.event.price * 100, this.event.uid);
           this.transactionId = token.id;
           this.showConfirmModalSubject.next(true);
       }).catch((err) => {
@@ -68,7 +68,6 @@ export class CheckoutComponent implements OnInit {
   }
 
   public onClickCancel() {
-    // If the window has been opened, this is how you can close it:
     this.stripeCheckoutHandler.close();
   }
 

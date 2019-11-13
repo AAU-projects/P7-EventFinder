@@ -14,8 +14,6 @@ export class CheckoutService {
     const payment = { token, amount, eventId};
 
     const paymentRef = this.firestore.collection(`/payments/${this.authService.user.uid}/userPayments/`).doc(paymentId);
-    //const paymentRef2 = this.firestore.collection('payments').doc(this.authService.user.uid);
-
     paymentRef.set(payment, {merge: true});
 
     return paymentId;
