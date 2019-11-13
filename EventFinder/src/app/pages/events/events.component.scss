@@ -64,3 +64,16 @@ p.tag:hover {
 mat-slider {
   width: 100% !important;
 }
+
+/deep/ .mat-accent /deep/ .mat-slider-thumb, /deep/ .mat-accent /deep/ .mat-slider-thumb-label, /deep/ .mat-accent /deep/ .mat-slider-track-fill {
+  background-color:  #3273dc;
+}
+
+.slidecontainer {
+  margin-top: 8px;
+}
+
+.remove-spacing {
+  margin: 0px;
+  padding: 0px;
+}

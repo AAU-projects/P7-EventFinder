@@ -18,10 +18,13 @@ export class EventsComponent implements OnInit {
   currentTagSearchResult: string[] = [];
   eventsTagList: string[] = [];
   userLocation: number[] = [null, null];
-  maxDistance = 0;
+  maxDistance = Number.MAX_SAFE_INTEGER;
+  maxPrice = Number.MAX_SAFE_INTEGER;
 
   eventListSubject: BehaviorSubject<Event[]> = new BehaviorSubject<Event[]>(null);
   public eventListObs: Observable<Event[]> = this.eventListSubject.asObservable();
+  selectedToDateFilter: Date = null;
+  selectedFromDateFilter: Date = null;
 
   constructor(
     public eventService: EventService,
@@ -74,13 +77,11 @@ export class EventsComponent implements OnInit {
       }
       this.addTagToEventList(event.atmosphereCustom);
       this.addTagToEventList(event.dresscode);
-      console.log(this.getInRange(event, this.userLocation, 2));
     }
-
   }
 
   getEventIndexInList(event: Event) {
-    return this.eventList.indexOf(event) + 1;
+    return this.eventListShow.indexOf(event) + 1;
   }
 
   setTagSearchDropdownItems(searchInput) {
@@ -110,39 +111,64 @@ export class EventsComponent implements OnInit {
     this.applyFilter();
   }
 
-  applyDistanceFilter(eventlist: Event[]) {
-    for (const event of eventlist) {
-      if (!(this.getInRange(event, this.userLocation, this.maxDistance))) {
-        eventlist = eventlist.splice(eventlist.indexOf(event), 1);
-      }
-    }
-    return eventlist;
-  }
-
   applyFilter() {
-    let tempEventListShow: Event[] = this.eventList;
-
-    tempEventListShow = this.applyTagsFilter(tempEventListShow);
-    // tempEventListShow = this.applyDistanceFilter(tempEventListShow);
+    let tempEventListShow: Event[] = Array.from(this.eventList);
+    tempEventListShow = tempEventListShow.filter(element => this.applyTagsFilter(element));
+    tempEventListShow = tempEventListShow.filter(element => this.getInRange(element, this.userLocation, this.maxDistance));
+    tempEventListShow = tempEventListShow.filter(element => element.price <= this.maxPrice);
+    tempEventListShow = tempEventListShow.filter(element => this.filterDates(element));
 
     this.eventListShow = tempEventListShow;
-    console.log(this.eventList);
+    console.log(this.eventListShow);
   }
 
+  private isDateNull(date) {
+    console.log(date === null || String(date) === 'Invalid Date');
+    return date === null || String(date) === 'Invalid Date';
+  }
 
-  private applyTagsFilter(tempEventListShow: Event[]) {
-    if (this.selectedTagsSearch.length === 0 ) {
-      return tempEventListShow;
-    }
-    for (const event of this.eventList) {
-      const allElements = (event.genre as string[]).concat(event.atmosphere as string[]);
-      allElements.push(event.dresscode);
-      if (event.atmosphereCustom !== null && event.atmosphereCustom !== "") {
-        allElements.push(event.atmosphereCustom);
+  private filterDates(element: Event) {
+    const startDate = new Date(element.startDate);
+    const endDate = new Date(element.endDate);
+    startDate.setHours(1);
+    endDate.setHours(1);
+
+    if (this.isDateNull(this.selectedFromDateFilter) && this.isDateNull(this.selectedToDateFilter)) {
+      return true;
+    } else if (!this.isDateNull(this.selectedFromDateFilter) && this.isDateNull(this.selectedToDateFilter)) {
+      if (startDate.getTime() >= this.selectedFromDateFilter.getTime()) {
+        return true;
       }
-      tempEventListShow = this.removeEventIfListNotContainsElement(event, tempEventListShow, allElements);
+
+    } else if (this.isDateNull(this.selectedFromDateFilter) && !this.isDateNull(this.selectedToDateFilter)) {
+      if (startDate.getTime() <= this.selectedToDateFilter.getTime()) {
+        return true;
+      }
+    } else {
+      if (((startDate.getTime() >= this.selectedFromDateFilter.getTime() && startDate.getTime() <= this.selectedToDateFilter.getTime())
+        || (endDate.getTime() >= this.selectedFromDateFilter.getTime() && endDate.getTime() <= this.selectedToDateFilter.getTime()))) {
+        return true;
+      }
     }
-    return tempEventListShow;
+    return false;
+  }
+
+  private applyTagsFilter(element) {
+    if (this.selectedTagsSearch.length === 0 ) {
+      return true;
+    }
+    const allElements = (element.genre as string[]).concat(element.atmosphere as string[]);
+    allElements.push(element.dresscode);
+    if (element.atmosphereCustom !== null && element.atmosphereCustom !== '') {
+      allElements.push(element.atmosphereCustom);
+    }
+
+    for (const tag of allElements) {
+      if (this.selectedTagsSearch.includes(this.toLowerCase(tag))) {
+        return true;
+      }
+    }
+    return false;
   }
 
   toLowerCase(value) {
@@ -153,24 +179,8 @@ export class EventsComponent implements OnInit {
     }
   }
 
-  private removeEventIfListNotContainsElement(event: Event, tempEventListShow, list: string[]) {
-    console.log(list);
-    let foundElement = false;
-    for (const element of list) {
-      if (!this.selectedTagsSearch.includes(this.toLowerCase(element)) && (tempEventListShow.includes(event))) {
-        foundElement = true;
-        break;
-      }
-    }
-    if (!foundElement) {
-      tempEventListShow = tempEventListShow.slice(tempEventListShow.indexOf(event), 1);
-    }
-    return tempEventListShow;
-  }
-
   getInRange(event: Event, userLoc: number[], maxrange: number) {
     const dist = Math.sqrt(Math.pow(userLoc[0] - event.latitude, 2) + Math.pow(userLoc[1] - event.longitude, 2)) * 71.95;
-    console.log(dist);
     if (dist > maxrange) {
       return false;
     }
@@ -188,6 +198,29 @@ export class EventsComponent implements OnInit {
   }
 
   distanceUpdate(value) {
+    if (value === 50) {
+      value = Number.MAX_SAFE_INTEGER;
+    }
     this.maxDistance = value;
+    this.applyFilter();
   }
+
+  priceUpdate(value) {
+    if (value === 10000) {
+      value = Number.MAX_SAFE_INTEGER;
+    }
+    this.maxPrice = value;
+    this.applyFilter();
+  }
+
+  toDateUpdate(value) {
+    this.selectedToDateFilter = new Date(value);
+    this.applyFilter();
+  }
+
+  fromDateUpdate(value) {
+    this.selectedFromDateFilter = new Date(value);
+    this.applyFilter();
+  }
+
 }

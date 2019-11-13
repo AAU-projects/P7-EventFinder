@@ -42,23 +42,55 @@
         </div>
       </div>
       <div class="slidecontainer">
-        <div class="is-pulled-left has-text-white is-size-7"><b><1km</b></div>
-        <div class="is-pulled-right has-text-white is-size-7"><b>no limit</b></div>
-          <mat-slider #distanceSlider (input)="distanceUpdate(distanceSlider.value)" thumbLabel tickInterval="1" min="0" max="50" step="1" value="50"></mat-slider>
+        <div class="columns remove-spacing">
+          <div class="column is-4 remove-spacing">
+              <div class="is-pulled-left has-text-white is-size-7"><b><1km</b></div>
+          </div>
+          <div class="column is-4 remove-spacing">
+              <div class="has-text-centered has-text-white is-size-7"><b>Distance</b></div>
+          </div>
+          <div class="column is-4 remove-spacing">
+            <div class="is-pulled-right has-text-white is-size-7"><b>No limit</b></div>
+          </div>
+        </div>
+          <mat-slider class="remove-spacing" #distanceSlider (input)="distanceUpdate(distanceSlider.value)" thumbLabel tickInterval="0.5" min="0" max="50" step="0.5" value="50"></mat-slider>
         </div>
         <div class="slidecontainer">
-            <div class="is-pulled-left has-text-white is-size-7"><b>>free</b></div>
-            <div class="is-pulled-right has-text-white is-size-7"><b>no limit</b></div>
-            <mat-slider #distanceSlider (input)="distanceUpdate(distanceSlider.value)" thumbLabel tickInterval="25" min="0" max="10000" step="25" value="10000"></mat-slider>
-            </div>
-      <div style="height: 400px;"></div>
+            <div class="columns remove-spacing">
+                <div class="column is-4 remove-spacing">
+                    <div class="is-pulled-left has-text-white is-size-7"><b>Free</b></div>
+                </div>
+                <div class="column is-4 remove-spacing">
+                    <div class="has-text-centered has-text-white is-size-7"><b>Price</b></div>
+                </div>
+                <div class="column is-4 remove-spacing">
+                    <div class="is-pulled-right has-text-white is-size-7"><b>No limit</b></div>
+                </div>
+              </div>
+              <mat-slider class="remove-spacing" #priceSlider (input)="priceUpdate(priceSlider.value)" thumbLabel tickInterval="25" min="0" max="10000" step="25" value="10000"></mat-slider>
+        </div>
+        <h1 class="has-text-white is-pulled-left is-size-7">From Date:</h1>
+        <p class="control has-icons-left">
+          <input class="input is-rounded has-text-centered" #dateTo type="date"  (input)="fromDateUpdate(dateTo.value)"  placeholder="Choose Date">
+          <span class="icon is-small is-left">
+              <i class="fas fa-calendar-alt"></i>
+          </span>
+        </p>
+        <h1 class="has-text-white is-pulled-left is-size-7">To Date:</h1>
+        <p class="control has-icons-left">
+            <input class="input is-rounded has-text-centered" #dateFrom type="date"  (input)="toDateUpdate(dateFrom.value)"  placeholder="Choose Date">
+            <span class="icon is-small is-left">
+                <i class="fas fa-calendar-alt"></i>
+            </span>
+          </p>
+      <div style="height: 10px;"></div>
     </div>
   </div>
-  <div *ngIf="eventListShow && eventListShow.length != 0" class="column">
+  <div *ngIf="eventListShow" class="column">
     <agm-map
       [zoom]="13"
-      [latitude]="eventListShow[0].latitude"
-      [longitude]="eventListShow[0].longitude"
+      [latitude]="eventListShow.length != 0 ? eventListShow[0].latitude : userLocation[0]"
+      [longitude]="eventListShow.length != 0 ? eventListShow[0].longitude : userLocation[1]"
       [styles]="shared.maptheme"
     >
     <agm-marker
@@ -97,6 +129,9 @@
                 [markerIndex]="getEventIndexInList(event)"
               ></app-event-tile>
             </div>
+          </div>
+          <div *ngIf="eventListShow.length == 0">
+            <h1 class="has-text-white subtitle is-3">No Event Result for Current Filter</h1>
           </div>
         </div>
       </div>
