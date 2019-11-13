@@ -119,11 +119,9 @@ export class EventsComponent implements OnInit {
     tempEventListShow = tempEventListShow.filter(element => this.filterDates(element));
 
     this.eventListShow = tempEventListShow;
-    console.log(this.eventListShow);
   }
 
   private isDateNull(date) {
-    console.log(date === null || String(date) === 'Invalid Date');
     return date === null || String(date) === 'Invalid Date';
   }
 
