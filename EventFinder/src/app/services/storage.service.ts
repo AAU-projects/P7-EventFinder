@@ -9,9 +9,7 @@ import { AuthService } from './auth.service';
 export class StorageService {
   downloadURL: Observable<string>;
 
-  constructor(private storage: AngularFireStorage, private auth: AuthService) {
-
-  }
+  constructor(private storage: AngularFireStorage, private auth: AuthService) {}
 
   uploadProfilePicture(image, filename) {
     return this.uploadImage(image, `images/${this.auth.user.uid}/${filename}`);
@@ -23,8 +21,7 @@ export class StorageService {
 
   uploadFileFromEvent(event, location) {
     const file = event.target.files[0];
-    const filePath = location;
-    this.storage.upload(filePath, file);
+    this.storage.upload(location, file);
     return location;
   }
 

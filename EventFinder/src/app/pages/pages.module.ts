@@ -13,6 +13,9 @@ import { EventsComponent } from './events/events.component';
 import { ForgotpasswordComponent } from './forgotpassword/forgotpassword.component';
 import { OrganizerComponent } from './organizer/organizer.component';
 import { HttpClientModule } from '@angular/common/http';
+import { AgmCoreModule } from '@agm/core';
+import { environment } from 'src/environments/environment';
+import {MatSliderModule} from '@angular/material/slider';
 
 
 /* How to add a new page:
@@ -38,7 +41,11 @@ import { HttpClientModule } from '@angular/common/http';
     PagesRoutingModule,
     ComponentsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    MatSliderModule,
+    AgmCoreModule.forRoot({ // Google maps
+      apiKey: environment.google.googleApiKey
+    })
   ],
   exports: [LoginComponent]
 })

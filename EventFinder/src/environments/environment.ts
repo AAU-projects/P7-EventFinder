@@ -12,8 +12,11 @@ export const environment = {
     storageBucket: 'eventfinder-8605f.appspot.com',
     messagingSenderId: '786569892758',
     appId: '1:786569892758:web:8ee5f1d776b3932d3c43b7',
-    measurementId: 'G-J1V669FQXB'
+    measurementId: 'G-J1V669FQXB',
   },
+  google: {
+    googleApiKey: 'AIzaSyCj6DAd2_FVNu73UmA41f4mjnbfP2Y2NhU'
+  }
 };
 
 /*

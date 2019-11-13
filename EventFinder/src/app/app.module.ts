@@ -17,6 +17,7 @@ import { AgmCoreModule } from '@agm/core';
 
 // Font Awesome
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 // Stripe
 import { StripeCheckoutModule } from 'ng-stripe-checkout';
@@ -34,9 +35,10 @@ import { StripeCheckoutModule } from 'ng-stripe-checkout';
     AngularFireStorageModule, // storage
     PagesModule,
     ComponentsModule,
-    FontAwesomeModule, // font awesome
+    FontAwesomeModule, 
+    BrowserAnimationsModule,// font awesome
     AgmCoreModule.forRoot({ // Google maps
-      apiKey: 'AIzaSyAxJpRUrMbG264kgpMZNhk916zvqP1K08U'
+    apiKey: environment.google.googleApiKey
     }),
     StripeCheckoutModule
   ],

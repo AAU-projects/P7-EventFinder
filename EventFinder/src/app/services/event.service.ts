@@ -26,16 +26,12 @@ export class EventService {
     return eventRef;
   }
 
-  /* To get the data from the documents, use subscribe.
-    .subscribe(snap => snap.forEach(docSnap => console.log(docSnap.id)))
-   */
-  async getEvents(limit: number = 5) {
-    this.firestore.collection('events', ref => ref.orderBy('startDate', 'asc').limit(limit))
-    .get();
+  getEvents(limit: number = 5) {
+    return this.firestore.collection('events', ref => ref.orderBy('startDate', 'asc').limit(limit)).snapshotChanges();
   }
 
-  getEventsTwo(limit: number = 5) {
-    return this.firestore.collection('events', ref => ref.orderBy('startDate', 'asc').limit(limit)).snapshotChanges();
+  getEventsBySearch(search, limit: number = 15) {
+    return this.firestore.collection('events', ref => ref.where('searchTerms', 'array-contains', search)).snapshotChanges();
   }
 
   async getEventsByQuery(query: QueryFn) {

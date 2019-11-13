@@ -43,6 +43,7 @@ export class EventFormComponent implements OnInit {
   bannerEvent: any;
   notificationMessage = '';
   notificationClass = '';
+  locationIsValid = false;
 
   showNotificationSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   showNotificationObs: Observable<boolean> = this.showNotificationSubject.asObservable();
@@ -66,6 +67,7 @@ export class EventFormComponent implements OnInit {
   createForm() {
     this.eventForm = this.fb.group({
       uid: ['', []],
+      searchTerms: ['', []],
       organizerId: this.authService.user.uid,
       startDate: ['', [Validators.required]],
       endDate: ['', [Validators.required]],
@@ -83,7 +85,9 @@ export class EventFormComponent implements OnInit {
       city: ['', [Validators.required, Validators.minLength(3), RegExValidator(/[a-z, ,A-Z,ÆæØøÅå]*/i)]],
       country: ['', [Validators.required, Validators.minLength(3), RegExValidator(/[a-z, ,A-Z,ÆæØøÅå]*/i)]],
       age: ['', [Validators.required, RegExValidator(/^[0-9]*$/i)]],
-      price: ['', [Validators.required, RegExValidator(/^[0-9]*$/i)]]
+      price: ['', [Validators.required, RegExValidator(/^[0-9]*$/i)]],
+      latitude: ['', []],
+      longitude: ['', []],
     });
   }
 
@@ -98,6 +102,17 @@ export class EventFormComponent implements OnInit {
 
     this.UploadBanner();
     value.banner = this.bannerFilePath;
+
+    const searchArray: string[] = [];
+
+    searchArray.push(value.city.toLowerCase());
+    const titleSplit = value.title.split(' ');
+    for (const subString of titleSplit) {
+      if (!(subString in searchArray)) {
+        searchArray.push(subString.toLowerCase());
+      }
+    }
+    value.searchTerms = searchArray;
     const id = this.eventService.createEvent(value);
 
     if (id === null) {
@@ -139,6 +154,25 @@ export class EventFormComponent implements OnInit {
         return false;
       }
     }
+  }
+
+  // tslint:disable: no-string-literal
+  checkAdresss() {
+    const address = this.eventForm.value.address + ' ' + this.eventForm.value.city;
+    this.mapsService.get_location(address).subscribe(result => {
+      if (result['status'] !== 'ZERO_RESULTS') {
+        this.locationIsValid = false;
+      }
+
+      const loc = result['results'][0]['geometry']['location'];
+      const latitude = loc['lat'];
+      const longitude = loc['lng'];
+
+      this.eventForm.controls['latitude'].setValue(latitude);
+      this.eventForm.controls['longitude'].setValue(longitude);
+      this.locationIsValid = true;
+    });
+
   }
 
   convertDateTime(inputDate, inputTime) {
@@ -191,7 +225,14 @@ export class EventFormComponent implements OnInit {
 
         this.eventForm.controls['city'].setValue(city);
         this.eventForm.controls['country'].setValue(country);
+        this.checkAdresss();
       }
     });
+  }
+
+  checkValidEventForm() {
+    return (!this.eventForm.valid || this.genreList.length === 0 ||
+      this.atmosList.length === 0 || !this.bannerEvent ||
+      this.checkDate() || !this.locationIsValid);
   }
 }

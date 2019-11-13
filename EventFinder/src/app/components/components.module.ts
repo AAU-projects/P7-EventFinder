@@ -18,6 +18,7 @@ import { EventSelectComponent } from '../pages/event-select/event-select.compone
 import { AgmCoreModule } from '@agm/core';
 import { CheckoutComponent } from './checkout/checkout.component';
 import {StripeCheckoutModule} from 'ng-stripe-checkout';
+import { environment } from 'src/environments/environment';
 
 /* How to add a new component:
     ng g c components/[name] --export
@@ -43,6 +44,7 @@ import {StripeCheckoutModule} from 'ng-stripe-checkout';
     FormsModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
+    StripeCheckoutModule,
     QuillModule.forRoot({
       modules: {
         syntax: false,
@@ -53,9 +55,8 @@ import {StripeCheckoutModule} from 'ng-stripe-checkout';
       placeholder: 'Write description here...'
     }),
     AgmCoreModule.forRoot({ // Google maps
-      apiKey: 'AIzaSyAxJpRUrMbG264kgpMZNhk916zvqP1K08U'
-    }),
-    StripeCheckoutModule
+      apiKey: environment.google.googleApiKey
+    })
   ],
   exports: [
     TestComponent,
