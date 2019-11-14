@@ -19,6 +19,7 @@ import { AgmCoreModule } from '@agm/core';
 import { CheckoutComponent } from './checkout/checkout.component';
 import {StripeCheckoutModule} from 'ng-stripe-checkout';
 import { environment } from 'src/environments/environment';
+import { UserEventsComponent } from './user-events/user-events.component';
 
 /* How to add a new component:
     ng g c components/[name] --export
@@ -37,7 +38,8 @@ import { environment } from 'src/environments/environment';
     EventTileComponent,
     TagSelectionComponent,
     EventSelectComponent,
-    CheckoutComponent],
+    CheckoutComponent,
+    UserEventsComponent],
   imports: [
     CommonModule,
     RouterModule,
@@ -70,7 +72,8 @@ import { environment } from 'src/environments/environment';
     EventTileComponent,
     TagSelectionComponent,
     EventSelectComponent,
-    CheckoutComponent
+    CheckoutComponent,
+    UserEventsComponent
   ],
 })
 export class ComponentsModule {}

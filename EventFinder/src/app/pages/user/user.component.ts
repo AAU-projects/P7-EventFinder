@@ -3,6 +3,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { User } from 'src/app/models/account.model';
 import { StorageService } from 'src/app/services/storage.service';
 import { take, tap } from 'rxjs/operators';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-user',
@@ -13,6 +14,9 @@ export class UserComponent implements OnInit {
   imgUrl: string;
   user: User;
 
+  userMenuSubject: BehaviorSubject<string> = new BehaviorSubject<string>('Tickets');
+  public userMenuObs: Observable<string> = this.userMenuSubject.asObservable();
+
   constructor(public auth: AuthService, private storage: StorageService) {
     this.auth.account.subscribe(account => {
       this.user = account as User;
@@ -22,5 +26,9 @@ export class UserComponent implements OnInit {
 
   ngOnInit() {
 
+  }
+
+  onMenuClick(menuName: string) {
+    this.userMenuSubject.next(menuName);
   }
 }

@@ -18,4 +18,12 @@ export class CheckoutService {
 
     return paymentId;
   }
+
+  getOrderedEventsForUser(userId) {
+    this.firestore.collection(`/payments/${userId}/userPayments`).snapshotChanges().forEach(doc => {
+      doc.forEach(payment => {
+        const eventId = payment.payload.doc.data.eventId;
+      });
+    });
+  }
 }
