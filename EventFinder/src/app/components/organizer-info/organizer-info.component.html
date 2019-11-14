@@ -35,7 +35,7 @@
             <span class="icon"><i class="fas fa-mobile-alt"></i></span>Phone:
             {{ user.phone }}
           </p>
-          <br>
+          <br />
           <p>
             <span class="icon"><i class="fas fa-at"></i></span>Mail:
             {{ user.email }}
@@ -46,8 +46,16 @@
     </div>
   </div>
   <div class="tile is-4 is-vertical is-parent">
-    <div class="tile is-child notification has-background-dark">
-
-    </div>
+    <div class="tile is-child notification has-background-dark"></div>
+  </div>
+</div>
+<div class="tile is-child notification has-background-dark">
+  <h1 class="title has-text-center has-text-white is-6">
+    Organization Events
+  </h1>
+</div>
+<div *ngFor="let event of orgEventList">
+  <div class="tile is-child notification has-background-dark event-padding">
+    <app-event-tile [inputEvent]="event"></app-event-tile>
   </div>
 </div>
