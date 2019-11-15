@@ -9,6 +9,7 @@ import { EventsComponent } from './events/events.component';
 import { ForgotpasswordComponent } from './forgotpassword/forgotpassword.component';
 import { OrganizerComponent } from './organizer/organizer.component';
 import { LoggedInGuard } from '../guards/logged-in.guard';
+import { PublicOrganizerComponent } from './public-organizer/public-organizer.component';
 
 // All paths starts from root (/)
 const routes: Routes = [
@@ -19,7 +20,7 @@ const routes: Routes = [
   {path: 'organizer', component: OrganizerComponent, canActivate: [LoggedInGuard]},
   {path: 'events', component: EventsComponent},
   {path: 'forgotpassword', component: ForgotpasswordComponent},
-
+  {path: 'o/:id', component: PublicOrganizerComponent},
   {path: '**', component: PageNotFoundComponent}, // Skal ligge nederst!!!!
 ];
 
