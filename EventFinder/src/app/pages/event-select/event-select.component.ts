@@ -22,6 +22,7 @@ export class EventSelectComponent implements OnInit {
   logoImage;
   bannerImage;
   @Input() inputEventID;
+  @Input() receiptUrl; // For use in the checkout component.
   @Output() closeEvent = new EventEmitter<string>();
 
   latitude: number;

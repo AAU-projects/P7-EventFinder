@@ -1,4 +1,10 @@
-<button class="button is-primary is-rounded {{sizeClass}}" (click)="onClickBuy()">DKK {{event.price}},-</button>
+<ng-template [ngIf]="!receiptUrl" [ngIfElse]="showReceipt">
+  <button class="button is-primary is-rounded {{sizeClass}}" (click)="onClickBuy()">DKK {{event.price}},-</button>
+</ng-template>
+
+<ng-template #showReceipt>
+  <button class="button is-primary is-rounded {{sizeClass}}" (click)="onClickReceipt()">Receipt</button>
+</ng-template>
 
 <ng-template [ngIf]="showConfirmModalObs | async">
   <div class="modal is-active">

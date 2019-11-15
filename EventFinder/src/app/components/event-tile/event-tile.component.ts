@@ -14,6 +14,7 @@ export class EventTileComponent implements OnInit {
   public event: Event;
   @Input() inputEvent: Event;
   @Input() markerIndex: number;
+  @Input() receiptUrl: string; // Only used when show in the user profile page.
   public organizer: Organizer;
   public allAtmosphere: string[];
   public bannerUrl;

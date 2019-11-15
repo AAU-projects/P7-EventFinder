@@ -19,6 +19,7 @@ export class CheckoutComponent implements OnInit {
   @Input() sizeClass: string;
   @Input() event: Event;
   @Input() organizer: Organizer;
+  @Input() receiptUrl: string;
 
   paymentDate = new Date(Date.now());
   paymentEmail: string;
@@ -73,5 +74,9 @@ export class CheckoutComponent implements OnInit {
 
   exitConfirmModal() {
     this.showConfirmModalSubject.next(false);
+  }
+
+  onClickReceipt() {
+    window.open(this.receiptUrl);
   }
 }
