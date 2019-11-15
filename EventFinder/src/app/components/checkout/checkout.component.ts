@@ -6,7 +6,6 @@ import { SharedService } from 'src/app/services/shared.service';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Event } from 'src/app/models/event.model';
 import { Organizer } from 'src/app/models/account.model';
-import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-checkout',
@@ -33,8 +32,7 @@ export class CheckoutComponent implements OnInit {
     private stripeCheckoutLoader: StripeCheckoutLoader,
     public authService: AuthService,
     private shared: SharedService,
-    private checkoutService: CheckoutService,
-    public sanitizer: DomSanitizer) {
+    private checkoutService: CheckoutService) {
       this.paymentEmail = this.authService.user.email;
     }
 
