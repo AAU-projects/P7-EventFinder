@@ -52,7 +52,7 @@ import { OrganizerEventListComponent } from './organizer-event-list/organizer-ev
         syntax: false,
         toolbar: [
           ['bold', 'italic', 'underline'],
-          [{ header: 1 }, { header: 2 }]],
+          [{ header: 2 }]],
       },
       placeholder: 'Write description here...'
     }),
