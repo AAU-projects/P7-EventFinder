@@ -16,6 +16,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { AgmCoreModule } from '@agm/core';
 import { environment } from 'src/environments/environment';
 import {MatSliderModule} from '@angular/material/slider';
+import { PublicOrganizerComponent } from './public-organizer/public-organizer.component';
 
 
 /* How to add a new page:
@@ -34,7 +35,8 @@ import {MatSliderModule} from '@angular/material/slider';
     RegisterComponent,
     EventsComponent,
     ForgotpasswordComponent,
-    OrganizerComponent
+    OrganizerComponent,
+    PublicOrganizerComponent
   ],
   imports: [
     CommonModule,
@@ -47,6 +49,6 @@ import {MatSliderModule} from '@angular/material/slider';
       apiKey: environment.google.googleApiKey
     })
   ],
-  exports: [LoginComponent]
+  exports: [LoginComponent, PublicOrganizerComponent]
 })
 export class PagesModule { }

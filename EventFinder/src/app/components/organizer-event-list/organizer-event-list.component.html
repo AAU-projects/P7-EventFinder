@@ -1,0 +1,10 @@
+<div class="tile is-child notification has-background-dark">
+    <h1 class="title has-text-center has-text-white is-6">
+      Organization Events
+    </h1>
+  </div>
+  <div *ngFor="let event of orgEventList">
+    <div class="event-margin">
+        <app-event-tile [inputEvent]="event"></app-event-tile>
+    </div>
+</div>
