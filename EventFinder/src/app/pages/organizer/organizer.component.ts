@@ -40,9 +40,7 @@ export class OrganizerComponent implements OnInit {
     this.menuTabSubject.next(tabName);
     this.subTabSubject.next(null);
 
-    if (tabName !== MenuTabs.Events) {
-      this.currentMenuTabSubject.next(tabName);
-    }
+    this.currentMenuTabSubject.next(tabName);
   }
 
   onSubMenuClick(tabName: MenuTabs) {
