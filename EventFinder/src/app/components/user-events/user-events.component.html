@@ -1,10 +1,14 @@
 <div class="tile is-ancestor">
-    <div class="tile is-parent">
-      <div class="tile is-child notification has-background-dark">
-        <h1 class="title has-text-left has-text-white is-6">
-            Event information
-        </h1>
-      </div>
+  <div class="tile is-parent">
+    <div class="tile is-child notification has-background-dark has-text-centered">
+      <h1 class="title has-text-white is-5">
+        Upcomming Events
+      </h1>
     </div>
   </div>
-
+</div>
+<div *ngFor="let eventObject of eventObjects">
+  <div class="tile is-child notification has-background-darker no-side-padding">
+    <app-event-tile [inputEvent]="eventObject.event" [receiptUrl]="eventObject.receipt_url"></app-event-tile>
+  </div>
+</div>

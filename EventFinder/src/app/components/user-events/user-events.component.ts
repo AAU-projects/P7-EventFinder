@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { User } from 'src/app/models/account.model';
 import { Event } from 'src/app/models/event.model';
+import { CheckoutService } from 'src/app/services/checkout.service';
 
 @Component({
   selector: 'app-user-events',
@@ -9,11 +10,12 @@ import { Event } from 'src/app/models/event.model';
 })
 export class UserEventsComponent implements OnInit {
   @Input() user: User;
-  events: [Event];
+  eventObjects;
 
-  constructor() { }
+  constructor(private checkoutService: CheckoutService) { }
 
   ngOnInit() {
+    this.eventObjects = this.checkoutService.getPurchasedEventsForUser(this.user.uid);
   }
 
 }

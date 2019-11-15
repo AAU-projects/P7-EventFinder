@@ -6,6 +6,7 @@ import { SharedService } from 'src/app/services/shared.service';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Event } from 'src/app/models/event.model';
 import { Organizer } from 'src/app/models/account.model';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-checkout',
@@ -19,6 +20,7 @@ export class CheckoutComponent implements OnInit {
   @Input() sizeClass: string;
   @Input() event: Event;
   @Input() organizer: Organizer;
+  @Input() receiptUrl: string;
 
   paymentDate = new Date(Date.now());
   paymentEmail: string;
@@ -31,7 +33,8 @@ export class CheckoutComponent implements OnInit {
     private stripeCheckoutLoader: StripeCheckoutLoader,
     public authService: AuthService,
     private shared: SharedService,
-    private checkoutService: CheckoutService) {
+    private checkoutService: CheckoutService,
+    public sanitizer: DomSanitizer) {
       this.paymentEmail = this.authService.user.email;
     }
 
@@ -73,5 +76,9 @@ export class CheckoutComponent implements OnInit {
 
   exitConfirmModal() {
     this.showConfirmModalSubject.next(false);
+  }
+
+  onClickReceipt() {
+    window.open(this.receiptUrl);
   }
 }

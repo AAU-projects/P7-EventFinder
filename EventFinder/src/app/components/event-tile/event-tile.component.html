@@ -1,5 +1,5 @@
 <div *ngIf="selectedEventID">
-  <app-event-select [inputEventID]="selectedEventID" (closeEvent)="selectInfoscreenEventHandler($event)"></app-event-select>
+  <app-event-select [receiptUrl]=receiptUrl [inputEventID]="selectedEventID" (closeEvent)="selectInfoscreenEventHandler($event)"></app-event-select>
 </div>
 
 
@@ -95,7 +95,7 @@
           </div>
           <div class="level-right">
               <div class="level-item">
-                  <app-checkout [organizer]=organizer [event]=event [sizeClass]='"is-medium"' [organizerImage]=organizerImageUrl></app-checkout>
+                  <app-checkout [receiptUrl]=receiptUrl [organizer]=organizer [event]=event [sizeClass]='"is-medium"' [organizerImage]=organizerImageUrl></app-checkout>
               </div>
           </div>
         </nav>
