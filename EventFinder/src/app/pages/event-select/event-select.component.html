@@ -56,7 +56,8 @@
                     <div class="has-text-white" [innerHTML]="getOrganizerDescription()"></div>
                   </div>
                   <!-- TODO: Redirect this button when functionality is implemented -->
-                  <button class="is-dark button is-rounded has-text-white-bis is-pulled-right">Læs mere</button>
+                  <button class="is-dark button is-rounded has-text-white-bis is-pulled-right" [routerLink]="['/o', organizer.uid]"
+                  routerLinkActive="router-link-active">Læs mere</button>
                 </div>
               </div>
             </div>

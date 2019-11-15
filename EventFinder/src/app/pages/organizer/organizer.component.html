@@ -99,6 +99,7 @@
         <div [ngSwitch]="(currentMenuTabObs | async)">
           <app-organizer-info *ngSwitchCase="menuTabs.Profile" [user]="user"></app-organizer-info>
           <app-event-form *ngSwitchCase="menuTabs.AddEvent"></app-event-form>
+          <app-organizer-event-list *ngSwitchCase="menuTabs.Events" [user]="user"></app-organizer-event-list>
         </div>
       </div>
     </div>

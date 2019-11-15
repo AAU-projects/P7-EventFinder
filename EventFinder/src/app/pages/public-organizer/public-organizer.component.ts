@@ -1,18 +1,23 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from 'src/app/services/auth.service';
+import { ActivatedRoute, Params } from '@angular/router';
+import { OrganizerService } from 'src/app/services/organizer.service';
+import { Organizer } from 'src/app/models/account.model';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { MenuTabs } from '../organizer/organizer-menu.enum';
-import { Observable, BehaviorSubject } from 'rxjs';
 import { StorageService } from 'src/app/services/storage.service';
 
 @Component({
-  selector: 'app-organizer',
-  templateUrl: './organizer.component.html',
-  styleUrls: ['./organizer.component.scss']
+  selector: 'app-public-organizer',
+  templateUrl: './public-organizer.component.html',
+  styleUrls: ['./public-organizer.component.scss']
 })
-export class OrganizerComponent implements OnInit {
+
+export class PublicOrganizerComponent implements OnInit {
   imgUrl: string;
+  organizer: Organizer = null;
 
   get menuTabs() { return MenuTabs; }
+
   StartTab = MenuTabs.Profile;
 
   menuTabSubject: BehaviorSubject<MenuTabs> = new BehaviorSubject<MenuTabs>(this.StartTab);
@@ -24,16 +29,21 @@ export class OrganizerComponent implements OnInit {
   currentMenuTabSubject: BehaviorSubject<MenuTabs> = new BehaviorSubject<MenuTabs>(null);
   public currentMenuTabObs: Observable<MenuTabs> = this.currentMenuTabSubject.asObservable();
 
-  constructor(public auth: AuthService, private storage: StorageService) {
-    this.auth.account.subscribe(account => {
-      this.storage.getImageUrl(account.profileImage).subscribe(
-        url => this.imgUrl = url
-      );
-    });
-  }
+  constructor(private route: ActivatedRoute, private organizerService: OrganizerService, private storageService: StorageService) { }
 
   ngOnInit() {
     this.currentMenuTabSubject.next(this.StartTab);
+    let orgID = null;
+    this.route.params.forEach((params: Params) => {
+        orgID = params.id;
+      });
+
+    this.organizerService.getOrganizer(orgID).snapshotChanges().subscribe(result => {
+        this.organizer = result.payload.data() as Organizer;
+        this.storageService.getImageUrl(this.organizer.profileImage).subscribe(
+          url => this.imgUrl = url
+        );
+    });
   }
 
   onMenuClick(tabName: MenuTabs) {

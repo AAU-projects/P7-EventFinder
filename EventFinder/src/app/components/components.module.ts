@@ -20,6 +20,7 @@ import { CheckoutComponent } from './checkout/checkout.component';
 import {StripeCheckoutModule} from 'ng-stripe-checkout';
 import { environment } from 'src/environments/environment';
 import { UserEventsComponent } from './user-events/user-events.component';
+import { OrganizerEventListComponent } from './organizer-event-list/organizer-event-list.component';
 
 /* How to add a new component:
     ng g c components/[name] --export
@@ -39,7 +40,8 @@ import { UserEventsComponent } from './user-events/user-events.component';
     TagSelectionComponent,
     EventSelectComponent,
     CheckoutComponent,
-    UserEventsComponent],
+    UserEventsComponent,
+    OrganizerEventListComponent],
   imports: [
     CommonModule,
     RouterModule,
@@ -52,7 +54,7 @@ import { UserEventsComponent } from './user-events/user-events.component';
         syntax: false,
         toolbar: [
           ['bold', 'italic', 'underline'],
-          [{ header: 1 }, { header: 2 }]],
+          [{ header: 2 }]],
       },
       placeholder: 'Write description here...'
     }),
@@ -73,7 +75,8 @@ import { UserEventsComponent } from './user-events/user-events.component';
     TagSelectionComponent,
     EventSelectComponent,
     CheckoutComponent,
-    UserEventsComponent
+    UserEventsComponent,
+    OrganizerEventListComponent
   ],
 })
 export class ComponentsModule {}

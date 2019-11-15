@@ -1,0 +1,64 @@
+<div *ngIf="organizer">
+    <div class="notification has-background-dark has-text-white top">
+      <div class="columns is-multiline">
+        <div class="column is-narrow">
+          <figure class="image is-128x128" *ngIf="imgUrl">
+              <img class="is-rounded" [src]="imgUrl">
+          </figure>
+        </div>
+        <div class="column">
+          <div class="columns is-gapless is-multiline">
+            <div class="column is-5">
+              <h1 class="title has-text-left">
+                {{ organizer.organization }}
+              </h1>
+              <div class="columns is-gapless is-multiline">
+                <div class="column">
+                  <h3 class="has-text-left">
+                    <span class="icon"><i class="fa fa-envelope"></i></span>
+                    {{ organizer.email }}
+                  </h3>
+                </div>
+                <div class="column">
+                  <h3 class="has-text-left">
+                    <span class="icon"><i class="fa fa-mobile-alt"></i></span>
+                    {{ organizer.phone }}
+                  </h3>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="columns is-gapless">
+      <div class="column is-2">
+        <div class="notification bottom-left has-background-dark">
+          <hr>
+          <aside class="menu has-text-white">
+            <ul class="menu-list">
+              <li><a [ngClass]="((menuTabObs | async) == menuTabs.Profile) ? 'is-active' : ''" class="no-decoration"
+                  (click)="onMenuClick(menuTabs.Profile)">Profile</a></li>
+              <li><a [ngClass]="((menuTabObs | async) == menuTabs.Events) ? 'is-active' : ''" class="no-decoration"
+                  (click)="onMenuClick(menuTabs.Events)">Events</a></li>
+              <li><a [ngClass]="((menuTabObs | async) == menuTabs.Feedback) ? 'is-active' : ''" class="no-decoration"
+                  (click)="onMenuClick(menuTabs.Feedback)">Feedback</a></li>
+              <li><a [ngClass]="((menuTabObs | async) == menuTabs.Tickets) ? 'is-active' : ''" class="no-decoration"
+                  (click)="onMenuClick(menuTabs.Tickets)">Tickets</a></li>
+            </ul>
+          </aside>
+        </div>
+      </div>
+
+      <!-- Main content is inserted here -->
+      <div class="column">
+        <div class="notification bottom-right has-background-darker">
+          <div [ngSwitch]="(currentMenuTabObs | async)">
+            <app-organizer-info *ngSwitchCase="menuTabs.Profile" [user]="organizer"></app-organizer-info>
+            <app-organizer-event-list *ngSwitchCase="menuTabs.Events" [user]="organizer"></app-organizer-event-list>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
