@@ -11,9 +11,6 @@
             <div class="column is-5">
               <h1 class="title has-text-left">
                 {{ organizer.organization }}
-                <a class="button is-small is-primary is-rounded">
-                  <span>Edit</span>
-                </a>
               </h1>
               <div class="columns is-gapless is-multiline">
                 <div class="column">
@@ -30,27 +27,6 @@
                 </div>
               </div>
             </div>
-            <div class="column has-text-right">
-              <div class="dropdown is-right is-hoverable">
-                <div class="dropdown-trigger">
-                  <button class="button is-rounded is-primary" aria-haspopup="true" aria-controls="profile-settings">
-                    <span class="icon is-small">
-                      <i class="fa fa-cog" aria-hidden="true"></i>
-                    </span>
-                  </button>
-                </div>
-                <div class="dropdown-menu" id="profile-settings" role="menu">
-                  <div class="dropdown-content">
-                    <a class="dropdown-item">
-                      <span class="icon"> <i class="fa fa-cog"></i></span>
-                      Notification Settings</a>
-                    <a class="dropdown-item">
-                      <span class="icon"> <i class="fa fa-cog"></i></span>
-                      Notification Settings</a>
-                  </div>
-                </div>
-              </div>
-            </div>
           </div>
         </div>
       </div>
@@ -64,30 +40,12 @@
             <ul class="menu-list">
               <li><a [ngClass]="((menuTabObs | async) == menuTabs.Profile) ? 'is-active' : ''" class="no-decoration"
                   (click)="onMenuClick(menuTabs.Profile)">Profile</a></li>
-              <li><a [ngClass]="((menuTabObs | async) == menuTabs.Activity) ? 'is-active' : ''" class="no-decoration"
-                  (click)="onMenuClick(menuTabs.Activity)">Activity</a></li>
               <li><a [ngClass]="((menuTabObs | async) == menuTabs.Events) ? 'is-active' : ''" class="no-decoration"
-                  (click)="onMenuClick(menuTabs.Events)">
-                  <nav class="level">
-                    <div class="level-item">
-                      <span>Events</span>
-                    </div>
-                    <div class="level-right">
-                      <span class="icon is-small">
-                        <i class="fas fa-angle-down" aria-hidden="true"></i>
-                      </span>
-                    </div>
-                  </nav>
-                </a></li>
-              <li *ngIf="(menuTabObs | async) == menuTabs.Events"><a
-                  [ngClass]="((subTabObs | async) == menuTabs.AddEvent) ? 'submenu-is-active' : 'submenu-not-active'"
-                  class="no-decoration" (click)="onSubMenuClick(menuTabs.AddEvent)">Add Event</a></li>
+                  (click)="onMenuClick(menuTabs.Events)">Events</a></li>
               <li><a [ngClass]="((menuTabObs | async) == menuTabs.Feedback) ? 'is-active' : ''" class="no-decoration"
                   (click)="onMenuClick(menuTabs.Feedback)">Feedback</a></li>
               <li><a [ngClass]="((menuTabObs | async) == menuTabs.Tickets) ? 'is-active' : ''" class="no-decoration"
                   (click)="onMenuClick(menuTabs.Tickets)">Tickets</a></li>
-              <li><a [ngClass]="((menuTabObs | async) == menuTabs.Preferences) ? 'is-active' : ''" class="no-decoration"
-                  (click)="onMenuClick(menuTabs.Preferences)">Preferences</a></li>
             </ul>
           </aside>
         </div>
@@ -98,7 +56,6 @@
         <div class="notification bottom-right has-background-darker">
           <div [ngSwitch]="(currentMenuTabObs | async)">
             <app-organizer-info *ngSwitchCase="menuTabs.Profile" [user]="organizer"></app-organizer-info>
-            <app-event-form *ngSwitchCase="menuTabs.AddEvent"></app-event-form>
             <app-organizer-event-list *ngSwitchCase="menuTabs.Events" [user]="organizer"></app-organizer-event-list>
           </div>
         </div>

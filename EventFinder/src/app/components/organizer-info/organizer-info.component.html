@@ -7,7 +7,7 @@
             Organization Information
           </h1>
         </div>
-        <div class="column has-text-right">
+        <div *ngIf="user.uid === authService.user.uid" class="column has-text-right">
           <a>
             <span class="icon has-text-white"><i class="fa fa-pen"></i></span>
           </a>
