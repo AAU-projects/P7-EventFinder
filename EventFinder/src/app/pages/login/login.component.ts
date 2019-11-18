@@ -42,7 +42,6 @@ export class LoginComponent {
       this.errorMessage = null;
       this.shared.showLogin(false);
     }, err => {
-      console.log(err);
       this.errorMessage = err.message;
     });
   }
