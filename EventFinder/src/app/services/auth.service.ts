@@ -1,6 +1,6 @@
 import { Injectable, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { User, Organizer, Account } from '../models/account.model';
+import { User, Organization, Account } from '../models/account.model';
 import { AccountTypes } from '../models/account.types.enum';
 import { auth } from 'firebase/app';
 import { User as fireUser } from 'firebase/app';
@@ -15,7 +15,9 @@ import { CookieService } from 'ngx-cookie-service';
 })
 export class AuthService {
   account: Observable<Account> = null;
+  selectedOrganizationUid: string;
   public userType: AccountTypes = this.getUserType();
+  userAccount: Observable<User>;
   user: fireUser = null;
 
   isUserSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(this.isUser());
@@ -29,34 +31,22 @@ export class AuthService {
   ) {
     this.fireAuth.authState.subscribe(user => {
       this.user = user;
+      if (user) {
+        this.userAccount = this.firestore.doc<User>(`users/${user.uid}`).valueChanges();
+      } else {
+        this.userAccount = of(null);
+      }
     });
-
-    /* this.fireAuth.authState.pipe(
-      switchMap(fireuser => {
-        if (fireuser) {
-          const promise = this.firestore.doc<User>(`users/${fireuser.uid}`).get().toPromise();
-          return promise.then((doc) => {
-              if (doc.exists) {
-                this.account = this.firestore.doc<User>(`users/${fireuser.uid}`).valueChanges();
-              } else {
-                this.account = this.firestore.doc<Organizer>(`organizers/${fireuser.uid}`).valueChanges();
-              }
-            }).catch((error) => {
-                return of(null);
-            });
-        }
-      })
-    ); */
 
     this.account = this.fireAuth.authState.pipe(
       switchMap(account => {
         if (account && this.userType === AccountTypes.User) {
           return this.firestore
-            .doc<User>(`users/${account.uid}`)
+            .doc<User>(`users/${this.user.uid}`)
             .valueChanges();
-        } else if (account && this.userType === AccountTypes.Organizer) {
+        } else if (account && this.userType === AccountTypes.Organization) {
           return this.firestore
-            .doc<Organizer>(`organizers/${account.uid}`)
+            .doc<Organization>(`organizations/${this.selectedOrganizationUid}`)
             .valueChanges();
         } else {
           return of(null);
@@ -70,7 +60,8 @@ export class AuthService {
       if (this.getCookieVar('type') === AccountTypes.User) {
         return AccountTypes.User;
       }
-      return AccountTypes.Organizer;
+      this.selectedOrganizationUid = this.getCookieVar('orgUID');
+      return AccountTypes.Organization;
     }
     return AccountTypes.User;
   }
@@ -93,18 +84,25 @@ export class AuthService {
     return this.cookie.get(variable);
   }
 
-  setOrganizerType() {
-    this.userType = AccountTypes.Organizer;
+  deleteCookieVar(variable: string) {
+    return this.cookie.delete(variable);
+  }
+
+  setOrganizationType(uid) {
+    this.userType = AccountTypes.Organization;
     this.isUserSubject.next(false);
-    this.setCookieVar('type', AccountTypes.Organizer);
-    console.log('org');
+    this.selectedOrganizationUid = uid;
+    this.account = this.firestore.doc<Organization>(`organizations/${this.selectedOrganizationUid}`).valueChanges();
+    this.setCookieVar('type', AccountTypes.Organization);
+    this.setCookieVar('orgUID', uid);
   }
 
   setUserType() {
     this.userType = AccountTypes.User;
+    this.account = this.firestore.doc<User>(`users/${this.user.uid}`).valueChanges();
     this.isUserSubject.next(true);
     this.setCookieVar('type', AccountTypes.User);
-    console.log('usr');
+    this.deleteCookieVar('orgUID');
   }
 
   isLoggedIn() {
@@ -127,24 +125,11 @@ export class AuthService {
       password
     );
 
-    this.firestore
-      .doc<User>(`users/${credentials.user.uid}`)
-      .get()
-      .subscribe(doc => {
-        if (doc.exists) {
-          this.setUserType();
-        } else {
-          this.setOrganizerType();
-        }
-        this.updateUserData(credentials.user);
-        if (redirect) {
-          if (this.userType === AccountTypes.User) {
-            this.router.navigate(['/user']);
-          } else {
-          this.router.navigate(['/organizer']);
-          }
-        }
-      });
+    this.updateUserData(credentials.user);
+
+    if (redirect) {
+      this.router.navigate(['/user']);
+    }
   }
 
   async register(value) {
@@ -161,7 +146,7 @@ export class AuthService {
     if (this.userType === AccountTypes.User) {
       userRef = this.firestore.doc(`users/${this.user.uid}`);
     } else {
-      userRef = this.firestore.doc(`organizers/${this.user.uid}`);
+      userRef = this.firestore.doc(`organizations/${this.user.uid}`);
     }
 
     userRef.set({profileImage: location}, { merge: true });
@@ -171,13 +156,8 @@ export class AuthService {
   }
 
   updateUserData(user: fireUser, value?) {
-    let userRef;
-
-    if (this.userType === AccountTypes.User) {
-      userRef = this.firestore.doc(`users/${user.uid}`);
-    } else {
-      userRef = this.firestore.doc(`organizers/${user.uid}`);
-    }
+    this.setUserType();
+    const userRef = this.firestore.doc<User>(`users/${user.uid}`);
 
     if (value) {
       if (this.userType === AccountTypes.User) {
@@ -192,31 +172,13 @@ export class AuthService {
             city: value.city,
             phone: value.phone,
             sex: value.sex,
-            birthday: value.birthday
-          },
-          { merge: true }
-        );
-      } else {
-        userRef.set(
-          {
-            uid: user.uid,
-            organization: value.organization,
-            email: user.email,
-            address: value.address,
-            zip: value.zip,
-            city: value.city,
-            country: value.country,
-            phone: value.phone
-          },
-          { merge: true }
+            birthday: value.birthday,
+            organizations: [],
+            profileImage: '',
+            preferences: []
+          }
         );
       }
-    } else {
-      const data = {
-        uid: user.uid,
-        email: user.email
-      };
-      userRef.set(data, { merge: true });
     }
 
     this.account = userRef.valueChanges();

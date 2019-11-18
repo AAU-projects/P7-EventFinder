@@ -15,6 +15,10 @@ export class StorageService {
     return this.uploadImage(image, `images/${this.auth.user.uid}/${filename}`);
   }
 
+  uploadOrgLogo(image, filename, orgid) {
+    return this.uploadImage(image, `images/${orgid}/${filename}`);
+  }
+
   uploadEventBanner(event, fileName) {
     return this.uploadFileFromEvent(event, `events/${this.auth.user.uid}/${fileName}`);
   }

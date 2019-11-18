@@ -1,6 +1,6 @@
 export interface Event {
   uid: string;
-  organizerId: string;
+  organizationId: string;
   title: string;
   address: string;
   zip: string;

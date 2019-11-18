@@ -41,9 +41,7 @@ export class LoginComponent {
     .then(res => {
       this.errorMessage = null;
       this.shared.showLogin(false);
-      console.log(this.authService.userType);
     }, err => {
-      console.log(err);
       this.errorMessage = err.message;
     });
   }

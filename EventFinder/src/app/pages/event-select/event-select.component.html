@@ -1,4 +1,4 @@
-<div *ngIf="eventLoaded && organizerLoaded && logoImage && bannerLoaded | async; else loading">
+<div *ngIf="eventLoaded && organizationLoaded && logoImage && bannerLoaded | async; else loading">
   <div class="modal is-active">
     <div class="modal-background" (click)="close()"></div>
     <div class="modal-content panel-size">
@@ -7,7 +7,7 @@
           <button class="delete" (click)="close()"></button>
         </div>
         <div class="second-layer">
-          <img class="image-logo" [src]="logoImage" alt="loading..">
+          <img class="image-logo image is-128x128" [src]="logoImage" alt="loading..">
           <div class="content">
             <h1 class="title has-text-white">{{ getTitle() }}</h1>
             <h2 class="small-text has-text-white has-text-weight-light">
@@ -47,16 +47,16 @@
                         <img class="" width="200" src="assets/images/testrating.png" />
                       </div>
                     </div>
-                    <app-checkout [receiptUrl]=receiptUrl [organizer]=organizer [event]=event [sizeClass]="'is-large'"[organizerImage]=logoImage></app-checkout>
+                    <app-checkout [receiptUrl]=receiptUrl [organization]=organization [event]=event [sizeClass]="'is-large'"[organizationImage]=logoImage></app-checkout>
                   </div>
                 </div>
                 <div class="is-divider"></div>
                 <div class="column has-text-white has-text-left" style="white-space: pre-line;">
                   <div>
-                    <div class="has-text-white" [innerHTML]="getOrganizerDescription()"></div>
+                    <div class="has-text-white" [innerHTML]="getOrganizationDescription()"></div>
                   </div>
                   <!-- TODO: Redirect this button when functionality is implemented -->
-                  <button class="is-dark button is-rounded has-text-white-bis is-pulled-right" [routerLink]="['/o', organizer.uid]"
+                  <button class="is-dark button is-rounded has-text-white-bis is-pulled-right" [routerLink]="['/o', organization.uid]"
                   routerLinkActive="router-link-active">Læs mere</button>
                 </div>
               </div>

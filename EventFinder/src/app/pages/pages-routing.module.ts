@@ -7,20 +7,24 @@ import { UserComponent } from './user/user.component';
 import { RegisterComponent } from './register/register.component';
 import { EventsComponent } from './events/events.component';
 import { ForgotpasswordComponent } from './forgotpassword/forgotpassword.component';
-import { OrganizerComponent } from './organizer/organizer.component';
+import { OrganizationComponent } from './organization/organization.component';
 import { LoggedInGuard } from '../guards/logged-in.guard';
-import { PublicOrganizerComponent } from './public-organizer/public-organizer.component';
+import { OrganizationRegisterComponent } from './organization-register/organization-register.component';
+import { AboutComponent } from './about/about.component';
+import { PublicOrganizationComponent } from './public-organization/public-organization.component';
 
 // All paths starts from root (/)
 const routes: Routes = [
   {path: '', component: HomeComponent},
   {path: 'register', component: RegisterComponent},
   {path: 'firebase', component: FirebaseTestComponent},
-  {path: 'user', component: UserComponent, canActivate: [LoggedInGuard]},
-  {path: 'organizer', component: OrganizerComponent, canActivate: [LoggedInGuard]},
+  {path: 'org-register', component: OrganizationRegisterComponent},
+  {path: 'user', component: UserComponent},
+  {path: 'organization', component: OrganizationComponent},
   {path: 'events', component: EventsComponent},
   {path: 'forgotpassword', component: ForgotpasswordComponent},
-  {path: 'o/:id', component: PublicOrganizerComponent},
+  {path: 'o/:id', component: PublicOrganizationComponent},
+  {path: 'about', component: AboutComponent},
   {path: '**', component: PageNotFoundComponent}, // Skal ligge nederst!!!!
 ];
 

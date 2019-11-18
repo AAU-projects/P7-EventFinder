@@ -16,13 +16,15 @@ export interface User extends Account {
     birthday: Date;
     sex: Sex;
     preferences: Genre|Atmosphere|Tags[];
+    organizations: string[];
 }
 
-export interface Organizer extends Account {
+export interface Organization extends Account {
     organization: string;
     address: string;
     about: string;
     tags: Tags[];
+    connectedUsers: string[];
 }
 
 export enum Sex {

@@ -1,16 +1,16 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { EventService } from 'src/app/services/event.service';
-import { Organizer } from 'src/app/models/account.model';
+import { Organization } from 'src/app/models/account.model';
 import { Event } from 'src/app/models/event.model';
 
 
 @Component({
-  selector: 'app-organizer-event-list',
-  templateUrl: './organizer-event-list.component.html',
-  styleUrls: ['./organizer-event-list.component.scss']
+  selector: 'app-organization-event-list',
+  templateUrl: './organization-event-list.component.html',
+  styleUrls: ['./organization-event-list.component.scss']
 })
-export class OrganizerEventListComponent implements OnInit {
-  @Input() user: Organizer;
+export class OrganizationEventListComponent implements OnInit {
+  @Input() user: Organization;
   orgEventList: Event[] = [];
 
   constructor(private eventService: EventService) {}
@@ -20,7 +20,7 @@ export class OrganizerEventListComponent implements OnInit {
       for (const collection of result) {
         const event = collection.payload.doc.data() as Event;
 
-        if (event.organizerId === this.user.uid) {
+        if (event.organizationId === this.user.uid) {
           this.orgEventList.push(event);
         }
       }

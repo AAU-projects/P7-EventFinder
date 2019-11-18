@@ -1,0 +1,37 @@
+.remove-bottom-margin {
+  margin-bottom: 0% !important;
+}
+
+.remove-bottom-padding {
+  padding-bottom: 0% !important;
+}
+
+.input {
+  height: 3em;
+  padding: calc(0.875em - 1px) calc(1em - 1px);
+}
+
+.button.is-darker {
+  background-color: #1B1B38;
+  border-color: transparent;
+  color: #fff;
+}
+
+.button.is-darker:hover {
+  background-color: #5C5C80;
+}
+
+.file.is-darker .file-cta{
+  background-color: #1B1B38;
+  border-color: transparent;
+  color: #fff;
+}
+
+.file.is-darker .file-cta:hover {
+  background-color: #5C5C80;
+}
+
+div.control.about {
+  background-color: white !important;
+}
+

@@ -68,7 +68,7 @@ export class EventFormComponent implements OnInit {
     this.eventForm = this.fb.group({
       uid: ['', []],
       searchTerms: ['', []],
-      organizerId: this.authService.user.uid,
+      organizationId: this.authService.selectedOrganizationUid,
       startDate: ['', [Validators.required]],
       endDate: ['', [Validators.required]],
       startTime: ['', [Validators.required]],

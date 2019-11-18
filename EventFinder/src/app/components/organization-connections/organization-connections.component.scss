@@ -1,0 +1,23 @@
+.box {
+  background-color: #5C5C80;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.input {
+  border: 1px solid #5C5C80;
+}
+
+.input:invalid {
+  border: 1px solid red;
+}
+
+.button.is-darker {
+  background-color: #1B1B38;
+  border-color: transparent;
+  color: #fff;
+}
+
+.button.is-darker:hover {
+  background-color: #5C5C80;
+}

@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
-import { MenuTabs } from '../organizer/organizer-menu.enum';
+import { MenuTabs } from './organization-menu.enum';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { StorageService } from 'src/app/services/storage.service';
 
 @Component({
-  selector: 'app-organizer',
-  templateUrl: './organizer.component.html',
-  styleUrls: ['./organizer.component.scss']
+  selector: 'app-organization',
+  templateUrl: './organization.component.html',
+  styleUrls: ['./organization.component.scss']
 })
-export class OrganizerComponent implements OnInit {
+export class OrganizationComponent implements OnInit {
   imgUrl: string;
 
   get menuTabs() { return MenuTabs; }
@@ -25,10 +25,12 @@ export class OrganizerComponent implements OnInit {
   public currentMenuTabObs: Observable<MenuTabs> = this.currentMenuTabSubject.asObservable();
 
   constructor(public auth: AuthService, private storage: StorageService) {
-    this.auth.account.subscribe(account => {
-      this.storage.getImageUrl(account.profileImage).subscribe(
-        url => this.imgUrl = url
-      );
+    const sub = this.auth.account.subscribe(account => {
+      const isub = this.storage.getImageUrl(account.profileImage).subscribe(url => {
+        this.imgUrl = url;
+        isub.unsubscribe();
+      });
+      sub.unsubscribe();
     });
   }
 

@@ -23,6 +23,10 @@ $background: $purple;
 $divider-background-color: $purpleDark;
 $divider-thickness : .05rem;
 
+// footer
+$footer-background-color: $purple;
+$footer-padding: 1rem 1.5rem 1rem;
+
 // notification
 $notification-padding: 1.25rem 1.5rem 1.25rem 1.5rem;
 
@@ -74,6 +78,4 @@ $modal-card-title-color: $white;
 @import "../../../node_modules/bulma/sass/form/_all.sass";
 @import "../../../node_modules/bulma/sass/components/_all.sass";
 @import "../../../node_modules/bulma/sass/layout/_all.sass";
-@import "../../../node_modules/bulma/sass/extensions/bulma-divider.sass"
-
-
+@import "../../../node_modules/bulma-extensions/bulma-divider/src/sass/index.sass";

@@ -1,8 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Event } from '../../models/event.model';
 import { StorageService } from 'src/app/services/storage.service';
-import { OrganizerService } from 'src/app/services/organizer.service';
-import { Organizer } from 'src/app/models/account.model';
+import { OrganizationService } from 'src/app/services/organization.service';
+import { Organization } from 'src/app/models/account.model';
 
 @Component({
   selector: 'app-event-tile',
@@ -15,10 +15,10 @@ export class EventTileComponent implements OnInit {
   @Input() inputEvent: Event;
   @Input() markerIndex: number;
   @Input() receiptUrl: string; // Only used when show in the user profile page.
-  public organizer: Organizer;
+  public organization: Organization;
   public allAtmosphere: string[];
   public bannerUrl;
-  public organizerImageUrl;
+  public organizationImageUrl;
   public description: string;
   private descriptionMaxLength = 300;
   public selectedEventID = null;
@@ -28,18 +28,23 @@ export class EventTileComponent implements OnInit {
   public formattedDate: string;
 
   constructor(private storageService: StorageService,
-              private organizerService: OrganizerService) {
+              private organizationService: OrganizationService) {
     this.allAtmosphere = [];
   }
 
   ngOnInit() {
     // Get event from input.
     this.event = this.inputEvent;
-    this.organizerService.getOrganizer(this.event.organizerId).valueChanges().subscribe((org) => {
-      this.organizer = org;
-      this.storageService.getImageUrl(this.organizer.profileImage).subscribe((url) => {
-        this.organizerImageUrl = url;
-      });
+
+    const sub = this.organizationService.getOrganization(this.event.organizationId).subscribe(org => {
+      this.organization = org;
+      if (org) {
+        const isub = this.storageService.getImageUrl(this.organization.profileImage).subscribe(url => {
+          this.organizationImageUrl = url;
+          isub.unsubscribe();
+          sub.unsubscribe();
+        });
+      }
     });
 
     // Get atmospheres.

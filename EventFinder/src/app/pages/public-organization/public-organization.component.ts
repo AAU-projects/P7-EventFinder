@@ -1,20 +1,20 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
-import { OrganizerService } from 'src/app/services/organizer.service';
-import { Organizer } from 'src/app/models/account.model';
+import { OrganizationService } from 'src/app/services/organization.service';
+import { Organization } from 'src/app/models/account.model';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { MenuTabs } from '../organizer/organizer-menu.enum';
+import { MenuTabs } from '../organization/organization-menu.enum';
 import { StorageService } from 'src/app/services/storage.service';
 
 @Component({
-  selector: 'app-public-organizer',
-  templateUrl: './public-organizer.component.html',
-  styleUrls: ['./public-organizer.component.scss']
+  selector: 'app-public-organization',
+  templateUrl: './public-organization.component.html',
+  styleUrls: ['./public-organization.component.scss']
 })
 
-export class PublicOrganizerComponent implements OnInit {
+export class PublicOrganizationComponent implements OnInit {
   imgUrl: string;
-  organizer: Organizer = null;
+  organization: Organization = null;
 
   get menuTabs() { return MenuTabs; }
 
@@ -29,7 +29,7 @@ export class PublicOrganizerComponent implements OnInit {
   currentMenuTabSubject: BehaviorSubject<MenuTabs> = new BehaviorSubject<MenuTabs>(null);
   public currentMenuTabObs: Observable<MenuTabs> = this.currentMenuTabSubject.asObservable();
 
-  constructor(private route: ActivatedRoute, private organizerService: OrganizerService, private storageService: StorageService) { }
+  constructor(private route: ActivatedRoute, private organizationService: OrganizationService, private storageService: StorageService) { }
 
   ngOnInit() {
     this.currentMenuTabSubject.next(this.StartTab);
@@ -38,11 +38,13 @@ export class PublicOrganizerComponent implements OnInit {
         orgID = params.id;
       });
 
-    this.organizerService.getOrganizer(orgID).snapshotChanges().subscribe(result => {
-        this.organizer = result.payload.data() as Organizer;
-        this.storageService.getImageUrl(this.organizer.profileImage).subscribe(
-          url => this.imgUrl = url
-        );
+    const sub = this.organizationService.getOrganization(orgID).subscribe(org => {
+      this.organization = org;
+      const isub = this.storageService.getImageUrl(org.profileImage).subscribe(url => {
+        this.imgUrl = url;
+        isub.unsubscribe();
+      });
+      sub.unsubscribe();
     });
   }
 

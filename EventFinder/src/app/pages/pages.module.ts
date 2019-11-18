@@ -11,12 +11,14 @@ import { UserComponent } from './user/user.component';
 import { RegisterComponent } from './register/register.component';
 import { EventsComponent } from './events/events.component';
 import { ForgotpasswordComponent } from './forgotpassword/forgotpassword.component';
-import { OrganizerComponent } from './organizer/organizer.component';
+import { OrganizationComponent } from './organization/organization.component';
 import { HttpClientModule } from '@angular/common/http';
+import { OrganizationRegisterComponent } from './organization-register/organization-register.component';
+import { AboutComponent } from './about/about.component';
 import { AgmCoreModule } from '@agm/core';
 import { environment } from 'src/environments/environment';
 import {MatSliderModule} from '@angular/material/slider';
-import { PublicOrganizerComponent } from './public-organizer/public-organizer.component';
+import { PublicOrganizationComponent } from './public-organization/public-organization.component';
 
 
 /* How to add a new page:
@@ -35,8 +37,10 @@ import { PublicOrganizerComponent } from './public-organizer/public-organizer.co
     RegisterComponent,
     EventsComponent,
     ForgotpasswordComponent,
-    OrganizerComponent,
-    PublicOrganizerComponent
+    OrganizationComponent,
+    OrganizationRegisterComponent,
+    AboutComponent,
+    PublicOrganizationComponent
   ],
   imports: [
     CommonModule,
@@ -49,6 +53,6 @@ import { PublicOrganizerComponent } from './public-organizer/public-organizer.co
       apiKey: environment.google.googleApiKey
     })
   ],
-  exports: [LoginComponent, PublicOrganizerComponent]
+  exports: [LoginComponent, PublicOrganizationComponent]
 })
 export class PagesModule { }

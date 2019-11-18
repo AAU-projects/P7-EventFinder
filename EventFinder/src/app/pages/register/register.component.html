@@ -1,37 +1,17 @@
-<div class="columns is-centered is-dark">
+<div class="columns is-centered">
   <div *ngIf="shared.showCropperEvent | async">
     <app-image-cropper [imageSource]="profileImage" (imageDestination)="getImage($event)"></app-image-cropper>
   </div>
   <div *ngIf="showTagPopUp">
-    <app-tag-selection></app-tag-selection>
+    <app-tag-selection [userType]="AccountTypes.User"></app-tag-selection>
   </div>
   <div class="column is-8">
-    <div class="notification">
+    <div class="notification is-dark">
       <h1 class="title has-text-weight-bold is-size-1 has-text-white">
-        <div *ngIf="auth.isUserObs | async; else elseBlock">Create User</div>
-        <ng-template #elseBlock>Create Organizer</ng-template>
+        <div>Create User</div>
       </h1>
-      <div class="columns is-centered is-multiline">
-        <div *ngIf="auth.isUserObs | async; then UserBlock else organizerBlock"></div>
-        <ng-template #UserBlock>
-          <div class="column is-half">
-            <a class="button is-primary is-small is-fullwidth is-rounded">User</a>
-          </div>
-          <div class="column is-half">
-            <a class="button is-dark is-small is-fullwidth is-rounded" (click)="this.setToOrganizer()">Organizer</a>
-          </div>
-        </ng-template>
-        <ng-template #organizerBlock>
-          <div class="column is-half">
-            <a class="button is-dark is-small is-fullwidth is-rounded" (click)="this.setToUser()">User</a>
-          </div>
-          <div class="column is-half">
-            <a class="button is-primary is-small is-fullwidth is-rounded">Organizer</a>
-          </div>
-        </ng-template>
         <div *ngIf="errorMessage" class="column is-12 notification is-danger">
           <p> {{ errorMessage }} </p>
-        </div>
       </div>
       <!--<app-two-state-button [width]="width" [height]="height" [options]="options" [actions]="actions">
         </app-two-state-button>-->
@@ -49,7 +29,7 @@
                   <img *ngIf="!profileImage" src="../../../assets/images/logo.png">
                   <img *ngIf="profileImage" [src]="profileImage">
                 </figure>
-                  <div class="file is-small is-centered is-dark">
+                  <div class="file is-small is-centered is-darker">
                     <label class="file-label">
                       <input #fileUpload class="file-input" type="file" accept="image/*"
                         (change)="selectProfileImage($event.target.files[0])"
@@ -111,10 +91,8 @@
 
           <!-- RIGHT SIDE STARTS HERE -->
           <div class="column allign-bottom">
-            <div *ngIf="auth.isUserObs | async; then userBlock else organizationBlock"></div>
 
             <!-- USER FIELDS START HERE -->
-            <ng-template #userBlock>
 
               <!-- INPUT: FIRSTNAME -->
               <div class="field">
@@ -235,7 +213,6 @@
                   </span>
                 </p>
               </div>
-            </ng-template>
             <!-- USER FIELDS ENDS HERE -->
 
             <!-- ORGANIZATION FIELDS START HERE -->
@@ -342,7 +319,7 @@
         </div>
         <div class="columns is-centered">
           <div class="column is-2">
-            <a class="button is-dark is-small is-rounded is-fullwidth" [routerLink]="['/']">
+            <a class="button is-darker is-small is-rounded is-fullwidth" [routerLink]="['/']">
               Cancel
             </a>
           </div>

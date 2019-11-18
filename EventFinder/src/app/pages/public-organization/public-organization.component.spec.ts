@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { OrganizerEventListComponent } from './organizer-event-list.component';
+import { PublicOrganizationComponent } from './public-organization.component';
 
-describe('OrganizerEventListComponent', () => {
-  let component: OrganizerEventListComponent;
-  let fixture: ComponentFixture<OrganizerEventListComponent>;
+describe('PublicOrganizationComponent', () => {
+  let component: PublicOrganizationComponent;
+  let fixture: ComponentFixture<PublicOrganizationComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ OrganizerEventListComponent ]
+      declarations: [ PublicOrganizationComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(OrganizerEventListComponent);
+    fixture = TestBed.createComponent(PublicOrganizationComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

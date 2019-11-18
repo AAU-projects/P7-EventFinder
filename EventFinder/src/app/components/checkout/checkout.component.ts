@@ -5,7 +5,7 @@ import { CheckoutService } from 'src/app/services/checkout.service';
 import { SharedService } from 'src/app/services/shared.service';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Event } from 'src/app/models/event.model';
-import { Organizer } from 'src/app/models/account.model';
+import { Organization } from 'src/app/models/account.model';
 
 @Component({
   selector: 'app-checkout',
@@ -15,10 +15,10 @@ import { Organizer } from 'src/app/models/account.model';
 export class CheckoutComponent implements OnInit {
   private stripeCheckoutHandler: StripeCheckoutHandler;
 
-  @Input() organizerImage: string;
+  @Input() organizationImage: string;
   @Input() sizeClass: string;
   @Input() event: Event;
-  @Input() organizer: Organizer;
+  @Input() organization: Organization;
   @Input() receiptUrl: string;
 
   paymentDate = new Date(Date.now());
@@ -47,9 +47,9 @@ export class CheckoutComponent implements OnInit {
   public onClickBuy() {
     if (this.authService.user) {
       this.stripeCheckoutHandler.open({
-          image: this.organizerImage,
+          image: this.organizationImage,
           name: this.event.title,
-          description: this.organizer.organization,
+          description: this.organization.organization,
           amount: this.event.price * 100,
           currency: 'DKK',
       }).then((token) => {

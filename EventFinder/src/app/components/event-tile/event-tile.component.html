@@ -3,7 +3,7 @@
 </div>
 
 
-<div *ngIf="organizerImageUrl" class="tile is-child is-hoverable box notification has-background-dark has-text-white pointer no-padding" (click)="setSelectedEvent(event.uid)">
+<div *ngIf="organizationImageUrl" class="tile is-child is-hoverable box notification has-background-dark has-text-white pointer no-padding" (click)="setSelectedEvent(event.uid)">
   <div class="columns is-vcentered is-hoverable">
     <div class="column no-padding-column is-4">
       <figure class="image is-square is-fullwidth">
@@ -17,11 +17,11 @@
         <div class="tile is-vertical is-parent">
           <div class="tile is-child no-padding has-centered-content is-flex">
             <figure class="image is-128x128">
-              <img src={{organizerImageUrl}}>
+              <img src={{organizationImageUrl}}>
             </figure>
           </div>
           <div class="tile is-child no-padding has-centered-content is-flex">
-            <div class="subtitle is-4 has-text-white">{{organizer.organization}}</div>
+            <div class="subtitle is-4 has-text-white">{{organization.organization}}</div>
           </div>
           <div class="tile is-child no-padding has-centered-content is-flex">
             <h3 class="has-text">
@@ -38,7 +38,7 @@
           </div>
           <div class="tile is-child no-padding has-centered-content is-flex">
             <div class="tags">
-                <span *ngFor="let tag of organizer.tags">
+                <span *ngFor="let tag of organization.tags">
                     <p class="tag">{{tag}}</p>
                   </span>
             </div>
@@ -95,7 +95,7 @@
           </div>
           <div class="level-right">
               <div class="level-item">
-                  <app-checkout [receiptUrl]=receiptUrl [organizer]=organizer [event]=event [sizeClass]='"is-medium"' [organizerImage]=organizerImageUrl></app-checkout>
+                  <app-checkout [receiptUrl]=receiptUrl [organization]=organization [event]=event [sizeClass]='"is-medium"' [organizationImage]=organizationImageUrl></app-checkout>
               </div>
           </div>
         </nav>

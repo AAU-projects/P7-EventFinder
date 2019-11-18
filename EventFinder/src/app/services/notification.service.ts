@@ -18,6 +18,11 @@ export class NotificationService {
   hideNotification() {
     this.showNotificationSubject.next(false);
   }
+  notifyError(msg) {
+    this.notificationClass = 'is-danger';
+    this.notificationMessage = msg;
+    this.showNotificationSubject.next(true);
+  }
 
   notifyWarning(msg) {
     this.notificationClass = 'is-warning';

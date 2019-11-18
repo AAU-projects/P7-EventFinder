@@ -3,7 +3,7 @@
     <div class="columns is-multiline">
       <div class="column is-narrow">
         <figure class="image is-128x128" *ngIf="imgUrl">
-            <img class="is-rounded" [src]="imgUrl">
+          <img class="is-rounded" [src]="imgUrl">
         </figure>
       </div>
       <div class="column">
@@ -86,6 +86,8 @@
                 (click)="onMenuClick(menuTabs.Feedback)">Feedback</a></li>
             <li><a [ngClass]="((menuTabObs | async) == menuTabs.Tickets) ? 'is-active' : ''" class="no-decoration"
                 (click)="onMenuClick(menuTabs.Tickets)">Tickets</a></li>
+            <li><a [ngClass]="((menuTabObs | async) == menuTabs.Staff) ? 'is-active' : ''" class="no-decoration"
+              (click)="onMenuClick(menuTabs.Staff)">Staff</a></li>
             <li><a [ngClass]="((menuTabObs | async) == menuTabs.Preferences) ? 'is-active' : ''" class="no-decoration"
                 (click)="onMenuClick(menuTabs.Preferences)">Preferences</a></li>
           </ul>
@@ -97,9 +99,10 @@
     <div class="column">
       <div class="notification bottom-right has-background-darker">
         <div [ngSwitch]="(currentMenuTabObs | async)">
-          <app-organizer-info *ngSwitchCase="menuTabs.Profile" [user]="user"></app-organizer-info>
+          <app-organization-info *ngSwitchCase="menuTabs.Profile" [user]="user"></app-organization-info>
           <app-event-form *ngSwitchCase="menuTabs.AddEvent"></app-event-form>
-          <app-organizer-event-list *ngSwitchCase="menuTabs.Events" [user]="user"></app-organizer-event-list>
+          <app-organization-connections *ngSwitchCase="menuTabs.Staff"></app-organization-connections>
+          <app-organization-event-list *ngSwitchCase="menuTabs.Events" [user]="user"></app-organization-event-list>
         </div>
       </div>
     </div>

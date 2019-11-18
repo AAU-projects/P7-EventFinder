@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { AccountService } from 'src/app/services/account.service';
 import { Tags } from 'src/app/models/account.model';
 import { Genre, Atmosphere } from 'src/app/models/event.model';
+import { AccountTypes } from 'src/app/models/account.types.enum';
+import { NotificationService } from 'src/app/services/notification.service';
 
 @Component({
   selector: 'app-tag-selection',
@@ -10,16 +12,19 @@ import { Genre, Atmosphere } from 'src/app/models/event.model';
   styleUrls: ['./tag-selection.component.scss']
 })
 export class TagSelectionComponent implements OnInit {
+  @Input() userType: AccountTypes;
+
   get Tags() { return Tags; }
   get Genre() { return Genre; }
   get Atmosphere() { return Atmosphere; }
+  get AccountTypes() { return AccountTypes; }
 
   tagList: Tags[] = [];
   userPreferenceList: any[] = [];
 
   errorMsg: string;
 
-  constructor(private router: Router, public accountService: AccountService) { }
+  constructor(private router: Router, public accountService: AccountService, private notification: NotificationService) { }
 
   ngOnInit() {
   }
@@ -29,19 +34,21 @@ export class TagSelectionComponent implements OnInit {
   }
 
   confirmSelection() {
-    if (this.accountService.isUser) {
+    if (this.userType === AccountTypes.User) {
       this.accountService.editTagsOrPrefrences(this.userPreferenceList);
-      this.router.navigate(['/']);
+      this.router.navigate(['/user']);
+      this.notification.notifySuccess('You have successfully created your user');
     } else {
       if (this.tagList.length >= 1 && this.tagList.length <= 3) {
         this.accountService.editTagsOrPrefrences(this.tagList);
-        this.router.navigate(['/']);
+        this.router.navigate(['/organization']);
+        this.notification.notifySuccess('You have successfully created your organization');
       }
     }
   }
 
-  organizerSubmitCheck() {
-    if (this.accountService.isUser) {
+  organizationSubmitCheck() {
+    if (this.userType === AccountTypes.User) {
       return false;
     } else {
       return !(this.tagList.length >= 1);

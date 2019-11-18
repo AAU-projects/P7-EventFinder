@@ -1,31 +1,20 @@
 <!-- Loggedin dropdown -->
-<div
-  class="navbar-item has-dropdown is-hoverable is-dark"
-  *ngIf="auth.isLoggedIn()"
->
-  <a
-    class="navbar-link is-arrowless"
-    [routerLink]="auth.userType == 'user'?['/user']:['/organizer']"
-    routerLinkActive="is-active"
-  >
+<div class="navbar-item has-dropdown is-hoverable is-dark" *ngIf="auth.isLoggedIn()">
+  <a class="navbar-link is-arrowless" [routerLink]="auth.userType == 'user'?['/user']:['/organization']"
+    routerLinkActive="is-active">
     <span class="icon"><i class="fa fa-user"></i></span>
   </a>
-  <div *ngIf="auth.isUserObs | async; then user; else organizer"></div>
+  <div *ngIf="auth.isUserObs | async; then user; else organization"></div>
 </div>
 
 <!-- Logged out dropdown -->
-<div
-  class="navbar-item has-dropdown is-hoverable"
-  *ngIf="!auth.isLoggedIn()"
->
-  <a class="navbar-link is-arrowless"
-    ><span (click)="openLogin()" class="icon"><i class="fa fa-user"></i></span
-  ></a>
+<div class="navbar-item has-dropdown is-hoverable" *ngIf="!auth.isLoggedIn()">
+  <a class="navbar-link is-arrowless"><span (click)="openLogin()" class="icon"><i class="fa fa-user"></i></span></a>
   <div class="navbar-dropdown is-right has-text-white">
     <a class="navbar-item has-text-white" (click)="openLogin()">
       <span class="icon has-text-white"><i class="fa fa-user"></i></span>Login
     </a>
-    <a class="navbar-item has-text-white" (click)="openRegister()" >
+    <a class="navbar-item has-text-white" (click)="openRegister()">
       <span class="icon has-text-white"><i class="fas fa-edit"></i></span>Register
     </a>
   </div>
@@ -47,13 +36,25 @@
       <span class="icon has-text-white"><i class="fa fa-cog"></i></span>Settings
     </a>
     <hr class="navbar-divider" />
+    <ng-container *ngTemplateOutlet="Orgs"></ng-container>
+    <hr class="navbar-divider" />
     <ng-container *ngTemplateOutlet="logout"></ng-container>
   </div>
 </ng-template>
 
-<!-- Organizer Dropdown -->
-<ng-template #organizer>
+<!-- organization Dropdown -->
+<ng-template #organization>
   <div class="navbar-dropdown is-right">
+      <a class="navbar-item has-text-white" [routerLink]="['/organization']" routerLinkActive="is-active">
+        <span class="icon has-text-white"><i class="fa fa-user"></i></span>Profile
+      </a>
+      <hr class="navbar-divider" />
+      <a class="navbar-item has-text-white" (click)="switchToUser()">
+        <figure class="image is-24x24" style="left: -8px;">
+          <img [src]="account.baseUserImg" class="is-rounded">
+        </figure>{{account.getBaseUserName()}}
+      </a>
+    <hr class="navbar-divider" />
     <ng-container *ngTemplateOutlet="logout"></ng-container>
   </div>
 </ng-template>
@@ -63,4 +64,15 @@
   <a class="navbar-item has-text-white" (click)="notifyLogout()">
     <span class="icon has-text-white"><i class="fa fa-sign-out-alt"></i></span>Logout
   </a>
+</ng-template>
+
+<!-- Organizations list -->
+<ng-template #Orgs>
+  <div *ngFor="let org of organizations">
+    <a class="navbar-item has-text-white" (click)="switchToOrganization(org[0].uid)">
+      <figure class="image is-24x24" style="left: -8px;">
+        <img [src]="org[1]">
+      </figure>{{org[0].organization}}
+    </a>
+  </div>
 </ng-template>

@@ -23,15 +23,13 @@ export class RegisterComponent {
 
   constructor(
     public auth: AuthService,
-    private router: Router,
     private fb: FormBuilder,
     public shared: SharedService,
     private storage: StorageService,
     private mapsService: GoogleMapsService,
   )  {
     this.shared.showLogin(false);
-    this.createForm(this.auth.userType);
-    this.auth.isUserObs.subscribe();
+    this.createForm();
   }
 
   selectProfileImage(image: File) {
@@ -55,19 +53,7 @@ export class RegisterComponent {
      this.profileImage = image;
    }
 
-
-  setToUser() {
-    this.auth.setUserType();
-    this.createForm(this.auth.userType);
-  }
-
-  setToOrganizer() {
-    this.auth.setOrganizerType();
-    this.createForm(this.auth.userType);
-  }
-
-  createForm(userType: AccountTypes) {
-    if (userType === AccountTypes.User) {
+  createForm() {
       this.registerForm = this.fb.group({
         email: ['', [Validators.required, Validators.email]],
         password: ['', [Validators.required, Validators.minLength(6)]],
@@ -81,29 +67,9 @@ export class RegisterComponent {
         birthday: ['', [Validators.required]],
         sex: ['', [Validators.required]]
       });
-    } else {
-      this.registerForm = this.fb.group({
-        email: ['', [Validators.required, Validators.email]],
-        password: ['', [Validators.required, Validators.minLength(6)]],
-        confirmPassword: ['', [Validators.required]],
-        zip: ['', [Validators.required, RegExValidator(/^[0-9]{4}$/i)]],
-        city: ['', [Validators.required, Validators.minLength(3), RegExValidator(/[a-z, ,A-Z,ÆæØøÅå]*/i)]],
-        country: ['', [Validators.required, Validators.minLength(3), RegExValidator(/[a-z, ,A-Z,ÆæØøÅå]*/i)]],
-        phone: ['', [Validators.required, RegExValidator(/^[0-9]{8}$/i)]],
-        address: ['', [Validators.required, Validators.minLength(3), RegExValidator(/[a-z, ,A-Z,ÆæØøÅå,0-9]*/i)]],
-        organization: ['', [Validators.required, Validators.minLength(3), RegExValidator(/[a-z, ,A-Z,ÆæØøÅå,0-9]*/i)]]
-      });
-    }
   }
 
   register(value) {
-    if (this.auth.getUserType() === AccountTypes.Organizer) {
-      if (!this.profileImage) {
-        this.errorMessage = 'You must upload an organization logo';
-        this.successMessage = '';
-        return;
-      }
-    }
 
     this.auth.register(value)
     .then(res => {
@@ -116,13 +82,20 @@ export class RegisterComponent {
   }
 
   findInformationfromZip(value) {
-    this.mapsService.get_city_from_zip(value).subscribe(result => {
-      if (result['status'] !== 'ZERO_RESULTS') {
-        const city = result['results'][0]['address_components'][1]['long_name'];
-        const country = result['results'][0]['address_components'].pop()['long_name'];
+    const status = 'status';
+    const results = 'results';
+    const addressComponents = 'address_components';
+    const longName = 'long_name';
+    const cityInput = 'city';
+    const countryInput = 'country';
 
-        this.registerForm.controls['city'].setValue(city);
-        this.registerForm.controls['country'].setValue(country);
+    this.mapsService.get_city_from_zip(value).subscribe(result => {
+      if (result[status] !== 'ZERO_RESULTS') {
+        const city = result[results][0][addressComponents][1][longName];
+        const country = result[results][0][addressComponents].pop()[longName];
+
+        this.registerForm.controls[cityInput].setValue(city);
+        this.registerForm.controls[countryInput].setValue(country);
       }
     });
   }
