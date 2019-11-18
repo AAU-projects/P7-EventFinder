@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { OrganizationService } from 'src/app/services/organizer.service';
+import { OrganizationService } from 'src/app/services/organization.service';
 import { AccountService } from 'src/app/services/account.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { Organization, User } from 'src/app/models/account.model';

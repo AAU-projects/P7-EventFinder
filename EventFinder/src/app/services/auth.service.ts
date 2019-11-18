@@ -88,7 +88,7 @@ export class AuthService {
     return this.cookie.delete(variable);
   }
 
-  setOrganizerType(uid) {
+  setOrganizationType(uid) {
     this.userType = AccountTypes.Organization;
     this.isUserSubject.next(false);
     this.selectedOrganizationUid = uid;
@@ -174,7 +174,7 @@ export class AuthService {
             sex: value.sex,
             birthday: value.birthday,
             organizations: [],
-            profileImage: value.profileImage,
+            profileImage: '',
             preferences: []
           }
         );

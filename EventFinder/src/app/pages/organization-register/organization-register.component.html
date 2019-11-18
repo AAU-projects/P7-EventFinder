@@ -3,7 +3,7 @@
     <app-image-cropper [imageSource]="profileImage" (imageDestination)="getImage($event)"></app-image-cropper>
   </div>
   <div *ngIf="showTagPopUp">
-    <app-tag-selection [userType]="AccountTypes.Organizer"></app-tag-selection>
+    <app-tag-selection [userType]="AccountTypes.Organization"></app-tag-selection>
   </div>
   <div class="notification is-dark">
     <h1 class="title has-text-weight-bold is-size-1"> Create Organization </h1>

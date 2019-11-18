@@ -1,10 +1,10 @@
 <!-- Loggedin dropdown -->
 <div class="navbar-item has-dropdown is-hoverable is-dark" *ngIf="auth.isLoggedIn()">
-  <a class="navbar-link is-arrowless" [routerLink]="auth.userType == 'user'?['/user']:['/organizer']"
+  <a class="navbar-link is-arrowless" [routerLink]="auth.userType == 'user'?['/user']:['/organization']"
     routerLinkActive="is-active">
     <span class="icon"><i class="fa fa-user"></i></span>
   </a>
-  <div *ngIf="auth.isUserObs | async; then user; else organizer"></div>
+  <div *ngIf="auth.isUserObs | async; then user; else organization"></div>
 </div>
 
 <!-- Logged out dropdown -->
@@ -42,10 +42,10 @@
   </div>
 </ng-template>
 
-<!-- Organizer Dropdown -->
-<ng-template #organizer>
+<!-- organization Dropdown -->
+<ng-template #organization>
   <div class="navbar-dropdown is-right">
-      <a class="navbar-item has-text-white" [routerLink]="['/organizer']" routerLinkActive="is-active">
+      <a class="navbar-item has-text-white" [routerLink]="['/organization']" routerLinkActive="is-active">
         <span class="icon has-text-white"><i class="fa fa-user"></i></span>Profile
       </a>
       <hr class="navbar-divider" />

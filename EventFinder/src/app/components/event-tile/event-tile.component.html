@@ -1,9 +1,9 @@
 <div *ngIf="selectedEventID">
-  <app-event-select [inputEventID]="selectedEventID" (closeEvent)="selectInfoscreenEventHandler($event)"></app-event-select>
+  <app-event-select [receiptUrl]=receiptUrl [inputEventID]="selectedEventID" (closeEvent)="selectInfoscreenEventHandler($event)"></app-event-select>
 </div>
 
 
-<div *ngIf="organizerImageUrl" class="tile is-child is-hoverable box notification has-background-dark has-text-white pointer no-padding" (click)="setSelectedEvent(event.uid)">
+<div *ngIf="organizationImageUrl" class="tile is-child is-hoverable box notification has-background-dark has-text-white pointer no-padding" (click)="setSelectedEvent(event.uid)">
   <div class="columns is-vcentered is-hoverable">
     <div class="column no-padding-column is-4">
       <figure class="image is-square is-fullwidth">
@@ -17,21 +17,28 @@
         <div class="tile is-vertical is-parent">
           <div class="tile is-child no-padding has-centered-content is-flex">
             <figure class="image is-128x128">
-              <img src={{organizerImageUrl}}>
+              <img src={{organizationImageUrl}}>
             </figure>
           </div>
           <div class="tile is-child no-padding has-centered-content is-flex">
-            <div class="subtitle is-4 has-text-white">{{organizer.organization}}</div>
+            <div class="subtitle is-4 has-text-white">{{organization.organization}}</div>
           </div>
           <div class="tile is-child no-padding has-centered-content is-flex">
             <h3 class="has-text">
-              <span class="icon"><i class="fa fa-map-marker-alt"></i></span>
+                <span *ngIf="markerIndex" class="fa-stack">
+                    <!-- The icon that will wrap the number -->
+                    <span class="fas fa-map-marker fa-stack-2x" style="color: #ea4335;"></span>
+                    <!-- a strong element with the custom content, in this case a number -->
+                    <strong class="fa-stack-1x icon-map">
+                        {{markerIndex}}
+                    </strong>
+                </span>
               {{event.address}}
             </h3>
           </div>
           <div class="tile is-child no-padding has-centered-content is-flex">
             <div class="tags">
-                <span *ngFor="let tag of organizer.tags">
+                <span *ngFor="let tag of organization.tags">
                     <p class="tag">{{tag}}</p>
                   </span>
             </div>
@@ -88,7 +95,7 @@
           </div>
           <div class="level-right">
               <div class="level-item">
-                <button class="button is-primary">DKK {{event.price}},-</button>
+                  <app-checkout [receiptUrl]=receiptUrl [organization]=organization [event]=event [sizeClass]='"is-medium"' [organizationImage]=organizationImageUrl></app-checkout>
               </div>
           </div>
         </nav>

@@ -2,7 +2,7 @@ import { Component, OnInit, HostListener, EventEmitter, Input, Output } from '@a
 import { SharedService } from 'src/app/services/shared.service';
 import { EventService } from 'src/app/services/event.service';
 import { Event } from 'src/app/models/event.model';
-import { OrganizationService } from 'src/app/services/organizer.service';
+import { OrganizationService } from 'src/app/services/organization.service';
 import { Organization } from 'src/app/models/account.model';
 import { GoogleMapsService } from 'src/app/services/google-map.service';
 import { StorageService } from 'src/app/services/storage.service';
@@ -14,14 +14,15 @@ import { StorageService } from 'src/app/services/storage.service';
 })
 export class EventSelectComponent implements OnInit {
   eventLoaded: Promise<boolean>;
-  organizerLoaded: Promise<boolean>;
+  organizationLoaded: Promise<boolean>;
   logoLoaded: Promise<boolean>;
   bannerLoaded: Promise<boolean>;
   event: Event;
-  organizer: Organization;
+  organization: Organization;
   logoImage;
   bannerImage;
   @Input() inputEventID;
+  @Input() receiptUrl; // For use in the checkout component.
   @Output() closeEvent = new EventEmitter<string>();
 
   latitude: number;
@@ -31,21 +32,22 @@ export class EventSelectComponent implements OnInit {
     public shared: SharedService,
     private apiService: GoogleMapsService,
     private eventService: EventService,
-    private organizerService: OrganizationService,
+    private organizationService: OrganizationService,
     private storageService: StorageService
   ) {
+
   }
 
   ngOnInit() {
     this.loadEvent(this.inputEventID);
   }
 
-  loadOrganizer() {
-    this.organizerService
-      .getOrganization(this.event.organizerId)
+  loadOrganization() {
+    this.organizationService
+      .getOrganization(this.event.organizationId)
       .subscribe(document => {
-        this.organizer = document;
-        this.organizerLoaded = Promise.resolve(true);
+        this.organization = document;
+        this.organizationLoaded = Promise.resolve(true);
         this.loadLogo();
       });
   }
@@ -56,10 +58,11 @@ export class EventSelectComponent implements OnInit {
       .valueChanges()
       .subscribe(document => {
         this.event = document;
+        this.latitude = this.event.latitude;
+        this.longitude = this.event.longitude;
         this.eventLoaded = Promise.resolve(true);
-        this.updateMap();
         this.loadBanner();
-        this.loadOrganizer();
+        this.loadOrganization();
       });
   }
 
@@ -74,34 +77,15 @@ export class EventSelectComponent implements OnInit {
 
   loadLogo() {
     this.storageService
-      .getImageUrl(this.organizer.profileImage)
+      .getImageUrl(this.organization.profileImage)
       .subscribe(document => {
         this.logoImage = document;
         this.logoLoaded = Promise.resolve(true);
       });
   }
 
-  updateMap() {
-    this.apiService.get_location(this.formatAddress()).subscribe(result => {
-      const results = 'results';
-      const geometry = 'geometry';
-      const location = 'location';
-      const lat = 'lat';
-      const lng = 'lng';
-
-      const loc = result[results][0][geometry][location];
-      this.latitude = loc[lat];
-      this.longitude = loc[lng];
-    });
-  }
-
-  formatAddress() {
-    return this.event.address.replace(' ', '+');
-  }
-
   close() {
     this.closeEvent.emit('closeEvent');
-    //this.shared.showEvent(null);
   }
 
   getEventTitleDescription() {
@@ -112,8 +96,8 @@ export class EventSelectComponent implements OnInit {
     return this.event.description;
   }
 
-  getOrganizerDescription() {
-    return this.organizer.about;
+  getOrganizationDescription() {
+    return this.organization.about;
   }
 
   getLocation() {

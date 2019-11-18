@@ -111,7 +111,8 @@
                           [ngClass]="(eventForm.controls['zip'].invalid && eventForm.controls['zip'].dirty) ? 'is-danger' : ''"
                           required class="input is-rounded has-text-centered is-medium is-size-6" type="text"
                           formControlName="zip" placeholder="Zip"
-                          (blur)="findInformationfromZip($event.target.value)" />
+                          (blur)="findInformationfromZip($event.target.value)"
+                          on-focusout="checkAdresss()"/>
                         <span class="icon is-small is-left">
                           <i class="fas fa-city"></i>
                         </span>
@@ -126,7 +127,8 @@
                         <input
                           [ngClass]="(eventForm.controls['city'].invalid && eventForm.controls['city'].dirty) ? 'is-danger' : ''"
                           required class="input is-rounded has-text-centered is-medium is-size-6" type="text"
-                          formControlName="city" placeholder="City" />
+                          formControlName="city" placeholder="City"
+                          on-focusout="checkAdresss()"/>
                       </div>
                     </div>
                   </div>
@@ -299,7 +301,7 @@
           <div class="tile is-child box notification has-background-dark has-text-white">
             <p class="title">Live Preview</p>
             <button type="submit" class="button is-primary is-large is-rounded is-fullwidth"
-              [disabled]="!eventForm.valid || genreList.length == 0 || atmosList.length == 0 || !bannerEvent || checkDate()">
+              [disabled]="checkValidEventForm()">
               Create Event
             </button>
           </div>

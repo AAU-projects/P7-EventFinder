@@ -41,13 +41,13 @@ export class TagSelectionComponent implements OnInit {
     } else {
       if (this.tagList.length >= 1 && this.tagList.length <= 3) {
         this.accountService.editTagsOrPrefrences(this.tagList);
-        this.router.navigate(['/organizer']);
+        this.router.navigate(['/organization']);
         this.notification.notifySuccess('You have successfully created your organization');
       }
     }
   }
 
-  organizerSubmitCheck() {
+  organizationSubmitCheck() {
     if (this.userType === AccountTypes.User) {
       return false;
     } else {

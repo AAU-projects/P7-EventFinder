@@ -11,10 +11,14 @@ import { UserComponent } from './user/user.component';
 import { RegisterComponent } from './register/register.component';
 import { EventsComponent } from './events/events.component';
 import { ForgotpasswordComponent } from './forgotpassword/forgotpassword.component';
-import { OrganizerComponent } from './organizer/organizer.component';
+import { OrganizationComponent } from './organization/organization.component';
 import { HttpClientModule } from '@angular/common/http';
 import { OrganizationRegisterComponent } from './organization-register/organization-register.component';
 import { AboutComponent } from './about/about.component';
+import { AgmCoreModule } from '@agm/core';
+import { environment } from 'src/environments/environment';
+import {MatSliderModule} from '@angular/material/slider';
+import { PublicOrganizationComponent } from './public-organization/public-organization.component';
 
 
 /* How to add a new page:
@@ -33,17 +37,22 @@ import { AboutComponent } from './about/about.component';
     RegisterComponent,
     EventsComponent,
     ForgotpasswordComponent,
-    OrganizerComponent,
+    OrganizationComponent,
     OrganizationRegisterComponent,
-    AboutComponent
+    AboutComponent,
+    PublicOrganizationComponent
   ],
   imports: [
     CommonModule,
     PagesRoutingModule,
     ComponentsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    MatSliderModule,
+    AgmCoreModule.forRoot({ // Google maps
+      apiKey: environment.google.googleApiKey
+    })
   ],
-  exports: [LoginComponent]
+  exports: [LoginComponent, PublicOrganizationComponent]
 })
 export class PagesModule { }

@@ -7,10 +7,11 @@ import { UserComponent } from './user/user.component';
 import { RegisterComponent } from './register/register.component';
 import { EventsComponent } from './events/events.component';
 import { ForgotpasswordComponent } from './forgotpassword/forgotpassword.component';
-import { OrganizerComponent } from './organizer/organizer.component';
+import { OrganizationComponent } from './organization/organization.component';
 import { LoggedInGuard } from '../guards/logged-in.guard';
 import { OrganizationRegisterComponent } from './organization-register/organization-register.component';
 import { AboutComponent } from './about/about.component';
+import { PublicOrganizationComponent } from './public-organization/public-organization.component';
 
 // All paths starts from root (/)
 const routes: Routes = [
@@ -19,11 +20,11 @@ const routes: Routes = [
   {path: 'firebase', component: FirebaseTestComponent},
   {path: 'org-register', component: OrganizationRegisterComponent},
   {path: 'user', component: UserComponent},
-  {path: 'organizer', component: OrganizerComponent},
+  {path: 'organization', component: OrganizationComponent},
   {path: 'events', component: EventsComponent},
   {path: 'forgotpassword', component: ForgotpasswordComponent},
+  {path: 'o/:id', component: PublicOrganizationComponent},
   {path: 'about', component: AboutComponent},
-
   {path: '**', component: PageNotFoundComponent}, // Skal ligge nederst!!!!
 ];
 

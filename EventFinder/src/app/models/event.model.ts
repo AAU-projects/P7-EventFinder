@@ -1,6 +1,6 @@
 export interface Event {
   uid: string;
-  organizerId: string;
+  organizationId: string;
   title: string;
   address: string;
   zip: string;
@@ -16,6 +16,8 @@ export interface Event {
   atmosphere: Atmosphere[];
   atmosphereCustom: string;
   dresscode: Dresscode;
+  latitude: number;
+  longitude: number;
 }
 
 export enum Genre {

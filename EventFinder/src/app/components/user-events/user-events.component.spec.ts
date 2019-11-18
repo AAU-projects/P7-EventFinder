@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { OrganizerInfoComponent } from './organizer-info.component';
+import { UserEventsComponent } from './user-events.component';
 
-describe('OrganizerInfoComponent', () => {
-  let component: OrganizerInfoComponent;
-  let fixture: ComponentFixture<OrganizerInfoComponent>;
+describe('UserEventsComponent', () => {
+  let component: UserEventsComponent;
+  let fixture: ComponentFixture<UserEventsComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ OrganizerInfoComponent ]
+      declarations: [ UserEventsComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(OrganizerInfoComponent);
+    fixture = TestBed.createComponent(UserEventsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -62,7 +62,7 @@ export class OrganizationService {
     }, {merge: true});
 
     this.auth.selectedOrganizationUid = id;
-    this.auth.setOrganizerType(id);
+    this.auth.setOrganizationType(id);
 
     return id;
   }

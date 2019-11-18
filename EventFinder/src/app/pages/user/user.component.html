@@ -62,10 +62,10 @@
         <hr>
         <aside class="menu has-text-white">
           <ul class="menu-list">
-            <li><a class="selected no-decoration">Profile</a></li>
+            <li><a class="no-decoration" (click)="onMenuClick('Profile')" [ngClass]="((userMenuObs | async) == 'Profile') ? 'selected' : ''">Profile</a></li>
             <li><a class="no-decoration">Activity</a></li>
             <li><a class="no-decoration">Feedback</a></li>
-            <li><a class="no-decoration">Tickets</a></li>
+            <li><a class="no-decoration" (click)="onMenuClick('Tickets')" [ngClass]="((userMenuObs | async) == 'Tickets') ? 'selected' : ''">Tickets</a></li>
             <li><a class="no-decoration">Preferences</a></li>
           </ul>
         </aside>
@@ -73,7 +73,10 @@
     </div>
     <div class="column">
       <div class="notification bottom-right has-background-darker">
-        <app-user-info [user]="user"></app-user-info>
+        <div [ngSwitch]="(userMenuObs | async)">
+            <app-user-info *ngSwitchCase="'Profile'" [user]="user"></app-user-info>
+            <app-user-events *ngSwitchCase="'Tickets'" [user]="user"></app-user-events>
+        </div>
       </div>
     </div>
   </div>

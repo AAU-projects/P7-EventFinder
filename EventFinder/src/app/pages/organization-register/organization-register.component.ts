@@ -6,7 +6,7 @@ import { SharedService } from 'src/app/services/shared.service';
 import { StorageService } from 'src/app/services/storage.service';
 import { Organization } from 'src/app/models/account.model';
 import { AuthService } from 'src/app/services/auth.service';
-import { OrganizationService } from 'src/app/services/organizer.service';
+import { OrganizationService } from 'src/app/services/organization.service';
 import { AccountService } from 'src/app/services/account.service';
 import { AccountTypes } from 'src/app/models/account.types.enum';
 

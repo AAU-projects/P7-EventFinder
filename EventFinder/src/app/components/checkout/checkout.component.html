@@ -1,0 +1,72 @@
+<ng-template [ngIf]="!receiptUrl" [ngIfElse]="showReceipt">
+  <button class="button is-primary is-rounded {{sizeClass}}" (click)="onClickBuy()">DKK {{event.price}},-</button>
+</ng-template>
+
+<ng-template #showReceipt>
+  <button class="button is-primary is-rounded {{sizeClass}}" (click)="onClickReceipt()">Receipt</button>
+</ng-template>
+
+<ng-template [ngIf]="showConfirmModalObs | async">
+  <div class="modal is-active">
+    <div class="modal-background" (click)="exitConfirmModal()"></div>
+    <div class="modal-content">
+      <div class="notification round-corners">
+        <button class="delete" (click)="exitConfirmModal()"></button>
+        <div class="columns is-centered">
+          <div class="column">
+
+            <i class="fas fa-check-square fa-7x has-text-white"></i>
+
+            <h1 class="title has-text-white has-text-weight-bold is-size-2">
+              Payment Successful!
+            </h1>
+            <br>
+            <div class="content has-text-white is-size-6">
+              An email with your ticket and invoice for the purchase has been sent to:
+              {{paymentEmail}}
+              <br>
+              <br>
+            </div>
+            <div class="columns">
+              <div class="column is-1"></div>
+              <div class="column is-10">
+                <div class="content has-text-white is-size-6 no-bottom-margin">
+                  <div class="tile is-ancestor">
+                    <div class="tile is-vertical">
+                      <div class="tile is-parent less-tile-padding">
+                        <div class="tile is-child has-text-left"><strong>Event:</strong></div>
+                        <div class="tile is-child has-text-right">{{event.title}}</div>
+                      </div>
+                      <div class="tile is-parent less-tile-padding">
+                        <div class="tile is-child has-text-left"><strong>Date:</strong></div>
+                        <div class="tile is-child has-text-right">{{event.startDate | date : "MMMM d, y"}}</div>
+                      </div>
+                      <div class="tile is-parent less-tile-padding">
+                        <div class="tile is-child has-text-left"><strong>Time:</strong></div>
+                        <div class="tile is-child has-text-right">{{event.startDate | date : "HH:mm" }} - {{event.endDate | date : "HH:mm" }} </div>
+                      </div>
+                      <div class="tile is-parent less-tile-padding">
+                        <div class="tile is-child has-text-left"><strong>Adress:</strong></div>
+                        <div class="tile is-child has-text-right">{{event.address}}, {{event.zip}} {{event.city}}</div>
+                      </div>
+                      <div class="tile is-parent less-tile-padding">
+                        <div class="tile is-child has-text-left"><strong>Order Number:</strong></div>
+                        <div class="tile is-child has-text-right">{{transactionId}}</div>
+                      </div>
+                      <div class="tile is-parent less-tile-padding">
+                        <div class="tile is-child has-text-left"><strong>Price:</strong></div>
+                        <div class="tile is-child has-text-right">DDK {{event.price}},-</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="column is-1"></div>
+              </div>
+            </div>
+            <button class="button is-primary is-rounded is-medium" (click)="exitConfirmModal()">Confirm</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>

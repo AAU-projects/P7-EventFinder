@@ -4,7 +4,7 @@ import { SharedService } from 'src/app/services/shared.service';
 import { NotificationService } from 'src/app/services/notification.service';
 import { Router } from '@angular/router';
 import { AccountService } from 'src/app/services/account.service';
-import { OrganizationService } from 'src/app/services/organizer.service';
+import { OrganizationService } from 'src/app/services/organization.service';
 import { tap, take } from 'rxjs/operators';
 import { StorageService } from 'src/app/services/storage.service';
 import { Organization } from 'src/app/models/account.model';
@@ -65,8 +65,8 @@ export class NavbarUserDropdownComponent {
   }
 
   switchToOrganization(uid) {
-    this.auth.setOrganizerType(uid);
-    this.router.navigate(['/organizer']);
+    this.auth.setOrganizationType(uid);
+    this.router.navigate(['/organization']);
   }
 
   switchToUser() {

@@ -4,7 +4,7 @@ import { Account, Tags, User } from '../models/account.model';
 import { Observable } from 'rxjs';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { take, tap, map } from 'rxjs/operators';
-import { OrganizationService } from './organizer.service';
+import { OrganizationService } from './organization.service';
 import { StorageService } from './storage.service';
 
 @Injectable({

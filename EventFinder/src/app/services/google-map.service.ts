@@ -1,18 +1,22 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { zip } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class GoogleMapsService {
 
-  private APIKEY = 'AIzaSyCj6DAd2_FVNu73UmA41f4mjnbfP2Y2NhU';
+  private APIKEY = environment.google.googleApiKey;
 
   constructor(private httpClient: HttpClient) {}
 
+  formatAddress(address) {
+    return address.replace(' ', '+');
+  }
+
   get_location(address) {
-    return this.httpClient.get(this.get_api_address(address));
+    return this.httpClient.get(this.get_api_address(this.formatAddress(address)));
   }
 
   private get_api_address(address) {
