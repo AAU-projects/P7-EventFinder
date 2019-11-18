@@ -31,11 +31,9 @@ export class EventsComponent implements OnInit {
     public afs: AngularFirestore,
     public shared: SharedService
   ) {
-    const eventList = [];
-
     this.eventService.getEvents().subscribe(elist => {
-      elist.forEach(e => eventList.push(e.payload.doc.data() as Event));
-      this.eventList = eventList;
+      this.eventList = [];
+      elist.forEach(e => this.eventList.push(e.payload.doc.data() as Event));
       this.applyFilter();
       this.retrieveTagsForEvents();
     });
