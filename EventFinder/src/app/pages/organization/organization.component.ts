@@ -5,7 +5,7 @@ import { Observable, BehaviorSubject } from 'rxjs';
 import { StorageService } from 'src/app/services/storage.service';
 
 @Component({
-  selector: 'app-organizationr',
+  selector: 'app-organization',
   templateUrl: './organization.component.html',
   styleUrls: ['./organization.component.scss']
 })

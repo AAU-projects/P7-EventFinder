@@ -74,13 +74,3 @@ export class NavbarUserDropdownComponent {
     this.router.navigate(['/user']);
   }
 }
-
-class Pair {
-  organization: Organization;
-  logo: string;
-
-  constructor(org: Organization, url: string) {
-    this.organization = org;
-    this.logo = url;
-  }
-}
