@@ -22,7 +22,6 @@ export class CheckoutComponent implements OnInit {
   @Input() receiptUrl: string;
 
   paymentDate = new Date(Date.now());
-  paymentEmail: string;
   transactionId: string;
 
   showConfirmModalSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
@@ -32,9 +31,7 @@ export class CheckoutComponent implements OnInit {
     private stripeCheckoutLoader: StripeCheckoutLoader,
     public authService: AuthService,
     private shared: SharedService,
-    private checkoutService: CheckoutService) {
-      this.paymentEmail = this.authService.user.email;
-    }
+    private checkoutService: CheckoutService) {}
 
   ngOnInit() {
     this.stripeCheckoutLoader.createHandler({
