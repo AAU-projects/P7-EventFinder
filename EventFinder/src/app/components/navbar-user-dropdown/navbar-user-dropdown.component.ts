@@ -5,7 +5,7 @@ import { NotificationService } from 'src/app/services/notification.service';
 import { Router } from '@angular/router';
 import { AccountService } from 'src/app/services/account.service';
 import { OrganizationService } from 'src/app/services/organizer.service';
-import { tap, take} from 'rxjs/operators';
+import { tap, take } from 'rxjs/operators';
 import { StorageService } from 'src/app/services/storage.service';
 import { Organization } from 'src/app/models/account.model';
 
@@ -26,15 +26,18 @@ export class NavbarUserDropdownComponent {
     public account: AccountService,
     private orgs: OrganizationService,
     public storage: StorageService) {
+
     this.auth.account.subscribe(_ => {
-      this.auth.userAccount.subscribe(user => {
+      const asub = this.auth.userAccount.subscribe(user => {
         if (user) {
-          this.organizations.length = 0;
+          asub.unsubscribe();
+          this.organizations = [];
           user.organizations.forEach(id => {
-            this.orgs.getOrganization(id).subscribe(organization => {
-              const org = organization;
-              this.storage.getImageUrl(org.profileImage).subscribe(path => {
-                this.organizations.push([org, path]);
+            const sub = this.orgs.getOrganization(id).subscribe(organization => {
+              sub.unsubscribe();
+              const psub = this.storage.getImageUrl(organization.profileImage).subscribe(path => {
+                this.organizations.push([organization, path]);
+                psub.unsubscribe();
               });
             });
           });
@@ -43,7 +46,7 @@ export class NavbarUserDropdownComponent {
     });
   }
 
-  getProfileImage(org: Organization){
+  getProfileImage(org: Organization) {
     this.storage.getImageUrl(org.profileImage);
   }
 

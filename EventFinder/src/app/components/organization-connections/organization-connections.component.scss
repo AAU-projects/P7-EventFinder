@@ -7,3 +7,17 @@
 .input {
   border: 1px solid #5C5C80;
 }
+
+.input:invalid {
+  border: 1px solid red;
+}
+
+.button.is-darker {
+  background-color: #1B1B38;
+  border-color: transparent;
+  color: #fff;
+}
+
+.button.is-darker:hover {
+  background-color: #5C5C80;
+}

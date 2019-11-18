@@ -13,7 +13,7 @@ export class OrganizerComponent implements OnInit {
   imgUrl: string;
 
   get menuTabs() { return MenuTabs; }
-  StartTab = MenuTabs.Staff;
+  StartTab = MenuTabs.Profile;
 
   menuTabSubject: BehaviorSubject<MenuTabs> = new BehaviorSubject<MenuTabs>(this.StartTab);
   public menuTabObs: Observable<MenuTabs> = this.menuTabSubject.asObservable();
@@ -25,10 +25,12 @@ export class OrganizerComponent implements OnInit {
   public currentMenuTabObs: Observable<MenuTabs> = this.currentMenuTabSubject.asObservable();
 
   constructor(public auth: AuthService, private storage: StorageService) {
-    this.auth.account.subscribe(account => {
-      this.storage.getImageUrl(account.profileImage).subscribe(
-        url => this.imgUrl = url
-      );
+    const sub = this.auth.account.subscribe(account => {
+      const isub = this.storage.getImageUrl(account.profileImage).subscribe(url => {
+        this.imgUrl = url;
+        isub.unsubscribe();
+      });
+      sub.unsubscribe();
     });
   }
 

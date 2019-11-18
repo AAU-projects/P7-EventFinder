@@ -92,12 +92,14 @@ export class AuthService {
     this.userType = AccountTypes.Organization;
     this.isUserSubject.next(false);
     this.selectedOrganizationUid = uid;
+    this.account = this.firestore.doc<Organization>(`organizations/${this.selectedOrganizationUid}`).valueChanges();
     this.setCookieVar('type', AccountTypes.Organization);
     this.setCookieVar('orgUID', uid);
   }
 
   setUserType() {
     this.userType = AccountTypes.User;
+    this.account = this.firestore.doc<User>(`users/${this.user.uid}`).valueChanges();
     this.isUserSubject.next(true);
     this.setCookieVar('type', AccountTypes.User);
     this.deleteCookieVar('orgUID');

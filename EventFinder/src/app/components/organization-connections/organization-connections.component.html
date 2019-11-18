@@ -1,16 +1,18 @@
+<div *ngIf="showPopup">
+  <ng-container *ngTemplateOutlet="popUp;context:ctx"></ng-container>
+</div>
+
 <div class="notification is-dark">
   <!-- Add user feild -->
   <div class="field has-addons">
-      <div class="control has-icons-left is-expanded">
-          <input class="input" type="email" placeholder="Email">
-          <span class="icon is-small is-left">
-            <i class="fas fa-envelope fa-xs"></i>
-          </span>
-        </div>
+    <div class="control has-icons-left is-expanded">
+      <input class="input" type="email" placeholder="Email" [(ngModel)]="searchFeild" (input)="checkEmail()">
+      <span class="icon is-small is-left">
+        <i class="fas fa-envelope fa-xs"></i>
+      </span>
+    </div>
     <div class="control">
-      <a class="button is-primary">
-            Add User
-      </a>
+      <button class="button is-primary" (click)="addUser()" [disabled]="!valid">Add User</button>
     </div>
   </div>
   <!-- Connected user -->
@@ -34,12 +36,27 @@
       <div class="column is-2">
         <div class="field is-grouped is-pulled-right">
           <p class="control">
-            <a class="button is-dark is-small is-rounded is-fullwidth has-text-white" (click)="removeUser(uid)">
+            <a class="button is-dark is-small is-rounded is-fullwidth has-text-white" (click)="removeUser(uid, name)">
               Remove
             </a>
           </p>
         </div>
       </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #popUp let-title="title" let-message="message">
+  <div class="modal is-active">
+    <div class="modal-background"></div>
+    <div class="modal-content notification is-dark">
+      <h1 class="title"> {{ title }} </h1>
+      <h2 class="subtitle"> {{ message }} </h2>
+
+      <div class="buttons is-centered">
+          <button class="button is-primary" (click)="confirm()">Save changes</button>
+          <button class="button is-darker" (click)="cancel()">Cancel</button>
+        </div>
     </div>
   </div>
 </ng-template>

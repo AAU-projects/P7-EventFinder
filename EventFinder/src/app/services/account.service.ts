@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { AuthService } from './auth.service';
 import { Account, Tags, User } from '../models/account.model';
 import { Observable } from 'rxjs';
-import { AngularFirestore } from '@angular/fire/firestore';
+import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { take, tap, map } from 'rxjs/operators';
 import { OrganizationService } from './organizer.service';
 import { StorageService } from './storage.service';
@@ -30,10 +30,16 @@ export class AccountService {
     this.auth.isUserObs.subscribe(value => { this.isUser = value; });
   }
 
-  getUserFromUid(uid) {
-    const eventRef = this.firestore.collection('users').doc<User>(uid).valueChanges();
+  getUserFromEmail(email) {
+    const userRef = this.firestore.collection<User>('users', ref => ref.where('email', '==', email).limit(1));
 
-    return eventRef;
+    return userRef.valueChanges();
+  }
+
+  getUserFromUid(uid) {
+    const userRef = this.firestore.collection('users').doc<User>(uid).valueChanges();
+
+    return userRef;
   }
 
   getBaseUserName() {
@@ -56,32 +62,34 @@ export class AccountService {
   }
 
   removeOrganization(orgUid: string, userId: string) {
-    const userRef = this.firestore.doc(`users/${userId}`);
+    const userRef = this.firestore.doc<User>(`users/${userId}`);
 
-    userRef.valueChanges().pipe(
-      take(1), map(user => user as User), tap(user => {
-          if (user.organizations !== undefined) {
-            user.organizations = user.organizations.filter(uid => uid !== orgUid);
-          }
-
-          userRef.set(user);
-        })
-    ).subscribe();
+    const sub = userRef.valueChanges().subscribe(user => {
+      if (user.organizations) {
+        user.organizations = user.organizations.filter(uid => uid !== orgUid);
+      }
+      userRef.update(user);
+      sub.unsubscribe();
+    });
   }
 
-  addOrganization(uid: string) {
-      const userRef = this.firestore.doc(`users/${this.currentUser.uid}`);
-      let orgs = [uid];
+  addOrganization(orgUid: string, userUid?: string) {
+    let userRef: AngularFirestoreDocument<User>;
+    if (userUid) {
+      userRef = this.firestore.doc<User>(`users/${userUid}`);
+    } else {
+      userRef = this.firestore.doc<User>(`users/${this.baseUser.uid}`);
+    }
 
-      userRef.valueChanges().pipe(
-        take(1), map(user => user as User), tap(user => {
-            if (user.organizations !== undefined) {
-              orgs = orgs.concat(user.organizations);
-            }
-
-            userRef.set({organizations: orgs}, { merge: true });
-          })
-      ).subscribe();
+    const sub = userRef.valueChanges().subscribe(user => {
+      if (user.organizations.length > 0) {
+        user.organizations.concat(orgUid);
+      } else {
+        user.organizations = [orgUid];
+      }
+      userRef.update(user);
+      sub.unsubscribe();
+    });
   }
 
 

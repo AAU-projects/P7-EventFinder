@@ -3,29 +3,46 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { Organization } from '../models/account.model';
 import { AuthService } from './auth.service';
 import { AccountService } from './account.service';
+import { NotificationService } from './notification.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class OrganizationService {
 
-  constructor(private firestore: AngularFirestore, private auth: AuthService, private account: AccountService) { }
+  constructor(
+    private firestore: AngularFirestore,
+    private auth: AuthService,
+    private account: AccountService) { }
 
-  getOrganization(id) {
+  getOrganization(id: string) {
     const eventRef = this.firestore.collection('organizations').doc<Organization>(id).valueChanges();
 
     return eventRef;
   }
 
-  removeUser(uid, org: Organization) {
+  removeUser(uid: string, org: Organization) {
     org.connectedUsers = org.connectedUsers.filter(id => id !== uid);
     const eventRef = this.firestore.collection('organizations').doc<Organization>(org.uid);
-    eventRef.set(org);
+    eventRef.update(org);
 
     this.account.removeOrganization(org.uid, uid);
   }
 
-  createOrgnization(value): string {
+  addUser(uid: string, org: Organization) {
+    if (org.connectedUsers.find(user => user === uid)) {
+      return false;
+    } else {
+      org.connectedUsers = org.connectedUsers.concat(uid);
+      const eventRef = this.firestore.collection('organizations').doc<Organization>(org.uid);
+      eventRef.update(org);
+
+      this.account.addOrganization(org.uid, uid);
+      return true;
+    }
+  }
+
+  createOrgnization(value: Organization): string {
     const id = this.firestore.createId();
     const docref = this.firestore.doc<Organization>(`organizations/${id}`);
 
@@ -50,7 +67,7 @@ export class OrganizationService {
     return id;
   }
 
-  setLogo(imgPath) {
+  setLogo(imgPath: string) {
     const docref = this.firestore.doc(`organizations/${this.auth.selectedOrganizationUid}`);
     docref.set({profileImage: imgPath}, {merge: true});
   }

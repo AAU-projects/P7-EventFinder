@@ -14,9 +14,13 @@ export class UserComponent implements OnInit {
   user: User;
 
   constructor(public auth: AuthService, private storage: StorageService) {
-    this.auth.account.subscribe(account => {
+    const sub = this.auth.account.subscribe(account => {
       this.user = account as User;
-      this.storage.getImageUrl(this.user.profileImage).subscribe(url => this.imgUrl = url);
+      const isub = this.storage.getImageUrl(this.user.profileImage).subscribe(url => {
+        this.imgUrl = url;
+        isub.unsubscribe();
+      });
+      sub.unsubscribe();
     });
    }
 
