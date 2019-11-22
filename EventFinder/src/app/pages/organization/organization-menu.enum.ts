@@ -3,6 +3,7 @@ export enum MenuTabs {
     Activity = 'activity',
     Events = 'events',
     Feedback = 'feedback',
+    Statistics = 'statistics',
     Tickets = 'tickets',
     Preferences = 'preferences',
     AddEvent = 'add event',

@@ -1,0 +1,65 @@
+<ng-template [ngIf]="loading" [ngIfElse]="doneLoading">
+  <i class="fas fa-circle-notch fa-spin fa-5x has-text-white"></i>
+</ng-template>
+
+<ng-template #doneLoading>
+  <div class="tile box is-child notification has-background-dark tile-margin">
+    <h1 class="title has-text-white is-6">Event statistics</h1>
+
+    <nav class="level">
+        <div class="level-item has-text-centered">
+            <div class="field">
+                <div class="control">
+                    <p class="help has-text-white">Select event</p>
+                    <div class="select is-rounded is-small">
+                    <select>
+                        <option *ngFor="let event of orgEventList">
+                            {{event.title}}
+                        </option>
+                    </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="level-item has-text-centered">
+            <div class="field">
+                <div class="control">
+                    <p class="help has-text-white">Select data</p>
+                    <div class="select is-rounded is-small">
+                    <select>
+                        <option>Rating</option>
+                        <option>Gender segregation</option>
+                        <option>Customer geographic segmentation</option>
+                        <option>User preference pie / radar</option>
+                    </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="chart">
+      <canvas baseChart [data]="segregationPieChartData" [labels]="segregationPieChartLabels" [chartType]="pieChartType"
+        [options]="pieChartOptions" [colors]="segregationPieChartColors" [legend]="pieChartLegend">
+      </canvas>
+    </div>
+  </div>
+
+  <div class="tile box is-child notification has-background-dark tile-margin">
+    <h1 class="title has-text-white is-6">Overall rating</h1>
+    <div class="chart">
+      <canvas baseChart [data]="overallRatingPieChartData" [labels]="overallRatingPieChartLabels"
+        [chartType]="pieChartType" [options]="pieChartOptions" [colors]="pieChartColors" [legend]="pieChartLegend">
+      </canvas>
+    </div>
+  </div>
+
+  <div class="tile box is-child notification has-background-dark tile-margin">
+    <h1 class="title has-text-white is-6">Overall customer geographic segmentation</h1>
+    <div class="chart">
+        <canvas baseChart [data]="geoPieChartData" [labels]="geoPieChartLabels"
+          [chartType]="pieChartType" [options]="pieChartOptions" [colors]="geoPieChartColors" [legend]="pieChartLegend">
+        </canvas>
+    </div>
+  </div>
+</ng-template>
