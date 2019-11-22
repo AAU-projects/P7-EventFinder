@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Event } from '../../models/event.model';
+import { Event as Ev} from '../../models/event.model' ;
 import { StorageService } from 'src/app/services/storage.service';
 import { OrganizationService } from 'src/app/services/organization.service';
 import { Organization } from 'src/app/models/account.model';
@@ -11,8 +11,8 @@ import { Organization } from 'src/app/models/account.model';
 })
 export class EventTileComponent implements OnInit {
 
-  public event: Event;
-  @Input() inputEvent: Event;
+  public event: Ev;
+  @Input() inputEvent: Ev;
   @Input() markerIndex: number;
   @Input() receiptUrl: string; // Only used when show in the user profile page.
   public organization: Organization;
@@ -77,5 +77,9 @@ export class EventTileComponent implements OnInit {
 
   setSelectedEvent(eventID) {
     this.selectedEventID = eventID;
+  }
+
+  stopit(event: Event) {
+    event.stopImmediatePropagation();
   }
 }
