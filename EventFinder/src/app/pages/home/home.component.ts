@@ -13,9 +13,3 @@ export class HomeComponent implements OnInit {
   constructor(private shared: SharedService, private events: EventService, private storage: StorageService) { }
 
   ngOnInit() {
-  }
-
-  openLogin() {
-    this.shared.showLogin(true);
-  }
-}
