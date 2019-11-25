@@ -12,9 +12,9 @@
                 <div class="control">
                     <p class="help has-text-white">Select event</p>
                     <div class="select is-rounded is-small">
-                    <select>
-                        <option *ngFor="let event of orgEventList">
-                            {{event.title}}
+                    <select (change)="onEventSelect($event.target.value)" [(ngModel)]="selectedEvent">
+                        <option *ngFor="let event of orgEventList | keyvalue" value={{event.value.uid}}>
+                            {{event.value.title}}
                         </option>
                     </select>
                     </div>
@@ -26,11 +26,11 @@
                 <div class="control">
                     <p class="help has-text-white">Select data</p>
                     <div class="select is-rounded is-small">
-                    <select>
-                        <option>Rating</option>
-                        <option>Gender segregation</option>
-                        <option>Customer geographic segmentation</option>
-                        <option>User preference pie / radar</option>
+                    <select (change)="onEventSelect($event.target.value)" [(ngModel)]="selectedData">
+                        <option value={{graphData.Rating}}>Rating</option>
+                        <option value={{graphData.Gender}}>Gender segregation</option>
+                        <option value={{graphData.Geo}}>Customer geographic segmentation</option>
+                        <option value={{graphData.UserPreference}}>User preference</option>
                     </select>
                     </div>
                 </div>
@@ -38,9 +38,9 @@
         </div>
     </nav>
 
-    <div class="chart">
-      <canvas baseChart [data]="segregationPieChartData" [labels]="segregationPieChartLabels" [chartType]="pieChartType"
-        [options]="pieChartOptions" [colors]="segregationPieChartColors" [legend]="pieChartLegend">
+  <div class="chart">
+      <canvas baseChart [data]="currentChartData" [labels]="currentChartLabels" [chartType]="currentChartType"
+        [options]="pieChartOptions" [colors]="currentChartColors" [legend]="currentChartLegend">
       </canvas>
     </div>
   </div>
@@ -49,7 +49,7 @@
     <h1 class="title has-text-white is-6">Overall rating</h1>
     <div class="chart">
       <canvas baseChart [data]="overallRatingPieChartData" [labels]="overallRatingPieChartLabels"
-        [chartType]="pieChartType" [options]="pieChartOptions" [colors]="pieChartColors" [legend]="pieChartLegend">
+        [chartType]="overallRatingPieChartType" [options]="pieChartOptions" [colors]="overallRatingPieChartColors" [legend]="overallRatingPieChartLegend">
       </canvas>
     </div>
   </div>
@@ -58,7 +58,7 @@
     <h1 class="title has-text-white is-6">Overall customer geographic segmentation</h1>
     <div class="chart">
         <canvas baseChart [data]="geoPieChartData" [labels]="geoPieChartLabels"
-          [chartType]="pieChartType" [options]="pieChartOptions" [colors]="geoPieChartColors" [legend]="pieChartLegend">
+          [chartType]="geoPieChartType" [options]="pieChartOptions" [colors]="geoPieChartColors" [legend]="geoPieChartLegend">
         </canvas>
     </div>
   </div>
