@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { EventService } from 'src/app/services/event.service';
+import { AuthService } from 'src/app/services/auth.service';
 import { AngularFirestore, QueryFn } from '@angular/fire/firestore';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Event } from '../../models/event.model';
 import { match } from 'minimatch';
 import { SharedService } from 'src/app/services/shared.service';
+import { AccountService } from 'src/app/services/account.service';
 
 @Component({
   selector: 'app-events',
@@ -26,12 +28,14 @@ export class EventsComponent implements OnInit {
   selectedToDateFilter: Date = null;
   selectedFromDateFilter: Date = null;
 
-  constructor(
+    constructor(
     public eventService: EventService,
     public afs: AngularFirestore,
-    public shared: SharedService
+    public shared: SharedService,
+    public auth: AuthService,
+    public accountService: AccountService,
   ) {
-    this.eventService.getEvents().subscribe(elist => {
+    this.eventService.getEventsById(accountService.baseUser.recommended).subscribe(elist => {
       this.eventList = [];
       elist.forEach(e => this.eventList.push(e.payload.doc.data() as Event));
       this.applyFilter();

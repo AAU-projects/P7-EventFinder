@@ -38,9 +38,19 @@ export class EventService {
     return this.firestore.collection('events', query).get();
   }
 
-  getEvent(id) {
+  getEvent(id: string) {
     const eventRef = this.firestore.collection('events').doc<Event>(id);
 
     return eventRef;
+  }
+
+  getEventsById(idLst: string[]) {
+    let eventLstRef: any;
+    // tslint:disable-next-line: prefer-for-of
+    for (let i = 0; i < idLst.length; i++) {
+      eventLstRef += this.getEvent(idLst[i]);
+    }
+
+    return eventLstRef;
   }
 }

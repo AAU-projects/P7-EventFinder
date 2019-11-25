@@ -17,6 +17,7 @@ export interface User extends Account {
     sex: Sex;
     preferences: Genre|Atmosphere|Tags[];
     organizations: string[];
+    recommended: string[];
 }
 
 export interface Organization extends Account {

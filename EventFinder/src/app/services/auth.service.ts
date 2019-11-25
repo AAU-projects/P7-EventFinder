@@ -175,7 +175,8 @@ export class AuthService {
             birthday: value.birthday,
             organizations: [],
             profileImage: '',
-            preferences: []
+            preferences: [],
+            recommended: value.recommended
           }
         );
       }
