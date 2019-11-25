@@ -25,6 +25,8 @@ import { UserEventsComponent } from './user-events/user-events.component';
 import { OrganizationEventListComponent } from './organization-event-list/organization-event-list.component';
 import { StatisticsComponent } from './statistics/statistics.component';
 import { ChartsModule } from 'ng2-charts';
+import { FeedbackTileComponent } from './feedback-tile/feedback-tile.component';
+import { AddFeedbackComponent } from './add-feedback/add-feedback.component';
 
 /* How to add a new component:
     ng g c components/[name] --export
@@ -48,7 +50,9 @@ import { ChartsModule } from 'ng2-charts';
     CheckoutComponent,
     UserEventsComponent,
     OrganizationEventListComponent,
-    StatisticsComponent],
+    StatisticsComponent,
+    FeedbackTileComponent,
+    AddFeedbackComponent],
   imports: [
     CommonModule,
     RouterModule,
@@ -89,6 +93,8 @@ import { ChartsModule } from 'ng2-charts';
     UserEventsComponent,
     OrganizationEventListComponent,
     StatisticsComponent,
+    FeedbackTileComponent,
+    AddFeedbackComponent,
   ],
 })
 export class ComponentsModule {}

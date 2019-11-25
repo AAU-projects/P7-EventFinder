@@ -1,12 +1,16 @@
-.no-bottom-margin {
-  margin-bottom: 0rem  !important;
-}
-
-.less-tile-padding {
-  padding: 0.10rem !important;
-}
-
 .button {
+    margin-right: 1rem;
+}
+
+.star-active {
+    color: #FED88F;
+}
+
+.star-inactive {
+    color: #9A9AB2;
+}
+
+.level-item {
   margin-right: 5px;
 }
 
@@ -19,3 +23,8 @@
 .button.is-darker:hover {
   background-color: #5C5C80;
 }
+
+.modal:hover {
+  cursor: default;
+}
+

@@ -3,7 +3,8 @@
 </div>
 
 
-<div *ngIf="organizationImageUrl" class="tile is-child is-hoverable box notification has-background-dark has-text-white pointer no-padding" (click)="setSelectedEvent(event.uid)">
+<div id="mainTile" *ngIf="organizationImageUrl" class="tile is-child is-hoverable box notification has-background-dark has-text-white pointer no-padding" (click)="setSelectedEvent(event.uid)">
+
   <div class="columns is-vcentered is-hoverable">
     <div class="column no-padding-column is-4">
       <figure class="image is-square is-fullwidth">
@@ -90,11 +91,9 @@
         </h3>
         <br>
         <nav class="level">
-          <div class="level-left">
-
-          </div>
+          <div class="level-left"></div>
           <div class="level-right">
-              <div class="level-item">
+              <div class="level-item" (click)="stopit($event)">
                   <app-checkout [receiptUrl]=receiptUrl [organization]=organization [event]=event [sizeClass]='"is-medium"' [organizationImage]=organizationImageUrl></app-checkout>
               </div>
           </div>

@@ -1,10 +1,10 @@
-import { Component, OnInit, Input, HostListener } from '@angular/core';
+import { Component, OnInit, Input, HostListener, EventEmitter } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { StripeCheckoutLoader, StripeCheckoutHandler } from 'ng-stripe-checkout';
 import { CheckoutService } from 'src/app/services/checkout.service';
 import { SharedService } from 'src/app/services/shared.service';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { Event } from 'src/app/models/event.model';
+import { Event as Ev } from 'src/app/models/event.model';
 import { Organization } from 'src/app/models/account.model';
 
 @Component({
@@ -17,12 +17,13 @@ export class CheckoutComponent implements OnInit {
 
   @Input() organizationImage: string;
   @Input() sizeClass: string;
-  @Input() event: Event;
+  @Input() event: Ev;
   @Input() organization: Organization;
   @Input() receiptUrl: string;
 
   paymentDate = new Date(Date.now());
   transactionId: string;
+  leaveFeedback = false;
 
   showConfirmModalSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   public showConfirmModalObs: Observable<boolean> = this.showConfirmModalSubject.asObservable();
@@ -73,7 +74,17 @@ export class CheckoutComponent implements OnInit {
     this.showConfirmModalSubject.next(false);
   }
 
-  onClickReceipt() {
+  onClickReceipt(event: Event) {
+    event.stopPropagation();
     window.open(this.receiptUrl);
+  }
+
+  onLeaveFeedback(event: Event) {
+    event.stopPropagation();
+    this.leaveFeedback = true;
+  }
+
+  onCloseFromFeedback() {
+    this.leaveFeedback = false;
   }
 }

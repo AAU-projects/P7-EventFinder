@@ -1,0 +1,48 @@
+<div class="box" *ngIf="userImageUrl && organization && event">
+  <article class="media">
+    <div class="media-left">
+      <figure class="image is-64x64">
+        <img [src]="userImageUrl" alt="Image" class="is-rounded">
+      </figure>
+    </div>
+    <div class="media-content">
+      <div class="content">
+        <div class="columns">
+          <div class="column">
+            <nav class="level">
+              <div class="level-left">
+                <div class="columns is-mobile is-gapless">
+                  <div *ngFor="let rating of ratings()">
+                    <div class="column is-paddingless">
+                      <span class="level-item icon is-small">
+                        <i class="fa fa-star" aria-hidden="true" [ngClass]="{'star-active': rating}"
+                          [ngClass]="{'star-inactive': !rating}"></i>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </nav>
+            <p>
+              <strong> {{ user.firstname }} {{ user.lastname }} </strong>
+              <br>
+              {{ feedback.review }}
+              <br>
+              <small class="timestamp">{{ feedback.created | date : "MMMM d, y 'at ' HH:mm" }}</small>
+            </p>
+          </div>
+          <div class="column is-2-desktop is-4-tablet divider" *ngIf="showMetadata">
+            <p class="is-size-7">
+              {{ event.title }} <br>
+              {{ event.startDate | date : "dd'/'MM'/'yy" }} <br>
+              {{ event.address }}, {{ event.zip }} {{ event.city }} <br>
+              {{ event.country }} <br>
+              <br>
+              Hosted by: <a class="link" [routerLink]="['/o', organization.uid]"> {{ organization.organization }} </a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </article>
+</div>
