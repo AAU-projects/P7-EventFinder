@@ -25,6 +25,7 @@ export interface Organization extends Account {
     about: string;
     tags: Tags[];
     connectedUsers: string[];
+    rating: number;
 }
 
 export enum Sex {

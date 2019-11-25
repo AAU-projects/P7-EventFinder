@@ -103,6 +103,7 @@
           <app-event-form *ngSwitchCase="menuTabs.AddEvent"></app-event-form>
           <app-organization-connections *ngSwitchCase="menuTabs.Staff"></app-organization-connections>
           <app-organization-event-list *ngSwitchCase="menuTabs.Events" [user]="user"></app-organization-event-list>
+          <app-feedback-list-tile *ngSwitchCase="menuTabs.Feedback" [organization]="user"></app-feedback-list-tile>
         </div>
       </div>
     </div>

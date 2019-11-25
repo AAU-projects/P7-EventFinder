@@ -25,6 +25,7 @@ import { UserEventsComponent } from './user-events/user-events.component';
 import { OrganizationEventListComponent } from './organization-event-list/organization-event-list.component';
 import { FeedbackTileComponent } from './feedback-tile/feedback-tile.component';
 import { AddFeedbackComponent } from './add-feedback/add-feedback.component';
+import { FeedbackListTileComponent } from './feedback-list-tile/feedback-list-tile.component';
 
 /* How to add a new component:
     ng g c components/[name] --export
@@ -49,7 +50,8 @@ import { AddFeedbackComponent } from './add-feedback/add-feedback.component';
     UserEventsComponent,
     OrganizationEventListComponent,
     FeedbackTileComponent,
-    AddFeedbackComponent],
+    AddFeedbackComponent,
+    FeedbackListTileComponent],
   imports: [
     CommonModule,
     RouterModule,
@@ -90,6 +92,7 @@ import { AddFeedbackComponent } from './add-feedback/add-feedback.component';
     OrganizationEventListComponent,
     FeedbackTileComponent,
     AddFeedbackComponent,
+    FeedbackListTileComponent,
   ],
 })
 export class ComponentsModule {}

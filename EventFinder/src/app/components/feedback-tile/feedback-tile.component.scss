@@ -1,28 +1,29 @@
 .box {
-    background-color: #323259 !important;
-    color: white;
+  position: relative;
+  background-color: #323259 !important;
+  color: white;
 }
 
 .box strong {
-    color: white;
+  color: white;
 }
 
 .divider {
-    border-left: 2px solid #5C5C80;
-    padding-left: 15px;
-    padding-right: 15px;
+  border-left: 2px solid #5C5C80;
+  padding-left: 15px;
+  padding-right: 15px;
 }
 
 .star-active {
-    color: #FED88F;
+  color: #FED88F;
 }
 
 .star-inactive {
-    color: #9A9AB2;
+  color: #9A9AB2;
 }
 
 .level-item {
-    margin-right: 5px;
+  margin-right: 5px;
 }
 
 .level {
@@ -31,6 +32,8 @@
 
 .timestamp {
   color: #5C5C80;
+  position: absolute;
+  bottom: 5px;
 }
 
 .link {

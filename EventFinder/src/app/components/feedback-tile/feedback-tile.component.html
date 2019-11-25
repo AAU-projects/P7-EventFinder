@@ -1,3 +1,7 @@
+<div *ngIf="showEvent">
+  <app-event-select [inputEventID]="event.uid" (closeEvent)="toggleEvent()"></app-event-select>
+</div>
+
 <div class="box" *ngIf="userImageUrl && organization && event">
   <article class="media">
     <div class="media-left">
@@ -31,12 +35,10 @@
               <small class="timestamp">{{ feedback.created | date : "MMMM d, y 'at ' HH:mm" }}</small>
             </p>
           </div>
-          <div class="column is-2-desktop is-4-tablet divider" *ngIf="showMetadata">
+          <div class="column is-3-desktop is-4-tablet divider" *ngIf="showMetadata">
             <p class="is-size-7">
-              {{ event.title }} <br>
-              {{ event.startDate | date : "dd'/'MM'/'yy" }} <br>
-              {{ event.address }}, {{ event.zip }} {{ event.city }} <br>
-              {{ event.country }} <br>
+              <a class="link" (click)="toggleEvent()">{{ event.title }}</a> <br>
+              Date: {{ event.startDate | date : "dd'/'MM'/'yy" }} <br>
               <br>
               Hosted by: <a class="link" [routerLink]="['/o', organization.uid]"> {{ organization.organization }} </a>
             </p>

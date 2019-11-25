@@ -64,7 +64,7 @@
           <ul class="menu-list">
             <li><a class="no-decoration" (click)="onMenuClick('Profile')" [ngClass]="((userMenuObs | async) == 'Profile') ? 'selected' : ''">Profile</a></li>
             <li><a class="no-decoration">Activity</a></li>
-            <li><a class="no-decoration">Feedback</a></li>
+            <li><a class="no-decoration" (click)="onMenuClick('Feedback')" [ngClass]="((userMenuObs | async) == 'Feedback') ? 'selected' : ''">Feedback</a></li>
             <li><a class="no-decoration" (click)="onMenuClick('Tickets')" [ngClass]="((userMenuObs | async) == 'Tickets') ? 'selected' : ''">Tickets</a></li>
             <li><a class="no-decoration">Preferences</a></li>
           </ul>
@@ -76,6 +76,7 @@
         <div [ngSwitch]="(userMenuObs | async)">
             <app-user-info *ngSwitchCase="'Profile'" [user]="user"></app-user-info>
             <app-user-events *ngSwitchCase="'Tickets'" [user]="user"></app-user-events>
+            <app-feedback-list-tile *ngSwitchCase="'Feedback'" [user]="user"></app-feedback-list-tile>
         </div>
       </div>
     </div>

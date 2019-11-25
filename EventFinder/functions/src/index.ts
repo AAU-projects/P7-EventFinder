@@ -8,6 +8,32 @@ admin.initializeApp({
   databaseURL: 'https://eventfinder-8605f.firebaseio.com'
 });
 
+exports.updateOrganizationRating = functions.region('europe-west2')
+  .firestore.document('feedback/{id}').onCreate((change:any, context:any) => {
+    const feedback = change.data();
+
+    const organizationId = feedback.organizationuid;
+    const rating = feedback.rating;
+
+    admin.firestore().doc(`/organizations/${organizationId}`).get().then((doc: any) => {
+      if (doc.exists) {
+        const data = doc.data();
+
+        const currentSum = data['sumOfRatings'] ? data['sumOfRatings'] : 0;
+        const currentNum = data['numOfRatings'] ? data['numOfRatings'] : 0;
+        const newSum = currentSum + rating;
+        const newNum = currentNum + 1;
+        const newRating = newSum / newNum;
+
+        admin.firestore().doc(`/organizations/${organizationId}`).set({
+          sumOfRatings: newSum,
+          numOfRatings: newNum,
+          rating: newRating
+        }, {merge: true})
+      }
+    });
+  });
+
 exports.createStripeCharge = functions.region('europe-west2')
   .firestore.document('/payments/{userId}/userPayments/{paymentId}')
   .onCreate((change:any, context:any) => {

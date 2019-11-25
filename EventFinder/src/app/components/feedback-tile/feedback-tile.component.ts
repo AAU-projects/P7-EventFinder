@@ -20,6 +20,7 @@ export class FeedbackTileComponent implements OnInit {
   user: User;
   organization: Organization;
   userImageUrl: string;
+  showEvent = false;
 
   constructor(private eventService: EventService,
               private orgService: OrganizationService,
@@ -57,6 +58,10 @@ export class FeedbackTileComponent implements OnInit {
       }
     }
     return ratings;
+  }
+
+  toggleEvent() {
+    this.showEvent = !this.showEvent;
   }
 
 }

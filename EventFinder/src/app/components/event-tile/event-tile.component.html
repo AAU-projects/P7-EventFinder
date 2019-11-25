@@ -46,12 +46,22 @@
           </div>
           <div class="tile is-child no-padding has-centered-content is-flex">
             <h3 class="has-text">
-              4.0
-              <span class="icon"><i class="fa fa-star star-active"></i></span>
-              <span class="icon"><i class="fa fa-star star-active"></i></span>
-              <span class="icon"><i class="fa fa-star star-active"></i></span>
-              <span class="icon"><i class="fa fa-star star-active"></i></span>
-              <span class="icon"><i class="fa fa-star star-inactive"></i></span>
+              {{ organization.rating | number:'0.1-1' }}
+              <div class="columns stars">
+                  <div *ngFor="let star of orgRating()">
+                      <div class="column is-paddingless">
+                        <span class="icon is-small star">
+                          <div *ngIf="star == Stars.Half; else elseBlock">
+                              <i class="fa fa-star-half-alt star-active" aria-hidden="true"></i>
+                          </div>
+                          <ng-template #elseBlock>
+                              <i class="fa fa-star" aria-hidden="true" [ngClass]="{'star-active': star == Stars.Full}"
+                              [ngClass]="{'star-inactive': star == Stars.Empty}"></i>
+                          </ng-template>
+                        </span>
+                      </div>
+                    </div>
+              </div>
             </h3>
           </div>
         </div>
@@ -102,3 +112,5 @@
     </div>
   </div>
 </div>
+
+
