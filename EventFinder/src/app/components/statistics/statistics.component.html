@@ -12,7 +12,7 @@
                 <div class="control">
                     <p class="help has-text-white">Select event</p>
                     <div class="select is-rounded is-small">
-                    <select (change)="onEventSelect($event.target.value)" [(ngModel)]="selectedEvent">
+                    <select (change)="onEventSelect()" [(ngModel)]="selectedEvent">
                         <option *ngFor="let event of orgEventList | keyvalue" value={{event.value.uid}}>
                             {{event.value.title}}
                         </option>
@@ -26,7 +26,7 @@
                 <div class="control">
                     <p class="help has-text-white">Select data</p>
                     <div class="select is-rounded is-small">
-                    <select (change)="onEventSelect($event.target.value)" [(ngModel)]="selectedData">
+                    <select (change)="onEventSelect()" [(ngModel)]="selectedData">
                         <option value={{graphData.Rating}}>Rating</option>
                         <option value={{graphData.Gender}}>Gender segregation</option>
                         <option value={{graphData.Geo}}>Customer geographic segmentation</option>
@@ -39,12 +39,13 @@
     </nav>
 
   <div class="chart">
-      <canvas baseChart [data]="currentChartData" [labels]="currentChartLabels" [chartType]="currentChartType"
+      <canvas baseChart #currentChart="base-chart" [data]="currentChartData" [labels]="currentChartLabels" [chartType]="currentChartType"
         [options]="pieChartOptions" [colors]="currentChartColors" [legend]="currentChartLegend">
       </canvas>
     </div>
   </div>
 
+  <!--
   <div class="tile box is-child notification has-background-dark tile-margin">
     <h1 class="title has-text-white is-6">Overall rating</h1>
     <div class="chart">
@@ -62,4 +63,5 @@
         </canvas>
     </div>
   </div>
+  -->
 </ng-template>
