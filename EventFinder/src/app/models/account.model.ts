@@ -18,6 +18,7 @@ export interface User extends Account {
     preferences: Genre|Atmosphere|Tags[];
     organizations: string[];
     recommended: string[];
+    recommendedWeights: any;
 }
 
 export interface Organization extends Account {

@@ -44,13 +44,17 @@ export class EventService {
     return eventRef;
   }
 
-  getEventsById(idLst: string[]) {
-    let eventLstRef: any;
-    // tslint:disable-next-line: prefer-for-of
-    for (let i = 0; i < idLst.length; i++) {
-      eventLstRef += this.getEvent(idLst[i]);
-    }
+  getEventtest(id: string) {
+    return this.firestore.collection('events').doc<Event>(id).valueChanges();
+  }
 
-    return eventLstRef;
+  async getEventsById(idLst: string[]) {
+    const promises = [];
+
+    idLst.forEach(async id => {
+      promises.push(this.getEventtest(id));
+    });
+
+    return promises;
   }
 }

@@ -5,6 +5,7 @@ import { Tags } from 'src/app/models/account.model';
 import { Genre, Atmosphere } from 'src/app/models/event.model';
 import { AccountTypes } from 'src/app/models/account.types.enum';
 import { NotificationService } from 'src/app/services/notification.service';
+import { MAX_UNSIGNED_VALUE } from 'long';
 
 @Component({
   selector: 'app-tag-selection',
@@ -34,25 +35,19 @@ export class TagSelectionComponent implements OnInit {
   }
 
   confirmSelection() {
-    if (this.userType === AccountTypes.User) {
+    if (this.userType === AccountTypes.User && this.userPreferenceList.length >= 1) {
       this.accountService.editTagsOrPrefrences(this.userPreferenceList);
       this.router.navigate(['/user']);
       this.notification.notifySuccess('You have successfully created your user');
-    } else {
-      if (this.tagList.length >= 1 && this.tagList.length <= 3) {
-        this.accountService.editTagsOrPrefrences(this.tagList);
-        this.router.navigate(['/organization']);
-        this.notification.notifySuccess('You have successfully created your organization');
-      }
+    } else if (this.tagList.length >= 1 && this.tagList.length <= 3) {
+      this.accountService.editTagsOrPrefrences(this.tagList);
+      this.router.navigate(['/organization']);
+      this.notification.notifySuccess('You have successfully created your organization');
     }
   }
 
-  organizationSubmitCheck() {
-    if (this.userType === AccountTypes.User) {
-      return false;
-    } else {
-      return !(this.tagList.length >= 1);
-    }
+  submitCheck() {
+    return !(this.tagList.length >= 1 || this.userPreferenceList.length >= 1);
   }
 
   onTagClick(tag: Tags) {
@@ -64,6 +59,7 @@ export class TagSelectionComponent implements OnInit {
     } else {
       this.tagList.push(tag);
     }
+    console.log(this.tagList);
   }
 
   onPrefrenceClick(tag: Tags | Genre | Atmosphere) {

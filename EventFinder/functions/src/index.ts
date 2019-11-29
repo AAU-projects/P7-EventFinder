@@ -10,10 +10,10 @@ admin.initializeApp({
 
 const db = admin.firestore();
 
-
-exports.createStripeCharge = functions.region('europe-west2')
-  .firestore.document('/payments/{userId}/userPayments/{paymentId}')
-  .onCreate((change:any, context:any) => {
+exports.createStripeCharge = functions
+  .region("europe-west2")
+  .firestore.document("/payments/{userId}/userPayments/{paymentId}")
+  .onCreate((change: any, context: any) => {
     // Get all the data for the payment from firestore.
     const payment = change.data();
 
@@ -28,18 +28,20 @@ exports.createStripeCharge = functions.region('europe-west2')
     const idempotency_key = paymentId;
     const amount = payment.amount;
     const source = payment.token.id;
-    const currency = 'DKK';
+    const currency = "DKK";
     const receipt_email = payment.token.email;
-    const charge = {amount, currency, source, receipt_email};
+    const charge = { amount, currency, source, receipt_email };
 
     // Creates the Stripe charge.
-    return stripe.charges.create(charge, { idempotency_key })
+    return stripe.charges
+      .create(charge, { idempotency_key })
       .then((chargeSnap: any) => {
         // When the charge has been completed, save the charge object in firestore.
-        admin.firestore()
+        admin
+          .firestore()
           .doc(`/payments/${userId}/userPayments/${paymentId}`)
-          .set({stripeCharge: chargeSnap}, {merge: true});
-      })
+          .set({ stripeCharge: chargeSnap }, { merge: true });
+      });
   });
 
 exports.updatePreferences = functions
@@ -81,68 +83,67 @@ exports.recommender = functions
   .region("europe-west2")
   .firestore.document("/recommender/{userId}")
   .onUpdate(async (change: any, context: any) => {
-    const preferences = change.after.data();
-    const userId = context.params.userId;
-    const batch = db.batch();
-    const userRef = db.collection("users/").doc(userId);
-    let total = 0;
-
-    for (const key in preferences) {
-      const value = preferences[key];
-      total += value;
-    }
-    const weightMap = new Map();
-    // let mapString = '{weightMap: hello}';
-
-
-    const store: Record<string, Number> = {};
-
-    for (const key in preferences) {
-      const weightValue = preferences[key] / total;
-      store.key = weightValue
-      // data['weights'][key] = weightValue;
-      weightMap.set(key, weightValue)
-      // mapString += `'${key}' : '${weightValue}', `
-    }
-
-    // mapString = mapString.substring(0, mapString.length - 2);
-    // mapString += '}}'
-    batch.set(userRef, store, {merge: true});
-
-    let eventScoreMap: any = [];
-    const eventsSnaphot = await db.collection(`events`).get();
-    const events = eventsSnaphot.docs;
-    events.forEach((doc: any) => {
-      let score = 0;
-
-      const event = doc.data();
-      const genre = event.genre;
-      const atmosphere = event.atmosphere;
-      const dresscode = event.dresscode;
-      const allElements = genre.concat(atmosphere);
-      allElements.push(dresscode);
-
-      // Caculates score for an event
-      allElements.forEach(function(element: any) {
-        const name = element.toLowerCase();
-        if (weightMap.has(name)) {
-          score += weightMap.get(name) / allElements.length;
-        }
-      });
-
-      eventScoreMap.push([event.uid, score])
-    });
-
-    eventScoreMap = eventScoreMap.sort((a: any, b: any) => b[1] - a[1]);
-
-    const recommenedEvents = [];
-    for (let index = 0; index < 5; index++) {
-      const element = eventScoreMap[index];
-      recommenedEvents.push(element[0]);
-    }
-
-    batch.update(userRef, 'recommended', recommenedEvents);
-
-
-    return batch.commit();
+    return await updateRecommenderValues(change, context, true);
   });
+
+exports.recommender = functions
+  .region("europe-west2")
+  .firestore.document("/recommender/{userId}")
+  .onCreate(async (change: any, context: any) => {
+    return await updateRecommenderValues(change, context, false);
+  });
+
+
+async function updateRecommenderValues(change: any, context: any, updated: boolean) {
+  let preferences;
+  if (updated) {
+    preferences = change.after.data();
+  } else {
+    preferences = change.data();
+  }
+  const userId = context.params.userId;
+  const batch = db.batch();
+  const userRef = db.collection("users/").doc(userId);
+  let total = 0;
+  for (const key in preferences) {
+    const value = preferences[key];
+    total += value;
+  }
+  const weightMap: {
+    [key: string]: Number;
+  } = {};
+  for (const key in preferences) {
+    const weightValue = preferences[key] / total;
+    weightMap[key] = weightValue;
+  }
+  batch.set(userRef, { recommendedWeights: weightMap }, { merge: true });
+  let eventScoreMap: any = [];
+  const eventsSnaphot = await db.collection(`events`).get();
+  const events = eventsSnaphot.docs;
+  events.forEach((doc: any) => {
+    let score = 0;
+    const event = doc.data();
+    const genre = event.genre;
+    const atmosphere = event.atmosphere;
+    const dresscode = event.dresscode;
+    const allElements = genre.concat(atmosphere);
+    allElements.push(dresscode);
+    // Caculates score for an event
+    allElements.forEach(function (element: any) {
+      const name = element.toLowerCase();
+      if (name in weightMap) {
+        score += Number(weightMap[name]) / allElements.length;
+      }
+    });
+    eventScoreMap.push([event.uid, score]);
+  });
+  eventScoreMap = eventScoreMap.sort((a: any, b: any) => b[1] - a[1]);
+  const recommenedEvents = [];
+  for (let index = 0; index < 5; index++) {
+    const element = eventScoreMap[index];
+    recommenedEvents.push(element[0]);
+  }
+  batch.update(userRef, "recommended", recommenedEvents);
+  return batch.commit();
+}
+
