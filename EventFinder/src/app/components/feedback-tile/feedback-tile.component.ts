@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Feedback } from 'src/app/models/feedback.model';
-import { Event } from 'src/app/models/event.model';
+import { Event as ev } from 'src/app/models/event.model';
 import { User, Organization } from 'src/app/models/account.model';
 import { EventService } from 'src/app/services/event.service';
 import { OrganizationService } from 'src/app/services/organization.service';
@@ -15,12 +15,14 @@ import { StorageService } from 'src/app/services/storage.service';
 export class FeedbackTileComponent implements OnInit {
   @Input() showMetadata = false;
   @Input() feedback: Feedback;
+  @Input() editable: boolean;
 
-  event: Event;
+  event: ev;
   user: User;
   organization: Organization;
   userImageUrl: string;
   showEvent = false;
+  showFeedback = false;
 
   constructor(private eventService: EventService,
               private orgService: OrganizationService,
@@ -60,8 +62,29 @@ export class FeedbackTileComponent implements OnInit {
     return ratings;
   }
 
-  toggleEvent() {
+  toggleEvent(event: Event) {
+    event.stopPropagation();
     this.showEvent = !this.showEvent;
+  }
+
+  closeFeedback() {
+    this.showFeedback = false;
+  }
+
+  closeEvent() {
+    this.showEvent = false;
+  }
+
+  toggleFeedback() {
+    this.showFeedback = !this.showFeedback;
+  }
+
+  onBoxClick(event: Event) {
+    event.stopPropagation();
+    if (!this.editable) {
+      return;
+    }
+    this.toggleFeedback();
   }
 
 }

@@ -3,9 +3,14 @@
 </div>
 
 <div *ngIf="feedback">
-  <div *ngFor="let item of feedback">
+  <div *ngFor="let item of feedbackListFunc()">
     <div class="feedback">
-        <app-feedback-tile [showMetadata]="true" [feedback]="item"></app-feedback-tile>
+      <app-feedback-tile [showMetadata]="true" [feedback]="item" [editable]="editable"></app-feedback-tile>
     </div>
   </div>
+  <div>
+    <button class="button is-primary" (click)="onPreviousClick()" [disabled]="pages.length <= 1">Previous</button>
+    <button class="button is-primary" (click)="onNextClick()" [disabled]="feedback.length < this.feedbacksPerPage + 1">Next</button>
+  </div>
 </div>
+

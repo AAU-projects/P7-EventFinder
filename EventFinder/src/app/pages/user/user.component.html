@@ -76,7 +76,7 @@
         <div [ngSwitch]="(userMenuObs | async)">
             <app-user-info *ngSwitchCase="'Profile'" [user]="user"></app-user-info>
             <app-user-events *ngSwitchCase="'Tickets'" [user]="user"></app-user-events>
-            <app-feedback-list-tile *ngSwitchCase="'Feedback'" [user]="user"></app-feedback-list-tile>
+            <app-feedback-list-tile *ngSwitchCase="'Feedback'" [user]="user" [editable]="true"></app-feedback-list-tile>
         </div>
       </div>
     </div>
