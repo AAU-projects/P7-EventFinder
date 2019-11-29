@@ -27,10 +27,10 @@
                     <p class="help has-text-white">Select data</p>
                     <div class="select is-rounded is-small">
                     <select (change)="onEventSelect()" [(ngModel)]="selectedData">
+                        <option value={{graphData.UserPreference}}>User preference</option>
                         <option value={{graphData.Rating}}>Rating</option>
                         <option value={{graphData.Gender}}>Gender segregation</option>
                         <option value={{graphData.Geo}}>Customer geographic segmentation</option>
-                        <option value={{graphData.UserPreference}}>User preference</option>
                     </select>
                     </div>
                 </div>
