@@ -19,9 +19,7 @@ export class RecommenderService {
       this.eventService
         .getEventsById(account.recommended)
         .then(async elist => {
-          // tslint:disable-next-line: prefer-for-of
-          for (let index = 0; index < elist.length; index++) {
-            const element = elist[index];
+          for (const element of elist) {
             await element.subscribe((event: Event) => {
               eventList.push(event);
               this.eventListSubject.next(eventList);

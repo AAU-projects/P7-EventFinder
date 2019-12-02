@@ -44,15 +44,11 @@ export class EventService {
     return eventRef;
   }
 
-  getEventtest(id: string) {
-    return this.firestore.collection('events').doc<Event>(id).valueChanges();
-  }
-
   async getEventsById(idLst: string[]) {
     const promises = [];
 
     idLst.forEach(async id => {
-      promises.push(this.getEventtest(id));
+      promises.push(this.getEvent(id).valueChanges());
     });
 
     return promises;

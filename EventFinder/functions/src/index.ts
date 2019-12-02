@@ -1,18 +1,18 @@
-const functions = require("firebase-functions");
-const admin = require("firebase-admin");
-const serviceAccount = require("../serviceAccountKey.json");
-const stripe = require("stripe")("sk_test_4eIsswkxkyrNLFdG62jHrkG400VbeMKRGP");
+const functions = require('firebase-functions');
+const admin = require('firebase-admin');
+const serviceAccount = require('../serviceAccountKey.json');
+const stripe = require('stripe')('sk_test_4eIsswkxkyrNLFdG62jHrkG400VbeMKRGP');
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
-  databaseURL: "https://eventfinder-8605f.firebaseio.com"
+  databaseURL: 'https://eventfinder-8605f.firebaseio.com'
 });
 
 const db = admin.firestore();
 
 exports.createStripeCharge = functions
-  .region("europe-west2")
-  .firestore.document("/payments/{userId}/userPayments/{paymentId}")
+  .region('europe-west2')
+  .firestore.document('/payments/{userId}/userPayments/{paymentId}')
   .onCreate((change: any, context: any) => {
     // Get all the data for the payment from firestore.
     const payment = change.data();
@@ -28,7 +28,7 @@ exports.createStripeCharge = functions
     const idempotency_key = paymentId;
     const amount = payment.amount;
     const source = payment.token.id;
-    const currency = "DKK";
+    const currency = 'DKK';
     const receipt_email = payment.token.email;
     const charge = { amount, currency, source, receipt_email };
 
@@ -45,16 +45,16 @@ exports.createStripeCharge = functions
   });
 
 exports.updatePreferences = functions
-  .region("europe-west2")
-  .firestore.document("/payments/{userId}/userPayments/{paymentId}")
+  .region('europe-west2')
+  .firestore.document('/payments/{userId}/userPayments/{paymentId}')
   .onCreate((change: any, context: any) => {
     const payment = change.data();
     const userId = context.params.userId;
     const batch = db.batch();
-    const recommenderRef = db.collection("recommender").doc(userId);
+    const recommenderRef = db.collection('recommender').doc(userId);
 
     return db
-      .collection("events")
+      .collection('events')
       .doc(payment.eventId)
       .get()
       .then((snapshot: any) => {
@@ -80,15 +80,15 @@ exports.updatePreferences = functions
   });
 
 exports.recommender = functions
-  .region("europe-west2")
-  .firestore.document("/recommender/{userId}")
+  .region('europe-west2')
+  .firestore.document('/recommender/{userId}')
   .onUpdate(async (change: any, context: any) => {
     return await updateRecommenderValues(change, context, true);
   });
 
 exports.recommender = functions
-  .region("europe-west2")
-  .firestore.document("/recommender/{userId}")
+  .region('europe-west2')
+  .firestore.document('/recommender/{userId}')
   .onCreate(async (change: any, context: any) => {
     return await updateRecommenderValues(change, context, false);
   });
@@ -103,7 +103,7 @@ async function updateRecommenderValues(change: any, context: any, updated: boole
   }
   const userId = context.params.userId;
   const batch = db.batch();
-  const userRef = db.collection("users/").doc(userId);
+  const userRef = db.collection('users/').doc(userId);
   let total = 0;
   for (const key in preferences) {
     const value = preferences[key];
@@ -143,7 +143,7 @@ async function updateRecommenderValues(change: any, context: any, updated: boole
     const element = eventScoreMap[index];
     recommenedEvents.push(element[0]);
   }
-  batch.update(userRef, "recommended", recommenedEvents);
+  batch.update(userRef, 'recommended', recommenedEvents);
   return batch.commit();
 }
 

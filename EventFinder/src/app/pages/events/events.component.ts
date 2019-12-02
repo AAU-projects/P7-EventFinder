@@ -147,9 +147,6 @@ export class EventsComponent implements OnInit {
   }
 
   applyFilter() {
-    if (this.eventList === null) {
-      return;
-    }
     let tempEventListShow: Event[] = Array.from(this.eventList);
     tempEventListShow = tempEventListShow.filter(element => this.applyTagsFilter(element));
     tempEventListShow = tempEventListShow.filter(element => this.getInRange(element, this.userLocation, this.maxDistance));
