@@ -9,7 +9,7 @@
       <div class="tile is-ancestor">
         <div class="tile is-child has-centered-content is-flex is-4"></div>
         <div class="tile is-child has-centered-content is-flex is-4">
-          <button class="button is-rounded is-primary is-fullwidth" [disabled]="organizationSubmitCheck()" (click)="confirmSelection()">Confirm</button>
+          <button class="button is-rounded is-primary is-fullwidth" [disabled]="submitCheck()" (click)="confirmSelection()">Confirm</button>
         </div>
       </div>
       <div class="tile is-ancestor" *ngIf="accountService.isUser">
@@ -25,7 +25,6 @@
 <!-- Userblock  -->
 <ng-template #UserBlock>
   <P>Please select a few catagories so we know which types of events you like:</P>
-  <p class="is-size-7">(optional)</p>
   <br>
   <div class="tile is-ancestor">
     <div class="tile is-vertical is-parent">
