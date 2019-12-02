@@ -19,6 +19,7 @@ import { AgmCoreModule } from '@agm/core';
 import { environment } from 'src/environments/environment';
 import {MatSliderModule} from '@angular/material/slider';
 import { PublicOrganizationComponent } from './public-organization/public-organization.component';
+import { FormsModule } from '@angular/forms';
 
 
 /* How to add a new page:
@@ -49,6 +50,7 @@ import { PublicOrganizationComponent } from './public-organization/public-organi
     ReactiveFormsModule,
     HttpClientModule,
     MatSliderModule,
+    FormsModule,
     AgmCoreModule.forRoot({ // Google maps
       apiKey: environment.google.googleApiKey
     })

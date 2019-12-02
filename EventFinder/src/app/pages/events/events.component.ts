@@ -8,6 +8,7 @@ import { match } from 'minimatch';
 import { SharedService } from 'src/app/services/shared.service';
 import { AccountService } from 'src/app/services/account.service';
 import { RecommenderService } from 'src/app/services/recommender.service';
+import { Params, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-events',
@@ -23,6 +24,7 @@ export class EventsComponent implements OnInit {
   userLocation: number[] = [null, null];
   maxDistance = Number.MAX_SAFE_INTEGER;
   maxPrice = Number.MAX_SAFE_INTEGER;
+  searchFromURL: string;
 
   selectedToDateFilter: Date = null;
   selectedFromDateFilter: Date = null;
@@ -33,7 +35,8 @@ export class EventsComponent implements OnInit {
     public shared: SharedService,
     public auth: AuthService,
     public accountService: AccountService,
-    public recommenderService: RecommenderService
+    public recommenderService: RecommenderService,
+    private route: ActivatedRoute
   ) {
     if (accountService.currentUser) {
       this.recommenderService.eventListObs.subscribe(events => {
@@ -55,10 +58,17 @@ export class EventsComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.route.params.forEach((params: Params) => {
+      this.searchFromURL = params.searchterm;
+    });
     navigator.geolocation.getCurrentPosition((position) => {
       this.userLocation[0] = position.coords.latitude;
       this.userLocation[1] = position.coords.longitude;
     });
+
+    if (this.searchFromURL) {
+      this.search(this.searchFromURL);
+    }
   }
 
   async search(input) {
