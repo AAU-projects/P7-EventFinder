@@ -21,8 +21,4 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
   }
-
-  openLogin() {
-    this.shared.showLogin(true);
-  }
 }

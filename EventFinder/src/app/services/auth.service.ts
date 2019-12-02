@@ -56,7 +56,7 @@ export class AuthService {
   }
 
   getUserType() {
-    if (this.cookie.check('type')){
+    if (this.cookie.check('type')) {
       if (this.getCookieVar('type') === AccountTypes.User) {
         return AccountTypes.User;
       }
@@ -67,7 +67,7 @@ export class AuthService {
   }
 
   isUser() {
-    if (this.cookie.check('type')){
+    if (this.cookie.check('type')) {
       if (this.getCookieVar('type') === AccountTypes.User) {
         return true;
       }
@@ -175,7 +175,9 @@ export class AuthService {
             birthday: value.birthday,
             organizations: [],
             profileImage: '',
-            preferences: []
+            preferences: [],
+            recommended: [],
+            recommendedWeights: [],
           }
         );
       }
