@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, HostListener, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input} from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { StripeCheckoutLoader, StripeCheckoutHandler } from 'ng-stripe-checkout';
 import { CheckoutService } from 'src/app/services/checkout.service';
