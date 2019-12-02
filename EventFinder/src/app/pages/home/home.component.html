@@ -7,9 +7,3 @@
 <div class="buttons is-centered">
   <a [routerLink]="['/events']" class="button is-primary">See available events ></a>
 </div>
-
-<div *ngIf="feedback.length > 0">
-  <div *ngFor="let item of feedback">
-    <app-feedback-tile [showMetadata]="true" [feedback]="item"></app-feedback-tile>
-  </div>
-</div>

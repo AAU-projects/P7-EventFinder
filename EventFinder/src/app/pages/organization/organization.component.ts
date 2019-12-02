@@ -13,7 +13,7 @@ export class OrganizationComponent implements OnInit {
   imgUrl: string;
 
   get menuTabs() { return MenuTabs; }
-  StartTab = MenuTabs.Feedback;
+  StartTab = MenuTabs.Profile;
 
   menuTabSubject: BehaviorSubject<MenuTabs> = new BehaviorSubject<MenuTabs>(this.StartTab);
   public menuTabObs: Observable<MenuTabs> = this.menuTabSubject.asObservable();
