@@ -10,6 +10,93 @@ admin.initializeApp({
 
 const db = admin.firestore();
 
+exports.onFeedbackCreate = functions.region('europe-west2')
+  .firestore.document('feedback/{id}').onCreate((change: any, context: any) => {
+    const feedback = change.data();
+
+    const organizationId = feedback.organizationuid;
+    const rating = feedback.rating;
+
+    return admin.firestore().runTransaction((t: any) => {
+      return t.get(admin.firestore().doc(`/organizations/${organizationId}`))
+        .then((doc: any) => {
+          if (doc.exists) {
+            const data = doc.data();
+
+            const currentSum = data['sumOfRatings'] ? data['sumOfRatings'] : 0;
+            const currentNum = data['numOfRatings'] ? data['numOfRatings'] : 0;
+            const newSum = currentSum + rating;
+            const newNum = currentNum + 1;
+            const newRating = newSum / newNum;
+
+            admin.firestore().doc(`/organizations/${organizationId}`).set({
+              sumOfRatings: newSum,
+              numOfRatings: newNum,
+              rating: newRating
+            }, { merge: true })
+          }
+        });
+    });
+  });
+
+exports.onFeedbackUpdate = functions.region('europe-west2')
+  .firestore.document('feedback/{id}').onUpdate((change: any, context: any) => {
+    const feedbackBefore = change.before.data();
+    const feedbackAfter = change.after.data();
+
+    const organizationId = feedbackAfter.organizationuid;
+    const ratingOld = feedbackBefore.rating;
+    const ratingNew = feedbackAfter.rating;
+
+    return admin.firestore().runTransaction((t: any) => {
+      return t.get(admin.firestore().doc(`/organizations/${organizationId}`))
+        .then((doc: any) => {
+          if (doc.exists) {
+            const data = doc.data();
+
+            const currentSum = data['sumOfRatings'] ? data['sumOfRatings'] : 0;
+            const currentNum = data['numOfRatings'] ? data['numOfRatings'] : 0;
+            const newSum = (currentSum - ratingOld) + ratingNew;
+            const newRating = newSum / currentNum;
+
+            admin.firestore().doc(`/organizations/${organizationId}`).set({
+              sumOfRatings: newSum,
+              rating: newRating
+            }, { merge: true })
+          }
+        });
+    });
+  });
+
+exports.onFeedbackDelete = functions.region('europe-west2')
+  .firestore.document('feedback/{id}').onDelete((change: any, context: any) => {
+    const feedback = change.data();
+
+    const organizationId = feedback.organizationuid;
+    const rating = feedback.rating;
+
+    return admin.firestore().runTransaction((t: any) => {
+      return t.get(admin.firestore().doc(`/organizations/${organizationId}`))
+        .then((doc: any) => {
+          if (doc.exists) {
+            const data = doc.data();
+
+            const currentSum = data['sumOfRatings'] ? data['sumOfRatings'] : 0;
+            const currentNum = data['numOfRatings'] ? data['numOfRatings'] : 0;
+            const newSum = currentSum - rating;
+            const newNum = currentNum - 1;
+            const newRating = newSum / newNum;
+
+            admin.firestore().doc(`/organizations/${organizationId}`).set({
+              sumOfRatings: newSum,
+              numOfRatings: newNum,
+              rating: newRating
+            }, { merge: true })
+          }
+        });
+    });
+  });
+
 exports.createStripeCharge = functions
   .region('europe-west2')
   .firestore.document('/payments/{userId}/userPayments/{paymentId}')
@@ -64,7 +151,7 @@ exports.updatePreferences = functions
         const allElements = genre.concat(atmosphere);
         allElements.push(dresscode);
 
-        allElements.forEach(function(element: any) {
+        allElements.forEach(function (element: any) {
           const name = element.toLowerCase();
           batch.update(
             recommenderRef,
@@ -73,7 +160,7 @@ exports.updatePreferences = functions
           );
         });
 
-        return batch.commit().then(function() {
+        return batch.commit().then(function () {
           return null;
         });
       });

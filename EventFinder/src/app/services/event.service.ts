@@ -47,10 +47,11 @@ export class EventService {
   async getEventsById(idLst: string[]) {
     const promises = [];
 
-    idLst.forEach(async id => {
-      promises.push(this.getEvent(id).valueChanges());
-    });
-
+    if (idLst) {
+      idLst.forEach(async id => {
+        promises.push(this.getEvent(id).valueChanges());
+      });
+    }
     return promises;
   }
 }

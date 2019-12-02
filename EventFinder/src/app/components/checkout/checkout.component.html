@@ -1,9 +1,12 @@
+<div *ngIf="leaveFeedback"> <app-add-feedback [event]="event" (closeform)="onCloseFromFeedback()"></app-add-feedback> </div>
+
 <ng-template [ngIf]="!receiptUrl" [ngIfElse]="showReceipt">
   <button class="button is-primary is-rounded {{sizeClass}}" (click)="onClickBuy()">DKK {{event.price}},-</button>
 </ng-template>
 
 <ng-template #showReceipt>
-  <button class="button is-primary is-rounded {{sizeClass}}" (click)="onClickReceipt()">Receipt</button>
+  <button class="button is-darker is-rounded {{sizeClass}}" (click)="onLeaveFeedback($event)">Leave Feedback</button>
+  <button class="button is-primary is-rounded {{sizeClass}}" (click)="onClickReceipt($event)">Receipt</button>
 </ng-template>
 
 <ng-template [ngIf]="showConfirmModalObs | async">
@@ -23,7 +26,6 @@
             <br>
             <div class="content has-text-white is-size-6">
               An email with your ticket and invoice for the purchase has been sent to:
-              {{paymentEmail}}
               <br>
               <br>
             </div>
