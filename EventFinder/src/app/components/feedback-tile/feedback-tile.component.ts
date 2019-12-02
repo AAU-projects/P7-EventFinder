@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Feedback } from 'src/app/models/feedback.model';
-import { Event as ev } from 'src/app/models/event.model';
+import { Event as Ev } from 'src/app/models/event.model';
 import { User, Organization } from 'src/app/models/account.model';
 import { EventService } from 'src/app/services/event.service';
 import { OrganizationService } from 'src/app/services/organization.service';
@@ -17,7 +17,7 @@ export class FeedbackTileComponent implements OnInit {
   @Input() feedback: Feedback;
   @Input() editable: boolean;
 
-  event: ev;
+  event: Ev;
   user: User;
   organization: Organization;
   userImageUrl: string;
