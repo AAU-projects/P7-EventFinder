@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Feedback } from '../models/feedback.model';
+import { reduce, map, tap, switchMap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -40,6 +41,15 @@ export class FeedbackService {
   }
 
   private getFeedback(field, value, limit = 5, startAt?: string) {
+    if (limit === 0) {
+      return this.firestore.collection<Feedback>('feedback', ref => ref.orderBy('created', 'desc').where(field, '==', value))
+        .valueChanges();
+    } else {
+      return this.getFeedbackFromFirebase(field, value, limit, startAt);
+    }
+  }
+
+  private getFeedbackFromFirebase(field, value, limit, startAt?: string) {
     if (startAt) {
       return this.firestore.collection<Feedback>('feedback', ref => ref.orderBy('created', 'desc')
         .where(field, '==', value)

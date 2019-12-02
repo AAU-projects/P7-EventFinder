@@ -23,7 +23,7 @@ export class AddFeedbackComponent implements OnInit {
   constructor(private account: AccountService, private feedback: FeedbackService) { }
 
   ngOnInit() {
-    const sub = this.feedback.getFeedbackFromUser(this.account.baseUser.uid).subscribe(
+    const sub = this.feedback.getFeedbackFromUser(this.account.baseUser.uid, 0).subscribe(
       feedbacks => {
         const feedback = feedbacks.find(item => item.eventuid === this.event.uid);
         if (feedback) {

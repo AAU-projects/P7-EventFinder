@@ -1,10 +1,10 @@
-import { Injectable } from "@angular/core";
-import { AngularFirestore } from "@angular/fire/firestore";
-import { AuthService } from "./auth.service";
-import { EventService } from "./event.service";
+import { Injectable } from '@angular/core';
+import { AngularFirestore } from '@angular/fire/firestore';
+import { AuthService } from './auth.service';
+import { EventService } from './event.service';
 
 @Injectable({
-  providedIn: "root"
+  providedIn: 'root'
 })
 export class CheckoutService {
   constructor(
@@ -35,17 +35,17 @@ export class CheckoutService {
       .snapshotChanges()
       .subscribe(snapshot => {
         snapshot.forEach(doc => {
-          eventIdList.push(doc.payload.doc.get("eventId"));
-          receipts[doc.payload.doc.get("eventId")] = doc.payload.doc.get(
-            "stripeCharge.receipt_url"
+          eventIdList.push(doc.payload.doc.get('eventId'));
+          receipts[doc.payload.doc.get('eventId')] = doc.payload.doc.get(
+            'stripeCharge.receipt_url'
           );
         });
         this.eventService.getEvents(500).subscribe(events => {
           events.forEach(event => {
-            if (eventIdList.includes(event.payload.doc.get("uid"))) {
+            if (eventIdList.includes(event.payload.doc.get('uid'))) {
               const eventObject = {
                 event: event.payload.doc.data() as Event,
-                receipt_url: receipts[event.payload.doc.get("uid")]
+                receipt_url: receipts[event.payload.doc.get('uid')]
               };
               eventObjects.push(eventObject);
             }
