@@ -59,7 +59,6 @@ export class TagSelectionComponent implements OnInit {
     } else {
       this.tagList.push(tag);
     }
-    console.log(this.tagList);
   }
 
   onPrefrenceClick(tag: Tags | Genre | Atmosphere) {
