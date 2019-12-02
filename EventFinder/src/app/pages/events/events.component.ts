@@ -35,17 +35,24 @@ export class EventsComponent implements OnInit {
     public accountService: AccountService,
     public recommenderService: RecommenderService
   ) {
-    this.recommenderService.eventListObs.subscribe(events => {
-      this.eventList = events;
-      if (this.eventList === null) {
-        return;
-      }
-      this.applyFilter();
-      this.retrieveTagsForEvents();
-    });
+    if (accountService.currentUser) {
+      this.recommenderService.eventListObs.subscribe(events => {
+        this.eventList = events;
+        if (this.eventList === null) {
+          return;
+        }
+        this.applyFilter();
+        this.retrieveTagsForEvents();
+      });
+    } else {
+      this.eventService.getEvents().subscribe(elist => {
+        this.eventList = [];
+        elist.forEach(e => this.eventList.push(e.payload.doc.data() as Event));
+        this.applyFilter();
+        this.retrieveTagsForEvents();
+      });
+    }
   }
-
-
 
   ngOnInit() {
     navigator.geolocation.getCurrentPosition((position) => {
@@ -60,7 +67,9 @@ export class EventsComponent implements OnInit {
       .getEventsBySearch(input.toLowerCase())
       .subscribe(elist => {
         elist.forEach(e => eventList.push(e.payload.doc.data() as Event));
-        this.eventList = this.sortByRecommended(eventList);
+        if (this.accountService.currentUser !== null) {
+          this.eventList = this.sortByRecommended(eventList);
+        }
         this.applyFilter();
         this.retrieveTagsForEvents();
       });
@@ -147,6 +156,9 @@ export class EventsComponent implements OnInit {
   }
 
   applyFilter() {
+    if (this.eventList === null) {
+      return;
+    }
     let tempEventListShow: Event[] = Array.from(this.eventList);
     tempEventListShow = tempEventListShow.filter(element => this.applyTagsFilter(element));
     tempEventListShow = tempEventListShow.filter(element => this.getInRange(element, this.userLocation, this.maxDistance));
