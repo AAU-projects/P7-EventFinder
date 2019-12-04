@@ -15,6 +15,6 @@ export class HomeComponent implements OnInit {
   }
 
   search() {
-    this.router.navigate([`/events/search/${this.searchString}`]);
+    this.router.navigate([`/events/search/${this.searchString.replace(' ', '_')}`]);
   }
 }

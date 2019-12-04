@@ -8,7 +8,7 @@ import { match } from 'minimatch';
 import { SharedService } from 'src/app/services/shared.service';
 import { AccountService } from 'src/app/services/account.service';
 import { RecommenderService } from 'src/app/services/recommender.service';
-import { Params, ActivatedRoute } from '@angular/router';
+import { Params, ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-events',
@@ -36,7 +36,8 @@ export class EventsComponent implements OnInit {
     public auth: AuthService,
     public accountService: AccountService,
     public recommenderService: RecommenderService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) {
     if (accountService.currentUser) {
       this.recommenderService.eventListObs.subscribe(events => {
@@ -67,12 +68,14 @@ export class EventsComponent implements OnInit {
     });
 
     if (this.searchFromURL) {
+      this.searchFromURL = this.searchFromURL.replace('_', ' ');
       this.search(this.searchFromURL);
     }
   }
 
-  async search(input) {
+  async search(input: string) {
     const eventList = [];
+    this.router.navigate([`/events/search/${input.replace(' ', '_')}`]);
     this.eventService
       .getEventsBySearch(input.toLowerCase())
       .subscribe(elist => {
@@ -85,6 +88,7 @@ export class EventsComponent implements OnInit {
         this.retrieveTagsForEvents();
       });
   }
+
   sortByRecommended(events: any[]) {
     const weightMap = this.accountService.baseUser.recommendedWeights;
     let eventScoreMap: any = [];
