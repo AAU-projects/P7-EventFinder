@@ -14,7 +14,7 @@ export class UserComponent implements OnInit {
   imgUrl: string;
   user: User;
 
-  userMenuSubject: BehaviorSubject<string> = new BehaviorSubject<string>('Tickets');
+  userMenuSubject: BehaviorSubject<string> = new BehaviorSubject<string>('Profile');
   public userMenuObs: Observable<string> = this.userMenuSubject.asObservable();
 
   constructor(public auth: AuthService, private storage: StorageService) {
