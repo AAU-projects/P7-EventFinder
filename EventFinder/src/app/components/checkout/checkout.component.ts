@@ -1,9 +1,6 @@
-import { Component, OnInit, Input, OnDestroy} from '@angular/core';
+import { Component, Input} from '@angular/core';
 import { AuthService } from '../../services/auth.service';
-import { StripeCheckoutLoader, StripeCheckoutHandler } from 'ng-stripe-checkout';
 import { CheckoutService } from 'src/app/services/checkout.service';
-import { SharedService } from 'src/app/services/shared.service';
-import { BehaviorSubject, Observable } from 'rxjs';
 import { Event as Ev } from 'src/app/models/event.model';
 import { Organization } from 'src/app/models/account.model';
 import { AngularFirestore } from '@angular/fire/firestore';
