@@ -80,6 +80,7 @@ export class EventsComponent implements OnInit {
         if (this.accountService.currentUser !== null) {
           this.eventList = this.sortByRecommended(eventList);
         }
+        this.eventList = eventList;
         this.applyFilter();
         this.retrieveTagsForEvents();
       });
