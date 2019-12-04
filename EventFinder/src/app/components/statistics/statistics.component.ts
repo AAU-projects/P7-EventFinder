@@ -123,6 +123,10 @@ export class StatisticsComponent implements OnInit {
   getTotalRatings(feedbackList: Feedback[], pieChart: PieChart) {
     const reviewResults = [0, 0];
 
+    // Will be changed if data is found.
+    pieChart.data = [0];
+    pieChart.labels = ['No data'];
+
     feedbackList.forEach(feedback => {
       if (feedback.rating > 2) {
         reviewResults[0]++;
@@ -141,6 +145,10 @@ export class StatisticsComponent implements OnInit {
   getGenderSegregation(feedbackList: Feedback[], pieChart: PieChart) {
     const result = [0, 0];
     let count = 0;
+
+    // Will be changed if data is found.
+    pieChart.data = [0];
+    pieChart.labels = ['No data'];
 
     feedbackList.forEach(feedback => {
       const sub = this.accountService
@@ -170,6 +178,10 @@ export class StatisticsComponent implements OnInit {
   getGeographicalSegmentation(feedbackList: Feedback[], pieChart: PieChart) {
     const userList = [];
     let cityCountArray: any = [];
+
+    // Will be changed if data is found.
+    pieChart.data = [0];
+    pieChart.labels = ['No data'];
 
     // Gets all information about the user from their ids in the feedback given
     feedbackList.forEach(feedback => {
@@ -234,6 +246,10 @@ export class StatisticsComponent implements OnInit {
     const recommendationsArray = [];
     const recommender: { [key: string]: number } = {};
 
+    // Will be changed if data is found.
+    radarChart.data = [0];
+    radarChart.labels = ['No data'];
+
     // Gets all information about the user from their ids in the feedback given
     feedbackList.forEach(feedback => {
       const sub = this.recommenderService
@@ -275,6 +291,11 @@ export class StatisticsComponent implements OnInit {
     const dataTicketsSold = [];
     const dataTicketsAvailable = [];
     let count = 0;
+
+    // Will be changed if data is found.
+    barChart.data = [
+      { data: [0], label: 'No data', type: 'line' }];
+    barChart.labels = ['No data'];
 
     const sub = this.eventService.getAllEventsFromOrganizer(this.auth.selectedOrganizationUid)
       .subscribe(events => {

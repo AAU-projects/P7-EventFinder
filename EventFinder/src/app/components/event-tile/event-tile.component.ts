@@ -3,6 +3,7 @@ import { Event as Ev} from '../../models/event.model' ;
 import { StorageService } from 'src/app/services/storage.service';
 import { OrganizationService } from 'src/app/services/organization.service';
 import { Organization } from 'src/app/models/account.model';
+import { Stars } from 'src/app/models/star.enum';
 
 @Component({
   selector: 'app-event-tile',
@@ -10,6 +11,7 @@ import { Organization } from 'src/app/models/account.model';
   styleUrls: ['./event-tile.component.scss']
 })
 export class EventTileComponent implements OnInit {
+  get Stars() { return Stars; }
 
   public event: Ev;
   @Input() inputEvent: Ev;
@@ -81,5 +83,22 @@ export class EventTileComponent implements OnInit {
 
   stopit(event: Event) {
     event.stopImmediatePropagation();
+  }
+
+  orgRating() {
+    const rounded = Math.round(this.organization.rating * 2) / 2;
+    const stars = [];
+
+    for (let i = 1; i <= 5; i++) {
+      if (i <= rounded) {
+        stars.push(Stars.Full);
+      } else if (i - 0.5 === rounded) {
+        stars.push(Stars.Half);
+      } else {
+        stars.push(Stars.Empty);
+      }
+    }
+
+    return stars;
   }
 }

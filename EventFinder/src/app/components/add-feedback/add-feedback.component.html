@@ -28,5 +28,6 @@
     </nav>
     <button class="button is-primary" (click)="submit()" [disabled]="checkValidity()">Submit</button>
     <button class="button is-darker" (click)="close()">Cancel</button>
+    <button class="button is-danger" (click)="onDeleteClick()" *ngIf="editFeedback">Delete</button>
   </div>
 </div>

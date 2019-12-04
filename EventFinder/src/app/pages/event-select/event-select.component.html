@@ -3,7 +3,7 @@
     <div class="modal-background" (click)="close()"></div>
     <div class="modal-content panel-size">
       <div id="container">
-        <div class="row banner-background banner-size" [ngStyle]="{ 'background-image': 'url(' + bannerImage + ')'}">
+        <div class="banner-background banner-size" [ngStyle]="{ 'background-image': 'url(' + bannerImage + ')'}">
           <button class="delete" (click)="close()"></button>
         </div>
         <div class="second-layer">
@@ -44,10 +44,29 @@
                         </h2>
                       </div>
                       <div class="column">
-                        <img class="" width="200" src="assets/images/testrating.png" />
+                        <div class="columns stars has-text-white is-vcentered">
+                          <div class="column is-narrow">
+                              <p class="has-text-white">{{ organization.rating | number:'0.1-1' }}</p>
+                          </div>
+                          <div *ngFor="let star of orgRating()">
+                            <div class="column is-paddingless is-narrow">
+                              <span class="icon is-small star">
+                                <div *ngIf="star == Stars.Half; else elseBlock">
+                                  <i class="fa fa-star-half-alt star-active" aria-hidden="true"></i>
+                                </div>
+                                <ng-template #elseBlock>
+                                  <i class="fa fa-star" aria-hidden="true"
+                                    [ngClass]="{'star-active': star == Stars.Full}"
+                                    [ngClass]="{'star-inactive': star == Stars.Empty}"></i>
+                                </ng-template>
+                              </span>
+                            </div>
+                          </div>
+                        </div>
                       </div>
                     </div>
-                    <app-checkout [receiptUrl]=receiptUrl [organization]=organization [event]=event [sizeClass]="'is-large'"[organizationImage]=logoImage></app-checkout>
+                    <app-checkout [receiptUrl]=receiptUrl [organization]=organization [event]=event
+                      [sizeClass]="'is-large'" [organizationImage]=logoImage></app-checkout>
                   </div>
                 </div>
                 <div class="is-divider"></div>
@@ -55,12 +74,15 @@
                   <div>
                     <div class="has-text-white" [innerHTML]="getOrganizationDescription()"></div>
                   </div>
-                  <!-- TODO: Redirect this button when functionality is implemented -->
-                  <button class="is-dark button is-rounded has-text-white-bis is-pulled-right" [routerLink]="['/o', organization.uid]"
-                  routerLinkActive="router-link-active">Læs mere</button>
+                  <button class="is-dark button is-rounded has-text-white-bis is-pulled-right"
+                    [routerLink]="['/o', organization.uid]" routerLinkActive="router-link-active">Læs mere</button>
+                  <br>
                 </div>
               </div>
             </div>
+          </div>
+          <div class="notification is-light">
+            <app-feedback-list-tile [event]="event"></app-feedback-list-tile>
           </div>
         </div>
       </div>

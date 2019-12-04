@@ -3,6 +3,7 @@ import { EventService } from 'src/app/services/event.service';
 import { AccountService } from 'src/app/services/account.service';
 import { Event } from 'src/app/models/event.model';
 import { FeedbackService } from 'src/app/services/feedback.service';
+import { Feedback } from 'src/app/models/feedback.model';
 
 @Component({
   selector: 'app-add-feedback',
@@ -11,16 +12,28 @@ import { FeedbackService } from 'src/app/services/feedback.service';
 })
 export class AddFeedbackComponent implements OnInit {
   @Input() event: Event;
-  @Input() toggle;
   @Output() closeform = new EventEmitter<boolean>();
 
   rating = [false, false, false, false, false];
   givenRating: number;
-  review: '';
+  review = '';
+
+  editFeedback: Feedback;
 
   constructor(private account: AccountService, private feedback: FeedbackService) { }
 
   ngOnInit() {
+    const sub = this.feedback.getFeedbackFromUser(this.account.baseUser.uid, 0).subscribe(
+      feedbacks => {
+        const feedback = feedbacks.find(item => item.eventuid === this.event.uid);
+        if (feedback) {
+          this.rate(feedback.rating - 1);
+          this.review = feedback.review;
+          this.editFeedback = feedback;
+        }
+        sub.unsubscribe();
+      }
+    );
   }
 
   rate(index) {
@@ -43,17 +56,21 @@ export class AddFeedbackComponent implements OnInit {
   }
 
   submit() {
-    this.feedback.addFeedback({
-      useruid: this.account.baseUser.uid,
-      eventuid: this.event.uid,
-      organizationuid: this.event.organizationId,
-      review: this.review,
-      rating: this.givenRating,
-      created: new Date().toISOString(),
-      uid: ''
-    });
+    if (this.editFeedback) {
+      this.feedback.updateFeedback(this.editFeedback.uid, this.givenRating, this.review, new Date());
+    } else {
+      this.feedback.addFeedback({
+        useruid: this.account.baseUser.uid,
+        eventuid: this.event.uid,
+        organizationuid: this.event.organizationId,
+        review: this.review,
+        rating: this.givenRating,
+        created: new Date().toISOString(),
+        uid: '',
+        edited: ''
+      });
+    }
     this.close();
-
   }
 
   checkValidity() {
@@ -64,4 +81,10 @@ export class AddFeedbackComponent implements OnInit {
     this.closeform.emit(true);
   }
 
+  onDeleteClick() {
+    if (this.editFeedback) {
+      this.feedback.deleteFeedback(this.editFeedback.uid);
+    }
+    this.close();
+  }
 }

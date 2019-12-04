@@ -1,15 +1,13 @@
 <h1 class="has-text-white is-size-1 has-text-weight-light"><b>Welcome to EVENT</b>FINDER</h1>
 
-<p class="has-text-white spacing">
-  find amazing & super interesting & funny events near you today!
-</p>
-
-<div class="buttons is-centered">
-  <a [routerLink]="['/events']" class="button is-primary">See available events ></a>
+<div class="control has-icons-left has-icons-right input-search">
+  <input [(ngModel)]="searchString" (keydown.enter)="search()" class="input is-rounded search-input-width" type="text"
+    placeholder="Search for events"/>
+  <span class="icon is-small is-left">
+    <i class="fas fa-search"></i>
+  </span>
 </div>
-
-<div *ngIf="feedback.length > 0">
-  <div *ngFor="let item of feedback">
-    <app-feedback-tile [showMetadata]="true" [feedback]="item"></app-feedback-tile>
-  </div>
+<br>
+<div class="buttons is-centered">
+  <a class="button is-primary" (click)="search()">Search</a>
 </div>

@@ -6,5 +6,6 @@ export interface Feedback {
   rating: number;
   review: string;
   created: string;
+  edited: string;
 }
 

@@ -38,7 +38,7 @@ export class EventService {
     return this.firestore.collection('events', query).get();
   }
 
-  getEvent(id) {
+  getEvent(id: string) {
     const eventRef = this.firestore.collection('events').doc<Event>(id);
 
     return eventRef;
@@ -46,5 +46,16 @@ export class EventService {
 
   getAllEventsFromOrganizer(orgId: string) {
     return this.firestore.collection('events', ref => ref.where('organizationId', '==', orgId)).snapshotChanges();
+  }
+
+  async getEventsById(idLst: string[]) {
+    const promises = [];
+
+    if (idLst) {
+      idLst.forEach(async id => {
+        promises.push(this.getEvent(id).valueChanges());
+      });
+    }
+    return promises;
   }
 }

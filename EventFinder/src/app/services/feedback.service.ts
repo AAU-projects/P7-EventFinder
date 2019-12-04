@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Feedback } from '../models/feedback.model';
+import { reduce, map, tap, switchMap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -18,6 +19,15 @@ export class FeedbackService {
     return id;
   }
 
+  deleteFeedback(feedbackId: string) {
+    this.firestore.collection('feedback').doc(feedbackId).delete();
+  }
+
+  updateFeedback(feedbackId: string, rating: number, review: string, time: Date) {
+    this.firestore.collection('feedback').doc(feedbackId)
+      .set({rating, review, edited: time.toISOString()}, {merge: true});
+  }
+
   getFeedbackFromUser(userid: string, limit = 5, startafter?: string) {
     return this.getFeedback('useruid', userid, limit, startafter);
   }
@@ -30,11 +40,20 @@ export class FeedbackService {
     return this.getFeedback('eventuid', eventuid, limit, startafter);
   }
 
-  private getFeedback(field, value, limit = 5, startAfter?: string) {
-    if (startAfter) {
+  private getFeedback(field, value, limit = 5, startAt?: string) {
+    if (limit === 0) {
+      return this.firestore.collection<Feedback>('feedback', ref => ref.orderBy('created', 'desc').where(field, '==', value))
+        .valueChanges();
+    } else {
+      return this.getFeedbackFromFirebase(field, value, limit, startAt);
+    }
+  }
+
+  private getFeedbackFromFirebase(field, value, limit, startAt?: string) {
+    if (startAt) {
       return this.firestore.collection<Feedback>('feedback', ref => ref.orderBy('created', 'desc')
-        .startAfter(startAfter)
         .where(field, '==', value)
+        .startAt(startAt)
         .limit(limit))
         .valueChanges();
     } else {
