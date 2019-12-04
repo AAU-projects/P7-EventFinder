@@ -1,8 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-<<<<<<< HEAD
 import { Router } from '@angular/router';
-=======
->>>>>>> develop
 
 @Component({
   selector: 'app-home',
@@ -10,12 +7,8 @@ import { Router } from '@angular/router';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-<<<<<<< HEAD
   searchString: string;
   constructor(private router: Router) {
-=======
-  constructor() {
->>>>>>> develop
   }
 
   ngOnInit() {
