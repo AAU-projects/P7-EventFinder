@@ -71,7 +71,6 @@ export class AddFeedbackComponent implements OnInit {
       });
     }
     this.close();
-
   }
 
   checkValidity() {
@@ -88,5 +87,4 @@ export class AddFeedbackComponent implements OnInit {
     }
     this.close();
   }
-
 }

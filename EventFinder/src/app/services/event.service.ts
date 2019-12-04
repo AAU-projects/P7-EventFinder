@@ -44,6 +44,10 @@ export class EventService {
     return eventRef;
   }
 
+  getAllEventsFromOrganizer(orgId: string) {
+    return this.firestore.collection('events', ref => ref.where('organizationId', '==', orgId)).snapshotChanges();
+  }
+
   async getEventsById(idLst: string[]) {
     const promises = [];
 
