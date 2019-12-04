@@ -23,6 +23,8 @@ import {StripeCheckoutModule} from 'ng-stripe-checkout';
 import { environment } from 'src/environments/environment';
 import { UserEventsComponent } from './user-events/user-events.component';
 import { OrganizationEventListComponent } from './organization-event-list/organization-event-list.component';
+import { StatisticsComponent } from './statistics/statistics.component';
+import { ChartsModule } from 'ng2-charts';
 import { FeedbackTileComponent } from './feedback-tile/feedback-tile.component';
 import { AddFeedbackComponent } from './add-feedback/add-feedback.component';
 import { FeedbackListTileComponent } from './feedback-list-tile/feedback-list-tile.component';
@@ -49,9 +51,10 @@ import { FeedbackListTileComponent } from './feedback-list-tile/feedback-list-ti
     CheckoutComponent,
     UserEventsComponent,
     OrganizationEventListComponent,
+    StatisticsComponent,
     FeedbackTileComponent,
-    AddFeedbackComponent,
-    FeedbackListTileComponent],
+    FeedbackListTileComponent,
+    AddFeedbackComponent],
   imports: [
     CommonModule,
     RouterModule,
@@ -59,6 +62,7 @@ import { FeedbackListTileComponent } from './feedback-list-tile/feedback-list-ti
     ReactiveFormsModule,
     BrowserAnimationsModule,
     StripeCheckoutModule,
+    ChartsModule,
     QuillModule.forRoot({
       modules: {
         syntax: false,
@@ -90,9 +94,10 @@ import { FeedbackListTileComponent } from './feedback-list-tile/feedback-list-ti
     CheckoutComponent,
     UserEventsComponent,
     OrganizationEventListComponent,
+    StatisticsComponent,
     FeedbackTileComponent,
     AddFeedbackComponent,
-    FeedbackListTileComponent,
+    FeedbackListTileComponent
   ],
 })
 export class ComponentsModule {}

@@ -105,6 +105,8 @@
                 class="no-decoration" (click)="onSubMenuClick(menuTabs.AddEvent)">Add Event</a></li>
             <li><a [ngClass]="((menuTabObs | async) == menuTabs.Feedback) ? 'is-active' : ''" class="no-decoration"
                 (click)="onMenuClick(menuTabs.Feedback)">Feedback</a></li>
+            <li><a [ngClass]="((menuTabObs | async) == menuTabs.Statistics) ? 'is-active' : ''" class="no-decoration"
+              (click)="onMenuClick(menuTabs.Statistics)">Statistics</a></li>
             <li><a [ngClass]="((menuTabObs | async) == menuTabs.Tickets) ? 'is-active' : ''" class="no-decoration"
                 (click)="onMenuClick(menuTabs.Tickets)">Tickets</a></li>
             <li><a [ngClass]="((menuTabObs | async) == menuTabs.Staff) ? 'is-active' : ''" class="no-decoration"
@@ -125,6 +127,7 @@
           <app-organization-connections *ngSwitchCase="menuTabs.Staff"></app-organization-connections>
           <app-organization-event-list *ngSwitchCase="menuTabs.Events" [user]="org"></app-organization-event-list>
           <app-feedback-list-tile *ngSwitchCase="menuTabs.Feedback" [organization]="org"></app-feedback-list-tile>
+          <app-statistics *ngSwitchCase="menuTabs.Statistics"></app-statistics>
         </div>
       </div>
     </div>
