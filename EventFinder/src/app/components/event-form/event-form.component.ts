@@ -86,6 +86,8 @@ export class EventFormComponent implements OnInit {
       country: ['', [Validators.required, Validators.minLength(3), RegExValidator(/[a-z, ,A-Z,ÆæØøÅå]*/i)]],
       age: ['', [Validators.required, RegExValidator(/^[0-9]*$/i)]],
       price: ['', [Validators.required, RegExValidator(/^[0-9]*$/i)]],
+      ticketsAvailable: ['', [Validators.required, RegExValidator(/^[0-9]*$/i)]],
+      ticketsSold: [0, []],
       latitude: ['', []],
       longitude: ['', []],
     });

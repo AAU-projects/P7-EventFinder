@@ -46,8 +46,9 @@ export class EventsComponent implements OnInit {
       });
     } else {
       this.eventService.getEvents().subscribe(elist => {
-        this.eventList = [];
-        elist.forEach(e => this.eventList.push(e.payload.doc.data() as Event));
+        const tempEventList = [];
+        elist.forEach(e => tempEventList.push(e.payload.doc.data() as Event));
+        this.eventList = tempEventList;
         this.applyFilter();
         this.retrieveTagsForEvents();
       });

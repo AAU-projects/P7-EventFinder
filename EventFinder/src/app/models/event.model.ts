@@ -16,6 +16,8 @@ export interface Event {
   atmosphere: Atmosphere[];
   atmosphereCustom: string;
   dresscode: Dresscode;
+  ticketsAvailable: number;
+  ticketsSold: number;
   latitude: number;
   longitude: number;
 }
