@@ -28,7 +28,6 @@ export class CheckoutService {
   organizationImage: string;
   event: Ev;
 
-  transactionActive: boolean;
   transactionId: string;
   transactionUniqueId: string;
 
@@ -112,10 +111,9 @@ export class CheckoutService {
           t.update(eventRef, {ticketsSold: newTicketSold});
         });
     }).then(result => {
-      this.transactionUniqueId = this.generateID();
+      this.transactionUniqueId = this.firestore.createId();
       this.firestore.firestore.collection('paymentsTemp').doc(this.transactionUniqueId).set({eventId: this.event.uid});
 
-      this.transactionActive = true;
       this.executePayment();
       return true;
     }).catch(err => {
@@ -151,9 +149,5 @@ export class CheckoutService {
         });
       });
     return eventObjects;
-  }
-
-  generateID() {
-    return '_' + Math.random().toString(36).substr(2, 9);
   }
 }
