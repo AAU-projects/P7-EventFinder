@@ -98,10 +98,10 @@
     <br><br>
     <h1 class="title has-text-white is-6">Cost / attendency</h1>
     <div class="chart">
-      <canvas baseChart [data]="overallCostAttendencyChartObject.data"
+      <canvas baseChart [datasets]="overallCostAttendencyChartObject.data"
         [labels]="overallCostAttendencyChartObject.labels" [chartType]="overallCostAttendencyChartObject.type"
         [options]="overallCostAttendencyChartObject.options"
-        [legend]="overallCostAttendencyChartObject.legend" chart-series='test'>
+        [legend]="overallCostAttendencyChartObject.legend">
       </canvas>
     </div>
   </div>

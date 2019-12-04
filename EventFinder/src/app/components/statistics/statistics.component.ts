@@ -19,7 +19,7 @@ import { RadarChart, PieChart, BarChart } from 'src/app/components/statistics/gr
   styleUrls: ['./statistics.component.scss']
 })
 export class StatisticsComponent implements OnInit {
-  // References to the DOM chart objects
+  // References to the HTML chart objects
   @ViewChild('currentChart', { static: false })
   @ViewChild('radarChart', { static: false })
   currentChart: BaseChartDirective;
@@ -36,9 +36,7 @@ export class StatisticsComponent implements OnInit {
   recommendationsSubject: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
   public recommendationsObs: Observable<any[]> = this.recommendationsSubject.asObservable();
 
-  get graphData() {
-    return GraphData;
-  }
+  get graphData() { return GraphData; }
 
   // Currently selected chart
   public currentChartObject = new PieChart();
@@ -60,28 +58,35 @@ export class StatisticsComponent implements OnInit {
     private eventService: EventService,
     private feedbackService: FeedbackService,
     private accountService: AccountService,
-    private recommenderService: RecommenderService) {}
+    private recommenderService: RecommenderService
+  ) {}
 
   ngOnInit() {
-    const sub = this.eventService.getAllEventsFromOrganizer(this.auth.selectedOrganizationUid)
+    const sub = this.eventService
+      .getAllEventsFromOrganizer(this.auth.selectedOrganizationUid)
       .subscribe(result => {
-      for (const collection of result) {
-        const event = collection.payload.doc.data() as Event;
-        this.orgEventList[event.uid] = event;
-      }
-      this.selectedEvent = Object.keys(this.orgEventList)[0];
-      this.selectedData = GraphData.Rating;
-      this.loadData();
-      sub.unsubscribe();
-    });
+        for (const collection of result) {
+          const event = collection.payload.doc.data() as Event;
+          this.orgEventList[event.uid] = event;
+        }
+        // Set initial selected event and selected data.
+        this.selectedEvent = Object.keys(this.orgEventList)[0];
+        this.selectedData = GraphData.Rating;
+
+        // Loads initial data, and sets temp data for hidden charts.
+        this.loadData();
+        sub.unsubscribe();
+      });
   }
 
   // Initialize selected Chart settings
   loadData() {
+    // Gets the initial data for the graphs.
     this.initializeGraphs();
 
     this.currentChartObject.labels = ['Good Reviews', 'Bad Reviews'];
-    this.currentChartObject.colors = [{backgroundColor: ['rgba(67,205,119,0.8)', 'rgba(208,91,91,0.8)']}];
+    this.currentChartObject.colors = [{ backgroundColor: ['rgba(67,205,119,0.8)', 'rgba(208,91,91,0.8)'] }];
+    // Sets temp data and labels for the hidden radar chart.
     this.radarChartObject.labels = ['Loading', 'Data'];
     this.radarChartObject.data = [1, 0];
 
@@ -110,7 +115,7 @@ export class StatisticsComponent implements OnInit {
         this.getGenderSegregation(overallFeedbackList, this.overallSegregationChartObject);
         this.getGeographicalSegmentation(overallFeedbackList, this.overallGeoChartObject);
         this.getUserPreferences(overallFeedbackList, this.overallPreferenceChartObject);
-        this.getCostAttendencyRatio(this.overallCostAttendencyChartObject);
+        this.getCostAttendency(this.overallCostAttendencyChartObject);
         overallSub.unsubscribe();
       });
   }
@@ -127,7 +132,9 @@ export class StatisticsComponent implements OnInit {
     });
 
     pieChart.labels = ['Good Reviews', 'Bad Reviews'];
-    pieChart.colors = [{backgroundColor: ['rgba(67,205,119,0.8)', 'rgba(208,91,91,0.8)']}];
+    pieChart.colors = [
+      { backgroundColor: ['rgba(67,205,119,0.8)', 'rgba(208,91,91,0.8)'] }
+    ];
     pieChart.data = reviewResults;
   }
 
@@ -139,15 +146,20 @@ export class StatisticsComponent implements OnInit {
       const sub = this.accountService
         .getUserFromUid(feedback.useruid)
         .subscribe(user => {
-          count ++;
+          count++;
           if (user.sex === 'male') {
             result[0]++;
           } else {
             result[1]++;
           }
+          // Set the data and labels when all users have been checked.
           if (count === feedbackList.length) {
             pieChart.labels = ['Male', 'Female'];
-            pieChart.colors = [{backgroundColor: ['rgba(51,153,255,0.8)', 'rgba(208,91,91,0.8)']}];
+            pieChart.colors = [
+              {
+                backgroundColor: ['rgba(51,153,255,0.8)', 'rgba(208,91,91,0.8)']
+              }
+            ];
             pieChart.data = result;
           }
           sub.unsubscribe();
@@ -171,7 +183,7 @@ export class StatisticsComponent implements OnInit {
     });
 
     // Subscribe to the list of users
-    this.userListObs.subscribe(users => {
+    const userSub = this.userListObs.subscribe(users => {
       // If all users are added to the list
       if (userList.length === feedbackList.length) {
         const cityCount: { [key: string]: number } = {};
@@ -183,9 +195,7 @@ export class StatisticsComponent implements OnInit {
           }
         });
         // Makes arrays from the dictionary to be sorted
-        Object.keys(cityCount).forEach(key => {
-          cityCountArray.push([key, cityCount[key]]);
-        });
+        Object.keys(cityCount).forEach(key => {cityCountArray.push([key, cityCount[key]]); });
         // Sorts the arrays, so that the city with the most occurences comes first
         cityCountArray = cityCountArray.sort((a: any, b: any) => b[1] - a[1]);
 
@@ -201,17 +211,21 @@ export class StatisticsComponent implements OnInit {
           counter++;
         });
 
-        pieChart.colors = [{
-          backgroundColor: [
-            'rgba(65, 135, 151)',
-            'rgba(52, 117, 177)',
-            'rgba(173, 79, 115)',
-            'rgba(173, 144, 88)',
-            'rgba(159, 160, 178)'
-          ]}];
+        pieChart.colors = [
+          {
+            backgroundColor: [
+              'rgba(65, 135, 151)',
+              'rgba(52, 117, 177)',
+              'rgba(173, 79, 115)',
+              'rgba(173, 144, 88)',
+              'rgba(159, 160, 178)'
+            ]
+          }
+        ];
 
         pieChart.data = data;
         pieChart.labels = labels;
+        userSub.unsubscribe();
       }
     });
   }
@@ -255,30 +269,38 @@ export class StatisticsComponent implements OnInit {
     });
   }
 
-  getCostAttendencyRatio(barChart: BarChart) {
+  getCostAttendency(barChart: BarChart) {
     const labels = [];
-    const data = [];
-    let dataLabel: string;
+    const priceLine = [];
+    const dataTicketsSold = [];
+    const dataTicketsAvailable = [];
     let count = 0;
 
-    this.eventService.getAllEventsFromOrganizer(this.auth.selectedOrganizationUid)
+    const sub = this.eventService.getAllEventsFromOrganizer(this.auth.selectedOrganizationUid)
       .subscribe(events => {
         for (const collection of events) {
-          //if (count === 0)
-            //dataLabel += event.startDate;
-
           const event = collection.payload.doc.data() as Event;
+          const ticketsSold = event.ticketsSold;
+          const eventPrice = event.price;
+          const ticketsAvailable = event.ticketsAvailable;
+
+          dataTicketsAvailable.push(ticketsAvailable - ticketsSold);
+          dataTicketsSold.push(ticketsSold);
+          priceLine.push(eventPrice);
+
           labels.push(event.title);
-          //data.push((Math.random() * 6) + 1); // # price / tickets sold
           count ++;
           if (count === events.length) {
-            //dataLabel += " - " + event.startDate;
             barChart.labels = labels;
             barChart.data = [
-              { data: [65, 59, 80], label: 'Series A' }
+              { data: priceLine, label: 'Ticket Price', type: 'line',
+                backgroundColor: 'rgba(0, 0, 0,0)', pointBorderColor: 'rgba(255, 255, 255, 0.8)', borderColor: 'rgba(255, 255, 255, 0.8)' },
+              { data: dataTicketsSold, label: 'Tickets Sold', stack: 'a', backgroundColor: 'rgba(208,91,91,0.8)' },
+              { data: dataTicketsAvailable, label: 'Tickets Available', stack: 'a', backgroundColor: 'rgba(67,205,119,0.8)' }
             ];
           }
         }
+        sub.unsubscribe();
       });
   }
 
@@ -302,7 +324,10 @@ export class StatisticsComponent implements OnInit {
 
           // GEOGRAPHICAL
           case GraphData.Geo:
-            this.getGeographicalSegmentation(feedbackList, this.currentChartObject);
+            this.getGeographicalSegmentation(
+              feedbackList,
+              this.currentChartObject
+            );
             break;
 
           // USER PREFERENCE

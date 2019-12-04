@@ -70,7 +70,7 @@ export class RadarChart {
 }
 
 export class BarChart {
-  public labels;
+  public labels: string[];
   public data: ChartDataSets[];
   public type: ChartType = 'bar';
   public legend = true;
@@ -81,14 +81,32 @@ export class BarChart {
       position: 'top',
       labels: { fontColor: 'rgba(255, 255, 255)' }
     },
+    scales: {
+      yAxes: [{
+        ticks: {
+          fontColor: 'rgba(255, 255, 255)'
+        }
+      }],
+      xAxes: [{
+        ticks: {
+          fontColor: 'rgba(255, 255, 255)'
+        }
+      }]
+    },
     elements: {
       arc: {
         borderColor: 'rgba(50, 50, 89,1)',
         borderWidth: 7
       },
       line: {
-        borderColor: 'rgba(50, 50, 89,1)',
-        borderWidth: 7
+        borderColor: 'rgba(0, 0, 0, 1)',
+        borderWidth: 3
+      },
+      point: {
+        borderColor: 'rgba(0, 0, 0, 1)',
+        backgroundColor: 'rgba(0, 0, 0, 1)',
+        borderWidth: 5,
+        radius: 5
       }
     },
     hover: { mode: null }
