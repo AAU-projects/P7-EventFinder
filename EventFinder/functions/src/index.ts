@@ -166,6 +166,28 @@ exports.updatePreferences = functions
       });
   });
 
+exports.onPaymentCreateTemp = functions.region('europe-west2')
+.firestore.document('paymentsTemp/{paymentId}').onCreate((change: any, context: any) => {
+  const paymentId = context.params.paymentId;
+
+  return Promise.all([setTimeout(() => {
+    const paymentRef = db.collection('paymentsTemp').doc(paymentId);
+    return paymentRef.get().then((snapshot: any) => {
+      if (snapshot.exists) {
+        const eventRef = db.collection('events').doc(snapshot.data().eventId)
+
+        eventRef.get().then((document: any) => {
+          const ticketNotSold = document.data().ticketsSold - 1;
+          eventRef.update({ticketsSold: ticketNotSold})
+        });
+        paymentRef.delete();
+      }
+    });
+  }, 10000)]).then(() => {
+    return true;
+  }); // 30 seconds delay
+});
+
 exports.recommender = functions
   .region('europe-west2')
   .firestore.document('/recommender/{userId}')
@@ -233,4 +255,6 @@ async function updateRecommenderValues(change: any, context: any, updated: boole
   batch.update(userRef, 'recommended', recommenedEvents);
   return batch.commit();
 }
+
+
 

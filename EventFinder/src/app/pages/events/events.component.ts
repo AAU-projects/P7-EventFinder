@@ -37,6 +37,7 @@ export class EventsComponent implements OnInit {
   ) {
     if (accountService.currentUser) {
       this.recommenderService.eventListObs.subscribe(events => {
+
         this.eventList = events;
         if (this.eventList === null) {
           return;
@@ -48,6 +49,7 @@ export class EventsComponent implements OnInit {
       this.eventService.getEvents().subscribe(elist => {
         const tempEventList = [];
         elist.forEach(e => tempEventList.push(e.payload.doc.data() as Event));
+
         this.eventList = tempEventList;
         this.applyFilter();
         this.retrieveTagsForEvents();
@@ -63,11 +65,12 @@ export class EventsComponent implements OnInit {
   }
 
   async search(input) {
-    const eventList = [];
     this.eventService
       .getEventsBySearch(input.toLowerCase())
       .subscribe(elist => {
+        const eventList = [];
         elist.forEach(e => eventList.push(e.payload.doc.data() as Event));
+
         if (this.accountService.currentUser !== null) {
           this.eventList = this.sortByRecommended(eventList);
         }
