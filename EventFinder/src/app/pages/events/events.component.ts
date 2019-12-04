@@ -8,6 +8,7 @@ import { match } from 'minimatch';
 import { SharedService } from 'src/app/services/shared.service';
 import { AccountService } from 'src/app/services/account.service';
 import { RecommenderService } from 'src/app/services/recommender.service';
+import { Params, ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-events',
@@ -23,6 +24,7 @@ export class EventsComponent implements OnInit {
   userLocation: number[] = [null, null];
   maxDistance = Number.MAX_SAFE_INTEGER;
   maxPrice = Number.MAX_SAFE_INTEGER;
+  searchFromURL: string;
 
   selectedToDateFilter: Date = null;
   selectedFromDateFilter: Date = null;
@@ -33,7 +35,9 @@ export class EventsComponent implements OnInit {
     public shared: SharedService,
     public auth: AuthService,
     public accountService: AccountService,
-    public recommenderService: RecommenderService
+    public recommenderService: RecommenderService,
+    private route: ActivatedRoute,
+    private router: Router
   ) {
     if (accountService.currentUser) {
       this.recommenderService.eventListObs.subscribe(events => {
@@ -55,14 +59,23 @@ export class EventsComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.route.params.forEach((params: Params) => {
+      this.searchFromURL = params.searchterm;
+    });
     navigator.geolocation.getCurrentPosition((position) => {
       this.userLocation[0] = position.coords.latitude;
       this.userLocation[1] = position.coords.longitude;
     });
+
+    if (this.searchFromURL) {
+      this.searchFromURL = this.searchFromURL.replace('_', ' ');
+      this.search(this.searchFromURL);
+    }
   }
 
-  async search(input) {
+  async search(input: string) {
     const eventList = [];
+    this.router.navigate([`/events/search/${input.replace(' ', '_')}`]);
     this.eventService
       .getEventsBySearch(input.toLowerCase())
       .subscribe(elist => {
@@ -70,10 +83,12 @@ export class EventsComponent implements OnInit {
         if (this.accountService.currentUser !== null) {
           this.eventList = this.sortByRecommended(eventList);
         }
+        this.eventList = eventList;
         this.applyFilter();
         this.retrieveTagsForEvents();
       });
   }
+
   sortByRecommended(events: any[]) {
     const weightMap = this.accountService.baseUser.recommendedWeights;
     let eventScoreMap: any = [];

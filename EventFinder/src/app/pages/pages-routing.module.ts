@@ -22,6 +22,7 @@ const routes: Routes = [
   {path: 'user', component: UserComponent},
   {path: 'organization', component: OrganizationComponent},
   {path: 'events', component: EventsComponent},
+  {path: 'events/search/:searchterm', component: EventsComponent},
   {path: 'forgotpassword', component: ForgotpasswordComponent},
   {path: 'o/:id', component: PublicOrganizationComponent},
   {path: 'about', component: AboutComponent},
