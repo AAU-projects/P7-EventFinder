@@ -1,0 +1,108 @@
+<ng-template [ngIf]="loading" [ngIfElse]="doneLoading">
+  <i class="fas fa-circle-notch fa-spin fa-5x has-text-white"></i>
+</ng-template>
+
+<ng-template #doneLoading>
+  <!-- Event specific charts -->
+  <div class="tile box is-child notification has-background-dark tile-margin">
+    <h1 class="title has-text-white is-4">Event statistics</h1>
+
+    <nav class="level">
+      <div class="level-item has-text-centered">
+        <div class="field">
+          <div class="control">
+            <p class="help has-text-white">Select event</p>
+            <div class="select is-rounded is-small">
+              <select (change)="onEventSelect()" [(ngModel)]="selectedEvent">
+                <option *ngFor="let event of orgEventList | keyvalue" value={{event.value.uid}}>
+                  {{event.value.title}}
+                </option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="level-item has-text-centered">
+        <div class="field">
+          <div class="control">
+            <p class="help has-text-white">Select data</p>
+            <div class="select is-rounded is-small">
+              <select (change)="onEventSelect()" [(ngModel)]="selectedData">
+                <option value={{graphData.Rating}}>Rating</option>
+                <option value={{graphData.Gender}}>Gender segregation</option>
+                <option value={{graphData.Geo}}>Customer geographic segmentation</option>
+                <option value={{graphData.UserPreference}}>User preference</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+
+    <div class="chart" [ngClass]="selectedData === graphData.UserPreference ? '' : 'hide-chart'">
+      <canvas baseChart #radarChart="base-chart" [data]="radarChartObject.data" [labels]="radarChartObject.labels"
+        [chartType]="radarChartObject.type" [options]="radarChartObject.options">
+      </canvas>
+    </div>
+    <div class="chart" [ngClass]="selectedData === graphData.UserPreference ? 'hide-chart' : ''">
+      <canvas baseChart #currentChart="base-chart" [data]="currentChartObject.data" [labels]="currentChartObject.labels"
+        [chartType]="currentChartObject.type" [options]="currentChartObject.options"
+        [colors]="currentChartObject.colors" [legend]="currentChartObject.legend">
+      </canvas>
+    </div>
+  </div>
+
+  <!-- Overall charts -->
+  <div class="tile box is-child notification has-background-dark tile-margin">
+    <h1 class="title has-text-white is-4">Overall statistics</h1>
+    <h1 class="title has-text-white is-6">Rating</h1>
+    <div class="chart">
+      <canvas baseChart [data]="overallRatingChartObject.data"
+        [labels]="overallRatingChartObject.labels" [chartType]="overallRatingChartObject.type"
+        [options]="overallRatingChartObject.options" [colors]="overallRatingChartObject.colors"
+        [legend]="overallRatingChartObject.legend">
+      </canvas>
+    </div>
+
+    <br><br>
+    <h1 class="title has-text-white is-6">Gender segregation</h1>
+    <div class="chart">
+      <canvas baseChart [data]="overallSegregationChartObject.data"
+        [labels]="overallSegregationChartObject.labels" [chartType]="overallSegregationChartObject.type"
+        [options]="overallSegregationChartObject.options" [colors]="overallSegregationChartObject.colors"
+        [legend]="overallSegregationChartObject.legend">
+      </canvas>
+    </div>
+
+    <br><br>
+    <h1 class="title has-text-white is-6">Customer geographic segmentation</h1>
+    <div class="chart">
+      <canvas baseChart [data]="overallGeoChartObject.data"
+        [labels]="overallGeoChartObject.labels" [chartType]="overallGeoChartObject.type"
+        [options]="overallGeoChartObject.options" [colors]="overallGeoChartObject.colors"
+        [legend]="overallGeoChartObject.legend">
+      </canvas>
+    </div>
+
+    <br><br>
+    <h1 class="title has-text-white is-6">User preferences</h1>
+    <div class="chart">
+      <canvas baseChart [data]="overallPreferenceChartObject.data"
+        [labels]="overallPreferenceChartObject.labels" [chartType]="overallPreferenceChartObject.type"
+        [options]="overallPreferenceChartObject.options" [colors]="overallPreferenceChartObject.colors"
+        [legend]="overallPreferenceChartObject.legend">
+      </canvas>
+    </div>
+
+    <br><br>
+    <h1 class="title has-text-white is-6">Cost / attendency</h1>
+    <div class="chart">
+      <canvas baseChart [datasets]="overallCostAttendencyChartObject.data"
+        [labels]="overallCostAttendencyChartObject.labels" [chartType]="overallCostAttendencyChartObject.type"
+        [options]="overallCostAttendencyChartObject.options"
+        [legend]="overallCostAttendencyChartObject.legend">
+      </canvas>
+    </div>
+  </div>
+</ng-template>

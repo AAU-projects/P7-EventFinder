@@ -3,7 +3,8 @@
 </div>
 
 
-<div *ngIf="organizationImageUrl" class="tile is-child is-hoverable box notification has-background-dark has-text-white pointer no-padding" (click)="setSelectedEvent(event.uid)">
+<div id="mainTile" *ngIf="organizationImageUrl" class="tile is-child is-hoverable box notification has-background-dark has-text-white pointer no-padding" (click)="setSelectedEvent(event.uid)">
+
   <div class="columns is-vcentered is-hoverable">
     <div class="column no-padding-column is-4">
       <figure class="image is-square is-fullwidth">
@@ -45,12 +46,22 @@
           </div>
           <div class="tile is-child no-padding has-centered-content is-flex">
             <h3 class="has-text">
-              4.0
-              <span class="icon"><i class="fa fa-star star-active"></i></span>
-              <span class="icon"><i class="fa fa-star star-active"></i></span>
-              <span class="icon"><i class="fa fa-star star-active"></i></span>
-              <span class="icon"><i class="fa fa-star star-active"></i></span>
-              <span class="icon"><i class="fa fa-star star-inactive"></i></span>
+              {{ organization.rating | number:'0.1-1' }}
+              <div class="columns stars">
+                  <div *ngFor="let star of orgRating()">
+                      <div class="column is-paddingless">
+                        <span class="icon is-small star">
+                          <div *ngIf="star == Stars.Half; else elseBlock">
+                              <i class="fa fa-star-half-alt star-active" aria-hidden="true"></i>
+                          </div>
+                          <ng-template #elseBlock>
+                              <i class="fa fa-star" aria-hidden="true" [ngClass]="{'star-active': star == Stars.Full}"
+                              [ngClass]="{'star-inactive': star == Stars.Empty}"></i>
+                          </ng-template>
+                        </span>
+                      </div>
+                    </div>
+              </div>
             </h3>
           </div>
         </div>
@@ -90,11 +101,9 @@
         </h3>
         <br>
         <nav class="level">
-          <div class="level-left">
-
-          </div>
+          <div class="level-left"></div>
           <div class="level-right">
-              <div class="level-item">
+              <div class="level-item" (click)="stopit($event)">
                   <app-checkout [receiptUrl]=receiptUrl [organization]=organization [event]=event [sizeClass]='"is-medium"' [organizationImage]=organizationImageUrl></app-checkout>
               </div>
           </div>
@@ -103,3 +112,5 @@
     </div>
   </div>
 </div>
+
+

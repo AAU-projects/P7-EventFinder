@@ -6,6 +6,9 @@ import { OrganizationService } from 'src/app/services/organization.service';
 import { Organization } from 'src/app/models/account.model';
 import { GoogleMapsService } from 'src/app/services/google-map.service';
 import { StorageService } from 'src/app/services/storage.service';
+import { Feedback } from 'src/app/models/feedback.model';
+import { FeedbackService } from 'src/app/services/feedback.service';
+import { Stars } from 'src/app/models/star.enum';
 
 @Component({
   selector: 'app-event-select',
@@ -13,6 +16,8 @@ import { StorageService } from 'src/app/services/storage.service';
   styleUrls: ['./event-select.component.scss']
 })
 export class EventSelectComponent implements OnInit {
+  get Stars() { return Stars; }
+
   eventLoaded: Promise<boolean>;
   organizationLoaded: Promise<boolean>;
   logoLoaded: Promise<boolean>;
@@ -33,7 +38,8 @@ export class EventSelectComponent implements OnInit {
     private apiService: GoogleMapsService,
     private eventService: EventService,
     private organizationService: OrganizationService,
-    private storageService: StorageService
+    private storageService: StorageService,
+    private feedbackService: FeedbackService
   ) {
 
   }
@@ -210,5 +216,22 @@ export class EventSelectComponent implements OnInit {
     if (event.key === 'Escape') {
       this.close();
     }
+  }
+
+  orgRating() {
+    const rounded = Math.round(this.organization.rating * 2) / 2;
+    const stars = [];
+
+    for (let i = 1; i <= 5; i++) {
+      if (i <= rounded) {
+        stars.push(Stars.Full);
+      } else if (i - 0.5 === rounded) {
+        stars.push(Stars.Half);
+      } else {
+        stars.push(Stars.Empty);
+      }
+    }
+
+    return stars;
   }
 }

@@ -6,6 +6,7 @@ import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firest
 import { take, tap, map } from 'rxjs/operators';
 import { OrganizationService } from './organization.service';
 import { StorageService } from './storage.service';
+import { RecommenderService } from './recommender.service';
 
 @Injectable({
   providedIn: 'root'
@@ -16,13 +17,15 @@ export class AccountService {
   baseUserImg = '../../assets/images/logo.png';
   isUser: boolean;
 
-  constructor(private auth: AuthService, private firestore: AngularFirestore, private storage: StorageService) {
+  constructor(private auth: AuthService, private firestore: AngularFirestore, private storage: StorageService,
+              private recommender: RecommenderService) {
     this.auth.account.subscribe(account => {
       this.currentUser = account;
       this.auth.userAccount.subscribe(user => {
         if (user) {
           this.baseUser = user;
           this.storage.getImageUrl(user.profileImage).subscribe(path => this.baseUserImg = path);
+          this.recommender.retrieveRecommenedEvents(user);
         }
       });
     });
@@ -51,9 +54,18 @@ export class AccountService {
 
   editTagsOrPrefrences(taglist) {
     if (this.isUser) {
-      const userRef = this.firestore.doc(`users/${this.currentUser.uid}`);
+      const batch = this.firestore.firestore.batch();
+      const userRef = this.firestore.firestore.collection(`users`).doc(this.currentUser.uid);
+      const recommenderRef = this.firestore.firestore.collection(`recommender`).doc(this.currentUser.uid);
 
-      userRef.set({ preferences: taglist }, { merge: true });
+      batch.set(userRef, { preferences: taglist }, { merge: true });
+      const recommenderPreferences: { [key: string]: number } = {};
+      taglist.forEach(element => {
+        recommenderPreferences[element] = 1;
+      });
+      batch.set(recommenderRef, recommenderPreferences, { merge: true });
+
+      batch.commit();
     } else {
       const userRef = this.firestore.doc(`organizations/${this.auth.selectedOrganizationUid}`);
 

@@ -17,6 +17,8 @@ export interface User extends Account {
     sex: Sex;
     preferences: Genre|Atmosphere|Tags[];
     organizations: string[];
+    recommended: string[];
+    recommendedWeights: any;
 }
 
 export interface Organization extends Account {
@@ -25,6 +27,7 @@ export interface Organization extends Account {
     about: string;
     tags: Tags[];
     connectedUsers: string[];
+    rating: number;
 }
 
 export enum Sex {
