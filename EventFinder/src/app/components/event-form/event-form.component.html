@@ -173,6 +173,18 @@
                   </p>
                 </div>
 
+                <!-- INPUT: Tickets -->
+                <div class="field">
+                  <p class="control has-icons-left">
+                    <input
+                      [ngClass]="(eventForm.controls['ticket'].invalid && eventForm.controls['ticket'].dirty) ? 'is-danger' : ''"
+                      required class="input is-rounded has-text-centered is-medium is-size-6" type="number"
+                      formControlName="ticket" placeholder="Tickets available" id="ticketBox"/>
+                    <span class="icon is-small is-left">
+                      <i class="fa fa-ticket"></i>
+                    </span>
+                  </p>
+                </div>
               </div>
 
               <div class="column">

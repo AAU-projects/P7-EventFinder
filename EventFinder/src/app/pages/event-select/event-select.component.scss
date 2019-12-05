@@ -14,6 +14,18 @@
   height: auto;
   top: 300px;
   background-color: #5C5C80;
+  border-radius: 4px;
+}
+
+.is-light {
+  position: absolute;
+  width: 100%;
+  background-color: #5C5C80;
+  margin-top: 10px;
+}
+
+.feedback {
+  margin-bottom: 5px;
 }
 
 .image-logo {
@@ -21,10 +33,6 @@
   margin-top: 10px;
   margin-left: auto;
   margin-right: auto;
-}
-
-.title {
-  font-size: 4vh;
 }
 
 .small-text {
@@ -99,4 +107,20 @@ agm-map {
 // Ensures icons are aligned
 .icon-padding {
   width: 24px;
+}
+
+.stars {
+  margin-top: 1px;
+}
+
+.star {
+  margin-right: 5px;
+}
+
+.star-active {
+  color: #FED88F;
+}
+
+.star-inactive {
+  color: #9A9AB2;
 }

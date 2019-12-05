@@ -23,6 +23,11 @@ import {StripeCheckoutModule} from 'ng-stripe-checkout';
 import { environment } from 'src/environments/environment';
 import { UserEventsComponent } from './user-events/user-events.component';
 import { OrganizationEventListComponent } from './organization-event-list/organization-event-list.component';
+import { StatisticsComponent } from './statistics/statistics.component';
+import { ChartsModule } from 'ng2-charts';
+import { FeedbackTileComponent } from './feedback-tile/feedback-tile.component';
+import { AddFeedbackComponent } from './add-feedback/add-feedback.component';
+import { FeedbackListTileComponent } from './feedback-list-tile/feedback-list-tile.component';
 
 /* How to add a new component:
     ng g c components/[name] --export
@@ -45,7 +50,11 @@ import { OrganizationEventListComponent } from './organization-event-list/organi
     OrganizationConnectionsComponent,
     CheckoutComponent,
     UserEventsComponent,
-    OrganizationEventListComponent],
+    OrganizationEventListComponent,
+    StatisticsComponent,
+    FeedbackTileComponent,
+    FeedbackListTileComponent,
+    AddFeedbackComponent],
   imports: [
     CommonModule,
     RouterModule,
@@ -53,6 +62,7 @@ import { OrganizationEventListComponent } from './organization-event-list/organi
     ReactiveFormsModule,
     BrowserAnimationsModule,
     StripeCheckoutModule,
+    ChartsModule,
     QuillModule.forRoot({
       modules: {
         syntax: false,
@@ -84,6 +94,10 @@ import { OrganizationEventListComponent } from './organization-event-list/organi
     CheckoutComponent,
     UserEventsComponent,
     OrganizationEventListComponent,
+    StatisticsComponent,
+    FeedbackTileComponent,
+    AddFeedbackComponent,
+    FeedbackListTileComponent
   ],
 })
 export class ComponentsModule {}

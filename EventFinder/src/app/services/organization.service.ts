@@ -58,7 +58,8 @@ export class OrganizationService {
       address: value.address,
       about: value.about,
       tags: [],
-      connectedUsers: [this.auth.user.uid]
+      connectedUsers: [this.auth.user.uid],
+      rating: 0
     }, {merge: true});
 
     this.auth.selectedOrganizationUid = id;

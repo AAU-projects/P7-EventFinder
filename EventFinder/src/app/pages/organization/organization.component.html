@@ -1,4 +1,4 @@
-<div *ngIf="auth.account | async as user">
+<div *ngIf="org">
   <div class="notification has-background-dark has-text-white top">
     <div class="columns is-multiline">
       <div class="column is-narrow">
@@ -9,23 +9,44 @@
       <div class="column">
         <div class="columns is-gapless is-multiline">
           <div class="column is-5">
-            <h1 class="title has-text-left">
-              {{ user.organization }}
+            <h1 class="title has-text-left is-marginless">
+              {{ org.organization }}
               <a class="button is-small is-primary is-rounded">
                 <span>Edit</span>
               </a>
             </h1>
+            <div class="column is-paddingless">
+              <div class="columns stars has-text-white is-vcentered">
+                <div class="column is-narrow">
+                    <p class="has-text-white">{{ org.rating | number:'0.1-1' }}</p>
+                </div>
+                <div *ngFor="let star of orgRating()">
+                  <div class="column is-paddingless is-narrow">
+                    <span class="icon is-small star">
+                      <div *ngIf="star == Stars.Half; else elseBlock">
+                        <i class="fa fa-star-half-alt star-active" aria-hidden="true"></i>
+                      </div>
+                      <ng-template #elseBlock>
+                        <i class="fa fa-star" aria-hidden="true"
+                          [ngClass]="{'star-active': star == Stars.Full}"
+                          [ngClass]="{'star-inactive': star == Stars.Empty}"></i>
+                      </ng-template>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
             <div class="columns is-gapless is-multiline">
               <div class="column">
                 <h3 class="has-text-left">
                   <span class="icon"><i class="fa fa-envelope"></i></span>
-                  {{ user.email }}
+                  {{ org.email }}
                 </h3>
               </div>
               <div class="column">
                 <h3 class="has-text-left">
                   <span class="icon"><i class="fa fa-mobile-alt"></i></span>
-                  {{ user.phone }}
+                  {{ org.phone }}
                 </h3>
               </div>
             </div>
@@ -84,6 +105,8 @@
                 class="no-decoration" (click)="onSubMenuClick(menuTabs.AddEvent)">Add Event</a></li>
             <li><a [ngClass]="((menuTabObs | async) == menuTabs.Feedback) ? 'is-active' : ''" class="no-decoration"
                 (click)="onMenuClick(menuTabs.Feedback)">Feedback</a></li>
+            <li><a [ngClass]="((menuTabObs | async) == menuTabs.Statistics) ? 'is-active' : ''" class="no-decoration"
+              (click)="onMenuClick(menuTabs.Statistics)">Statistics</a></li>
             <li><a [ngClass]="((menuTabObs | async) == menuTabs.Tickets) ? 'is-active' : ''" class="no-decoration"
                 (click)="onMenuClick(menuTabs.Tickets)">Tickets</a></li>
             <li><a [ngClass]="((menuTabObs | async) == menuTabs.Staff) ? 'is-active' : ''" class="no-decoration"
@@ -99,10 +122,12 @@
     <div class="column">
       <div class="notification bottom-right has-background-darker">
         <div [ngSwitch]="(currentMenuTabObs | async)">
-          <app-organization-info *ngSwitchCase="menuTabs.Profile" [user]="user"></app-organization-info>
+          <app-organization-info *ngSwitchCase="menuTabs.Profile" [user]="org"></app-organization-info>
           <app-event-form *ngSwitchCase="menuTabs.AddEvent"></app-event-form>
           <app-organization-connections *ngSwitchCase="menuTabs.Staff"></app-organization-connections>
-          <app-organization-event-list *ngSwitchCase="menuTabs.Events" [user]="user"></app-organization-event-list>
+          <app-organization-event-list *ngSwitchCase="menuTabs.Events" [user]="org"></app-organization-event-list>
+          <app-feedback-list-tile *ngSwitchCase="menuTabs.Feedback" [organization]="org"></app-feedback-list-tile>
+          <app-statistics *ngSwitchCase="menuTabs.Statistics"></app-statistics>
         </div>
       </div>
     </div>

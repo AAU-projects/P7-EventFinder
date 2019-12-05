@@ -1,10 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { EventService } from 'src/app/services/event.service';
+import { AuthService } from 'src/app/services/auth.service';
 import { AngularFirestore, QueryFn } from '@angular/fire/firestore';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Event } from '../../models/event.model';
 import { match } from 'minimatch';
 import { SharedService } from 'src/app/services/shared.service';
+import { AccountService } from 'src/app/services/account.service';
+import { RecommenderService } from 'src/app/services/recommender.service';
+import { Params, ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-events',
@@ -12,7 +16,7 @@ import { SharedService } from 'src/app/services/shared.service';
   styleUrls: ['./events.component.scss']
 })
 export class EventsComponent implements OnInit {
-  eventList: Event[] = null;
+  eventList: Event[] = [];
   eventListShow: Event[] = null;
   selectedTagsSearch: string[] = [];
   currentTagSearchResult: string[] = [];
@@ -20,43 +24,104 @@ export class EventsComponent implements OnInit {
   userLocation: number[] = [null, null];
   maxDistance = Number.MAX_SAFE_INTEGER;
   maxPrice = Number.MAX_SAFE_INTEGER;
+  searchFromURL: string;
 
-  eventListSubject: BehaviorSubject<Event[]> = new BehaviorSubject<Event[]>(null);
-  public eventListObs: Observable<Event[]> = this.eventListSubject.asObservable();
   selectedToDateFilter: Date = null;
   selectedFromDateFilter: Date = null;
 
-  constructor(
+    constructor(
     public eventService: EventService,
     public afs: AngularFirestore,
-    public shared: SharedService
+    public shared: SharedService,
+    public auth: AuthService,
+    public accountService: AccountService,
+    public recommenderService: RecommenderService,
+    private route: ActivatedRoute,
+    private router: Router
   ) {
-    this.eventService.getEvents().subscribe(elist => {
-      this.eventList = [];
-      elist.forEach(e => this.eventList.push(e.payload.doc.data() as Event));
-      this.applyFilter();
-      this.retrieveTagsForEvents();
-    });
+    if (accountService.currentUser) {
+      this.recommenderService.eventListObs.subscribe(events => {
+
+        this.eventList = events;
+        if (this.eventList === null) {
+          return;
+        }
+        this.applyFilter();
+        this.retrieveTagsForEvents();
+      });
+    } else {
+      this.eventService.getEvents().subscribe(elist => {
+        const tempEventList = [];
+        elist.forEach(e => tempEventList.push(e.payload.doc.data() as Event));
+
+        this.eventList = tempEventList;
+        this.applyFilter();
+        this.retrieveTagsForEvents();
+      });
+    }
   }
 
   ngOnInit() {
+    this.route.params.forEach((params: Params) => {
+      this.searchFromURL = params.searchterm;
+    });
     navigator.geolocation.getCurrentPosition((position) => {
       this.userLocation[0] = position.coords.latitude;
       this.userLocation[1] = position.coords.longitude;
     });
+
+    if (this.searchFromURL) {
+      this.searchFromURL = this.searchFromURL.replace('_', ' ');
+      this.search(this.searchFromURL);
+    }
   }
 
-  async search(input) {
-    const eventList = [];
+  async search(input: string) {
+    this.router.navigate([`/events/search/${input.replace(' ', '_')}`]);
     this.eventService
       .getEventsBySearch(input.toLowerCase())
       .subscribe(elist => {
+        const eventList = [];
         elist.forEach(e => eventList.push(e.payload.doc.data() as Event));
+
+        if (this.accountService.currentUser !== null) {
+          this.eventList = this.sortByRecommended(eventList);
+        }
         this.eventList = eventList;
         this.applyFilter();
         this.retrieveTagsForEvents();
       });
   }
+
+  sortByRecommended(events: any[]) {
+    const weightMap = this.accountService.baseUser.recommendedWeights;
+    let eventScoreMap: any = [];
+    events.forEach((event: any) => {
+      let score = 0;
+
+      const genre = event.genre;
+      const atmosphere = event.atmosphere;
+      const dresscode = event.dresscode;
+      const allElements = genre.concat(atmosphere);
+      allElements.push(dresscode);
+
+      // Caculates score for an event
+      allElements.forEach((element: any) => {
+        const name = element.toLowerCase();
+        if (name in weightMap) {
+          score += Number(weightMap[name]) / allElements.length;
+        }
+      });
+
+      eventScoreMap.push([event, score]);
+    });
+    eventScoreMap = eventScoreMap.sort((a: any, b: any) => b[1] - a[1]);
+    const eventsList = [];
+    eventScoreMap.forEach((event: any) => {
+      eventsList.push(event[0]);
+    });
+    return eventsList;
+}
 
   addTagToEventList(tag) {
     if (tag !== null && tag !== '' && !(this.eventsTagList.includes(tag.toLowerCase()))) {
@@ -110,6 +175,9 @@ export class EventsComponent implements OnInit {
   }
 
   applyFilter() {
+    if (this.eventList === null) {
+      return;
+    }
     let tempEventListShow: Event[] = Array.from(this.eventList);
     tempEventListShow = tempEventListShow.filter(element => this.applyTagsFilter(element));
     tempEventListShow = tempEventListShow.filter(element => this.getInRange(element, this.userLocation, this.maxDistance));

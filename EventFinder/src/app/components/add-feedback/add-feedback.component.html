@@ -1,0 +1,33 @@
+<div class="modal is-active">
+  <div class="modal-background"></div>
+  <div class="modal-content notification is-dark">
+    <h1 class="title"> Leave Review for {{ event.title }} </h1>
+
+    <nav class="level">
+      <div class="level-left">
+        <div class="columns is-mobile is-gapless">
+          <p class="level-item">Your rating: </p>
+          <div *ngFor="let star of rating; let i = index">
+            <div class="column is-paddingless">
+              <span class="level-item icon is-small">
+                <i class="fa fa-star" aria-hidden="true" [ngClass]="{'star-active': star}"
+                  [ngClass]="{'star-inactive': !star}" (click)="rate(i)"></i>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <textarea class="textarea has-fixed-size" placeholder="Write your review" rows="5" maxlength="256" [(ngModel)]="review"></textarea>
+    <nav class="level">
+      <div class="level-left"></div>
+      <div class="level-right">
+        <p> {{ getChars() }} of 256 </p>
+      </div>
+    </nav>
+    <button class="button is-primary" (click)="submit()" [disabled]="checkValidity()">Submit</button>
+    <button class="button is-darker" (click)="close()">Cancel</button>
+    <button class="button is-danger" (click)="onDeleteClick()" *ngIf="editFeedback">Delete</button>
+  </div>
+</div>
